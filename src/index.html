@@ -12,8 +12,6 @@
     <script nomodule src="/build/pwc-choices-2.js"></script>
   </head>
   <body>
-    <pwc-choices-2></pwc-choices-2>
-
     <pwc-choices-2-selected-item-bubble show-close-button="true">
       Selected Item Bubble
     </pwc-choices-2-selected-item-bubble>
@@ -25,5 +23,30 @@
     <pwc-choices-2-selected-item-bubble>
       Selected Item Bubble That Is So Long That The Creator Should Be Banned
     </pwc-choices-2-selected-item-bubble>
+
+    <br />
+    <br />
+
+    <pwc-choices-2></pwc-choices-2>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", e => {
+        const choices = document.querySelector("pwc-choices-2");
+        choices.options = [
+          {
+            value: "foo",
+            label: "Foo"
+          },
+          {
+            value: "bar",
+            label: "Bar"
+          },
+          {
+            value: "baz",
+            label: "Baz"
+          }
+        ];
+      });
+    </script>
   </body>
 </html>
