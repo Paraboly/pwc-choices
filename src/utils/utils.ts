@@ -1,5 +1,5 @@
-export function format(first: string, middle: string, last: string): string {
-  return (
-    (first || "") + (middle ? ` ${middle}` : "") + (last ? ` ${last}` : "")
-  );
+export function resolveJson<TReturnType>(
+  input: string | TReturnType
+): TReturnType {
+  return typeof input === "string" ? JSON.parse(input) : input;
 }

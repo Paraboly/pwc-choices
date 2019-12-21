@@ -5,11 +5,10 @@
 
 ## Properties
 
-| Property | Attribute | Description     | Type     | Default     |
-| -------- | --------- | --------------- | -------- | ----------- |
-| `first`  | `first`   | The first name  | `string` | `undefined` |
-| `last`   | `last`    | The last name   | `string` | `undefined` |
-| `middle` | `middle`  | The middle name | `string` | `undefined` |
+| Property  | Attribute | Description | Type                  | Default     |
+| --------- | --------- | ----------- | --------------------- | ----------- |
+| `options` | `options` |             | `Option[] \| string`  | `undefined` |
+| `type`    | `type`    |             | `"multi" \| "single"` | `undefined` |
 
 
 ----------------------------------------------

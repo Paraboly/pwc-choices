@@ -1,32 +1,36 @@
-import { Component, Prop, h } from "@stencil/core";
-import { format } from "../../utils/utils";
+import { Component, Prop, h, State, Watch } from "@stencil/core";
+import { PwcChoices2 } from "../../utils/PwcChoices2";
+import { resolveJson } from "../../utils/utils";
 
 @Component({
   tag: "pwc-choices-2",
   styleUrl: "pwc-choices-2.scss",
   shadow: true
 })
-export class PwcChoices2 {
-  /**
-   * The first name
-   */
-  @Prop() first: string;
+export class PwcChoices2Component {
+  @Prop() type: "single" | "multi";
 
-  /**
-   * The middle name
-   */
-  @Prop() middle: string;
-
-  /**
-   * The last name
-   */
-  @Prop() last: string;
-
-  private getText(): string {
-    return format(this.first, this.middle, this.last);
+  @State() resolvedOptions: PwcChoices2.Option[];
+  @Prop() options: PwcChoices2.Option[] | string;
+  @Watch("options")
+  watchHandler(newValue: PwcChoices2.Option[] | string) {
+    this.resolvedOptions = resolveJson(newValue);
   }
 
   render() {
-    return <div>Hello, World! I'm {this.getText()}</div>;
+    return (
+      <div>
+        {this.generateInputBar()}
+        {this.generateDropdown()}
+      </div>
+    );
+  }
+
+  generateInputBar() {
+    return <div>Input Bar</div>;
+  }
+
+  generateDropdown() {
+    return <div>Dropdown</div>;
   }
 }

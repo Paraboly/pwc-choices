@@ -7,22 +7,14 @@
 
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
-
+import {
+  PwcChoices2,
+} from './utils/PwcChoices2';
 
 export namespace Components {
   interface PwcChoices2 {
-    /**
-    * The first name
-    */
-    'first': string;
-    /**
-    * The last name
-    */
-    'last': string;
-    /**
-    * The middle name
-    */
-    'middle': string;
+    'options': PwcChoices2.Option[] | string;
+    'type': "single" | "multi";
   }
 }
 
@@ -41,18 +33,8 @@ declare global {
 
 declare namespace LocalJSX {
   interface PwcChoices2 {
-    /**
-    * The first name
-    */
-    'first'?: string;
-    /**
-    * The last name
-    */
-    'last'?: string;
-    /**
-    * The middle name
-    */
-    'middle'?: string;
+    'options'?: PwcChoices2.Option[] | string;
+    'type'?: "single" | "multi";
   }
 
   interface IntrinsicElements {
