@@ -16,6 +16,9 @@ export namespace Components {
     'options': PwcChoices2.Option[] | string;
     'type': "single" | "multi";
   }
+  interface PwcChoices2SelectedItemBubble {
+    'showCloseButton': boolean;
+  }
 }
 
 declare global {
@@ -26,8 +29,15 @@ declare global {
     prototype: HTMLPwcChoices2Element;
     new (): HTMLPwcChoices2Element;
   };
+
+  interface HTMLPwcChoices2SelectedItemBubbleElement extends Components.PwcChoices2SelectedItemBubble, HTMLStencilElement {}
+  var HTMLPwcChoices2SelectedItemBubbleElement: {
+    prototype: HTMLPwcChoices2SelectedItemBubbleElement;
+    new (): HTMLPwcChoices2SelectedItemBubbleElement;
+  };
   interface HTMLElementTagNameMap {
     'pwc-choices-2': HTMLPwcChoices2Element;
+    'pwc-choices-2-selected-item-bubble': HTMLPwcChoices2SelectedItemBubbleElement;
   }
 }
 
@@ -36,9 +46,13 @@ declare namespace LocalJSX {
     'options'?: PwcChoices2.Option[] | string;
     'type'?: "single" | "multi";
   }
+  interface PwcChoices2SelectedItemBubble {
+    'showCloseButton'?: boolean;
+  }
 
   interface IntrinsicElements {
     'pwc-choices-2': PwcChoices2;
+    'pwc-choices-2-selected-item-bubble': PwcChoices2SelectedItemBubble;
   }
 }
 
@@ -49,6 +63,7 @@ declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
       'pwc-choices-2': LocalJSX.PwcChoices2 & JSXBase.HTMLAttributes<HTMLPwcChoices2Element>;
+      'pwc-choices-2-selected-item-bubble': LocalJSX.PwcChoices2SelectedItemBubble & JSXBase.HTMLAttributes<HTMLPwcChoices2SelectedItemBubbleElement>;
     }
   }
 }
