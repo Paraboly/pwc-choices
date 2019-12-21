@@ -1,4 +1,4 @@
-# component-name
+# pwc-choices-2
 
 <!-- Auto Generated Below -->
 

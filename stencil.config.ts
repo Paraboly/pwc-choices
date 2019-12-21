@@ -2,7 +2,7 @@ import { Config } from "@stencil/core";
 import { sass } from "@stencil/sass";
 
 export const config: Config = {
-  namespace: "project-name",
+  namespace: "pwc-choices-2",
   outputTargets: [
     {
       type: "dist",
