@@ -4,10 +4,10 @@ export namespace PwcChoices2 {
     label: string;
   }
 
-  export interface ISelectedItemBubbleCloseClickedEventPayload {
+  export interface IOptionBubbleCloseClickedEventPayload {
     originalEvent: MouseEvent;
     option: IOption;
-    bubbleElement: HTMLPwcChoices2SelectedItemBubbleElement;
+    bubbleElement: HTMLPwcChoices2OptionBubbleElement;
     index: number;
   }
 }

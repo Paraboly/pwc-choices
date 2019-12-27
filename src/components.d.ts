@@ -18,7 +18,7 @@ export namespace Components {
     'options': PwcChoices2.IOption[] | string;
     'type': "single" | "multi";
   }
-  interface PwcChoices2SelectedItemBubble {
+  interface PwcChoices2OptionBubble {
     'indexInSelectedList': number;
     'option': PwcChoices2.IOption;
     'showCloseButton': boolean;
@@ -34,14 +34,14 @@ declare global {
     new (): HTMLPwcChoices2Element;
   };
 
-  interface HTMLPwcChoices2SelectedItemBubbleElement extends Components.PwcChoices2SelectedItemBubble, HTMLStencilElement {}
-  var HTMLPwcChoices2SelectedItemBubbleElement: {
-    prototype: HTMLPwcChoices2SelectedItemBubbleElement;
-    new (): HTMLPwcChoices2SelectedItemBubbleElement;
+  interface HTMLPwcChoices2OptionBubbleElement extends Components.PwcChoices2OptionBubble, HTMLStencilElement {}
+  var HTMLPwcChoices2OptionBubbleElement: {
+    prototype: HTMLPwcChoices2OptionBubbleElement;
+    new (): HTMLPwcChoices2OptionBubbleElement;
   };
   interface HTMLElementTagNameMap {
     'pwc-choices-2': HTMLPwcChoices2Element;
-    'pwc-choices-2-selected-item-bubble': HTMLPwcChoices2SelectedItemBubbleElement;
+    'pwc-choices-2-option-bubble': HTMLPwcChoices2OptionBubbleElement;
   }
 }
 
@@ -52,16 +52,16 @@ declare namespace LocalJSX {
     'options'?: PwcChoices2.IOption[] | string;
     'type'?: "single" | "multi";
   }
-  interface PwcChoices2SelectedItemBubble {
+  interface PwcChoices2OptionBubble {
     'indexInSelectedList'?: number;
-    'onCloseClicked'?: (event: CustomEvent<PwcChoices2.ISelectedItemBubbleCloseClickedEventPayload>) => void;
+    'onCloseClicked'?: (event: CustomEvent<PwcChoices2.IOptionBubbleCloseClickedEventPayload>) => void;
     'option'?: PwcChoices2.IOption;
     'showCloseButton'?: boolean;
   }
 
   interface IntrinsicElements {
     'pwc-choices-2': PwcChoices2;
-    'pwc-choices-2-selected-item-bubble': PwcChoices2SelectedItemBubble;
+    'pwc-choices-2-option-bubble': PwcChoices2OptionBubble;
   }
 }
 
@@ -72,7 +72,7 @@ declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
       'pwc-choices-2': LocalJSX.PwcChoices2 & JSXBase.HTMLAttributes<HTMLPwcChoices2Element>;
-      'pwc-choices-2-selected-item-bubble': LocalJSX.PwcChoices2SelectedItemBubble & JSXBase.HTMLAttributes<HTMLPwcChoices2SelectedItemBubbleElement>;
+      'pwc-choices-2-option-bubble': LocalJSX.PwcChoices2OptionBubble & JSXBase.HTMLAttributes<HTMLPwcChoices2OptionBubbleElement>;
     }
   }
 }

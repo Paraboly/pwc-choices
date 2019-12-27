@@ -24,7 +24,7 @@ export class PwcChoices2Component {
 
   @Listen("closeClicked")
   optionBubbleCloseClickedHandler(
-    event: CustomEvent<PwcChoices2.ISelectedItemBubbleCloseClickedEventPayload>
+    event: CustomEvent<PwcChoices2.IOptionBubbleCloseClickedEventPayload>
   ) {
     const payload = event.detail;
     console.log("closeClicked");
@@ -60,11 +60,11 @@ export class PwcChoices2Component {
 
   generateSelectedOptions() {
     return this.currentSelectedOptions.map((selectedOption, index) => (
-      <pwc-choices-2-selected-item-bubble
+      <pwc-choices-2-option-bubble
         option={selectedOption}
         showCloseButton={true}
         indexInSelectedList={index}
-      ></pwc-choices-2-selected-item-bubble>
+      ></pwc-choices-2-option-bubble>
     ));
   }
 

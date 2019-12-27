@@ -9,19 +9,19 @@ import {
 import { PwcChoices2 } from "../../utils/PwcChoices2";
 
 @Component({
-  tag: "pwc-choices-2-selected-item-bubble",
-  styleUrl: "pwc-choices-2-selected-item-bubble.scss",
+  tag: "pwc-choices-2-option-bubble",
+  styleUrl: "pwc-choices-2-option-bubble.scss",
   shadow: true
 })
-export class PwcChoices2SelectedItemBubbleComponent {
-  @Element() rootElement: HTMLPwcChoices2SelectedItemBubbleElement;
+export class PwcChoices2OptionBubbleComponent {
+  @Element() rootElement: HTMLPwcChoices2OptionBubbleElement;
 
   @Prop() showCloseButton: boolean;
   @Prop() option: PwcChoices2.IOption;
   @Prop() indexInSelectedList: number;
 
   @Event() closeClicked: EventEmitter<
-    PwcChoices2.ISelectedItemBubbleCloseClickedEventPayload
+    PwcChoices2.IOptionBubbleCloseClickedEventPayload
   >;
 
   render() {

@@ -1,9 +1,6 @@
-# pwc-choices-2-selected-item-bubble
-
-
+# pwc-choices-2-option-bubble
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ----------------- | ------------------- | ----------- | --------- | ----------- |
 | `showCloseButton` | `show-close-button` |             | `boolean` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_
