@@ -13,10 +13,14 @@ import {
 
 export namespace Components {
   interface PwcChoices2 {
-    'options': PwcChoices2.Option[] | string;
+    'currentSelectedOptions': PwcChoices2.IOption[];
+    'isDropDownOpen': boolean;
+    'options': PwcChoices2.IOption[] | string;
     'type': "single" | "multi";
   }
   interface PwcChoices2SelectedItemBubble {
+    'indexInSelectedList': number;
+    'option': PwcChoices2.IOption;
     'showCloseButton': boolean;
   }
 }
@@ -43,10 +47,15 @@ declare global {
 
 declare namespace LocalJSX {
   interface PwcChoices2 {
-    'options'?: PwcChoices2.Option[] | string;
+    'currentSelectedOptions'?: PwcChoices2.IOption[];
+    'isDropDownOpen'?: boolean;
+    'options'?: PwcChoices2.IOption[] | string;
     'type'?: "single" | "multi";
   }
   interface PwcChoices2SelectedItemBubble {
+    'indexInSelectedList'?: number;
+    'onCloseClicked'?: (event: CustomEvent<PwcChoices2.ISelectedItemBubbleCloseClickedEventPayload>) => void;
+    'option'?: PwcChoices2.IOption;
     'showCloseButton'?: boolean;
   }
 

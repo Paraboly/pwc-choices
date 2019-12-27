@@ -1,6 +1,7 @@
-import { Component, Prop, h, State, Watch } from "@stencil/core";
+import { Component, Prop, h, State, Watch, Listen } from "@stencil/core";
 import { PwcChoices2 } from "../../utils/PwcChoices2";
 import { resolveJson } from "../../utils/utils";
+import _ from "lodash";
 
 @Component({
   tag: "pwc-choices-2",
@@ -10,14 +11,35 @@ import { resolveJson } from "../../utils/utils";
 export class PwcChoices2Component {
   @Prop() type: "single" | "multi";
 
-  @State() resolvedOptions: PwcChoices2.Option[];
-  @Prop() options: PwcChoices2.Option[] | string;
+  @State() resolvedOptions: PwcChoices2.IOption[];
+  @Prop() options: PwcChoices2.IOption[] | string;
   @Watch("options")
-  watchHandler(newValue: PwcChoices2.Option[] | string) {
+  optionsWatchHandler(newValue: PwcChoices2.IOption[] | string) {
     this.resolvedOptions = resolveJson(newValue);
+    console.log(this.resolvedOptions);
   }
 
-  @State() isDropDownOpen: boolean = false;
+  @Prop() isDropDownOpen: boolean = false;
+  @Prop() currentSelectedOptions: PwcChoices2.IOption[];
+
+  @Listen("closeClicked")
+  optionBubbleCloseClickedHandler(
+    event: CustomEvent<PwcChoices2.ISelectedItemBubbleCloseClickedEventPayload>
+  ) {
+    const payload = event.detail;
+    console.log("closeClicked");
+    console.log(payload);
+
+    const newSelectedItems = [...this.currentSelectedOptions];
+    newSelectedItems.splice(payload.index, 1);
+
+    this.currentSelectedOptions = newSelectedItems;
+  }
+
+  componentWillLoad() {
+    this.optionsWatchHandler(this.options);
+    this.currentSelectedOptions = [];
+  }
 
   render() {
     return (
@@ -31,9 +53,19 @@ export class PwcChoices2Component {
   generateInputBar() {
     return (
       <div class="input-bar" onClick={e => this.onInputBarClick(e)}>
-        Input Bar
+        {this.generateSelectedOptions()}
       </div>
     );
+  }
+
+  generateSelectedOptions() {
+    return this.currentSelectedOptions.map((selectedOption, index) => (
+      <pwc-choices-2-selected-item-bubble
+        option={selectedOption}
+        showCloseButton={true}
+        indexInSelectedList={index}
+      ></pwc-choices-2-selected-item-bubble>
+    ));
   }
 
   onInputBarClick(e: MouseEvent): void {
@@ -51,13 +83,15 @@ export class PwcChoices2Component {
     );
   }
 
-  generateOption(option: PwcChoices2.Option): any {
+  generateOption(option: PwcChoices2.IOption): any {
     return <li onClick={e => this.onOptionClick(option, e)}>{option.label}</li>;
   }
 
-  onOptionClick(option: PwcChoices2.Option, clickEvent: MouseEvent): void {
-    clickEvent.preventDefault();
+  onOptionClick(option: PwcChoices2.IOption, clickEvent: MouseEvent): void {
     console.log("option clicked");
+    clickEvent.preventDefault();
+    clickEvent.stopPropagation();
     console.log(option);
+    this.currentSelectedOptions = [...this.currentSelectedOptions, option];
   }
 }
