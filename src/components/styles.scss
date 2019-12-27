@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  transition: all 0.1s;
 }
 
 .container {
@@ -42,22 +43,15 @@
 .bubble {
   border: 1px solid black;
   border-radius: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-right: 10px;
-  padding-left: 10px;
+  padding: 5px 10px 5px 10px;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  overflow: hidden;
+  flex-wrap: nowrap;
   margin: 5px;
   min-height: 22px;
 }
 
 .bubble-label {
-  display: flex;
-  flex-wrap: wrap;
-  overflow: hidden;
 }
 
 .bubble-closeButton {

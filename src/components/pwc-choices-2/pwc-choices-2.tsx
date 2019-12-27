@@ -1,4 +1,12 @@
-import { Component, Prop, h, State, Watch, Listen } from "@stencil/core";
+import {
+  Component,
+  Prop,
+  h,
+  State,
+  Watch,
+  Listen,
+  Method
+} from "@stencil/core";
 import { PwcChoices2 } from "../../utils/PwcChoices2";
 import { resolveJson } from "../../utils/utils";
 import _ from "lodash";
@@ -9,59 +17,121 @@ import _ from "lodash";
   shadow: true
 })
 export class PwcChoices2Component {
-  @Prop() type: "single" | "multi";
+  @Prop() type: "single" | "multi" = "multi";
 
   @State() resolvedOptions: PwcChoices2.IOption[];
   @Prop() options: PwcChoices2.IOption[] | string;
   @Watch("options")
   optionsWatchHandler(newValue: PwcChoices2.IOption[] | string) {
     this.resolvedOptions = resolveJson(newValue);
-    console.log(this.resolvedOptions);
   }
 
-  @Prop() isDropDownOpen: boolean = false;
-  @Prop() currentSelectedOptions: PwcChoices2.IOption[];
+  @Prop() dropdownIsOpen: boolean = false;
   @Prop() placeholder: string;
-  @Prop() autoHidePlaceholder: boolean;
+
+  /**
+   * If true, the placeholder will be hidden if there are selected options.
+   */
+  @Prop() autoHidePlaceholder: boolean = true;
+
+  /**
+   * If true, selected option bubbles will have close buttons.
+   */
+  @Prop() showCloseButtons: boolean = true;
+
+  /**
+   * If true, the option will be removed from available options after selection.
+   */
+  @Prop() uniqueSelections: boolean = true;
+
+  /**
+   * If not undefined, this will be displayed in dropdown instead of the default text when there are no options left to choose.
+   */
+  @Prop() customNoOptionsString: string;
+
+  @State() selectedOptions: PwcChoices2.IOption[] = [];
+
+  @Method()
+  async getSelectedOptions(mode: "option" | "value" | "label" = "option") {
+    switch (mode) {
+      case "option":
+        return this.selectedOptions;
+
+      case "value":
+        return this.selectedOptions.map(o => o.value);
+
+      case "option":
+        return this.selectedOptions.map(o => o.label);
+
+      default:
+        throw new Error(
+          `mode value of "${mode}" is invalid. valid values are: "option", "value", "label"`
+        );
+    }
+  }
 
   @Listen("closeClicked")
   optionBubbleCloseClickedHandler(
     event: CustomEvent<PwcChoices2.IOptionBubbleCloseClickedEventPayload>
   ) {
     const payload = event.detail;
-    console.log("closeClicked");
-    console.log(payload);
-
-    const newSelectedItems = [...this.currentSelectedOptions];
+    const newSelectedItems = [...this.selectedOptions];
     newSelectedItems.splice(payload.index, 1);
-
-    this.currentSelectedOptions = newSelectedItems;
+    this.selectedOptions = newSelectedItems;
   }
 
   componentWillLoad() {
     this.optionsWatchHandler(this.options);
-    this.currentSelectedOptions = [];
   }
 
   render() {
     return (
       <div class="container">
-        {this.generateInputBar()}
-        {this.isDropDownOpen && this.generateDropdown()}
+        {this.constructInputBar()}
+        {this.dropdownIsOpen && this.constructDropdown()}
       </div>
     );
   }
 
-  generateInputBar() {
+  constructInputBar() {
     return (
       <div class="input-bar" onClick={e => this.onInputBarClick(e)}>
-        {this.generateSelectedOptions()}
-        {this.generatePlaceholder()}
+        {this.constructSelectedOptions()}
+        {this.constructPlaceholder()}
       </div>
     );
   }
-  generatePlaceholder() {
-    const selectedItemCount = this.currentSelectedOptions.length;
+
+  constructDropdown() {
+    const dropdownOptions: PwcChoices2.IOption[] = this.uniqueSelections
+      ? _.difference(this.resolvedOptions, this.selectedOptions)
+      : this.resolvedOptions;
+
+    return (
+      <div class="dropdown">
+        <ul>
+          {this.resolvedOptions && dropdownOptions.length === 0 ? (
+            <li> {this.customNoOptionsString || "No options to select."}</li>
+          ) : (
+            dropdownOptions.map(option => this.constructDropdownOption(option))
+          )}
+        </ul>
+      </div>
+    );
+  }
+
+  constructSelectedOptions() {
+    return this.selectedOptions.map((selectedOption, index) => (
+      <pwc-choices-2-option-bubble
+        option={selectedOption}
+        showCloseButton={this.showCloseButtons}
+        indexInSelectedList={index}
+      ></pwc-choices-2-option-bubble>
+    ));
+  }
+
+  constructPlaceholder() {
+    const selectedItemCount = this.selectedOptions.length;
     const shouldDisplay =
       this.placeholder && !(this.autoHidePlaceholder && selectedItemCount > 0);
 
@@ -76,40 +146,26 @@ export class PwcChoices2Component {
     );
   }
 
-  generateSelectedOptions() {
-    return this.currentSelectedOptions.map((selectedOption, index) => (
-      <pwc-choices-2-option-bubble
-        option={selectedOption}
-        showCloseButton={true}
-        indexInSelectedList={index}
-      ></pwc-choices-2-option-bubble>
-    ));
-  }
-
-  onInputBarClick(e: MouseEvent): void {
-    this.isDropDownOpen = !this.isDropDownOpen;
-  }
-
-  generateDropdown() {
+  constructDropdownOption(option: PwcChoices2.IOption): any {
     return (
-      <div class="dropdown">
-        <ul>
-          {this.resolvedOptions &&
-            this.resolvedOptions.map(option => this.generateOption(option))}
-        </ul>
-      </div>
+      <li onClick={e => this.onDropdownOptionClick(option, e)}>
+        {option.label}
+      </li>
     );
   }
 
-  generateOption(option: PwcChoices2.IOption): any {
-    return <li onClick={e => this.onOptionClick(option, e)}>{option.label}</li>;
+  onInputBarClick(e: MouseEvent): void {
+    e.preventDefault();
+    e.stopPropagation();
+    this.dropdownIsOpen = !this.dropdownIsOpen;
   }
 
-  onOptionClick(option: PwcChoices2.IOption, clickEvent: MouseEvent): void {
-    console.log("option clicked");
+  onDropdownOptionClick(
+    option: PwcChoices2.IOption,
+    clickEvent: MouseEvent
+  ): void {
     clickEvent.preventDefault();
     clickEvent.stopPropagation();
-    console.log(option);
-    this.currentSelectedOptions = [...this.currentSelectedOptions, option];
+    this.selectedOptions = [...this.selectedOptions, option];
   }
 }

@@ -48,8 +48,6 @@ export class PwcChoices2OptionBubbleComponent {
   }
 
   onCloseClicked(event: MouseEvent): void {
-    console.log("onCloseClicked");
-    console.log(this);
     event.preventDefault();
     event.stopPropagation();
     this.closeClicked.emit({

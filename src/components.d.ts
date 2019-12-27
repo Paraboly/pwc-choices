@@ -13,12 +13,27 @@ import {
 
 export namespace Components {
   interface PwcChoices2 {
+    /**
+    * If true, the placeholder will be hidden if there are selected options.
+    */
     'autoHidePlaceholder': boolean;
-    'currentSelectedOptions': PwcChoices2.IOption[];
-    'isDropDownOpen': boolean;
+    /**
+    * If not undefined, this will be displayed in dropdown instead of the default text when there are no options left to choose.
+    */
+    'customNoOptionsString': string;
+    'dropdownIsOpen': boolean;
+    'getSelectedOptions': (mode?: "option" | "value" | "label") => Promise<PwcChoices2.IOption[] | string[]>;
     'options': PwcChoices2.IOption[] | string;
     'placeholder': string;
+    /**
+    * If true, selected option bubbles will have close buttons.
+    */
+    'showCloseButtons': boolean;
     'type': "single" | "multi";
+    /**
+    * If true, the option will be removed from available options after selection.
+    */
+    'uniqueSelections': boolean;
   }
   interface PwcChoices2OptionBubble {
     'indexInSelectedList': number;
@@ -49,12 +64,26 @@ declare global {
 
 declare namespace LocalJSX {
   interface PwcChoices2 {
+    /**
+    * If true, the placeholder will be hidden if there are selected options.
+    */
     'autoHidePlaceholder'?: boolean;
-    'currentSelectedOptions'?: PwcChoices2.IOption[];
-    'isDropDownOpen'?: boolean;
+    /**
+    * If not undefined, this will be displayed in dropdown instead of the default text when there are no options left to choose.
+    */
+    'customNoOptionsString'?: string;
+    'dropdownIsOpen'?: boolean;
     'options'?: PwcChoices2.IOption[] | string;
     'placeholder'?: string;
+    /**
+    * If true, selected option bubbles will have close buttons.
+    */
+    'showCloseButtons'?: boolean;
     'type'?: "single" | "multi";
+    /**
+    * If true, the option will be removed from available options after selection.
+    */
+    'uniqueSelections'?: boolean;
   }
   interface PwcChoices2OptionBubble {
     'indexInSelectedList'?: number;

@@ -2,12 +2,36 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
-| Property          | Attribute           | Description | Type      | Default     |
-| ----------------- | ------------------- | ----------- | --------- | ----------- |
-| `showCloseButton` | `show-close-button` |             | `boolean` | `undefined` |
+| Property              | Attribute                | Description | Type      | Default     |
+| --------------------- | ------------------------ | ----------- | --------- | ----------- |
+| `indexInSelectedList` | `index-in-selected-list` |             | `number`  | `undefined` |
+| `option`              | --                       |             | `IOption` | `undefined` |
+| `showCloseButton`     | `show-close-button`      |             | `boolean` | `undefined` |
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+## Events
+
+| Event          | Description | Type                                                 |
+| -------------- | ----------- | ---------------------------------------------------- |
+| `closeClicked` |             | `CustomEvent<IOptionBubbleCloseClickedEventPayload>` |
+
+
+## Dependencies
+
+### Used by
+
+ - [pwc-choices-2](../pwc-choices-2)
+
+### Graph
+```mermaid
+graph TD;
+  pwc-choices-2 --> pwc-choices-2-option-bubble
+  style pwc-choices-2-option-bubble fill:#f9f,stroke:#333,stroke-width:4px
+```
+
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*
