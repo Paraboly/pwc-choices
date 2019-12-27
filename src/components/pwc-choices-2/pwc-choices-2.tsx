@@ -47,7 +47,7 @@ export class PwcChoices2Component {
   /**
    * If not undefined, this will be displayed in dropdown instead of the default text when there are no options left to choose.
    */
-  @Prop() customNoOptionsString: string;
+  @Prop() noOptionsString: string = "No options to choose from.";
 
   @State() selectedOptions: PwcChoices2.IOption[] = [];
 
@@ -111,7 +111,7 @@ export class PwcChoices2Component {
       <div class="dropdown">
         <ul>
           {this.resolvedOptions && dropdownOptions.length === 0 ? (
-            <li> {this.customNoOptionsString || "No options to select."}</li>
+            <li> {this.noOptionsString}</li>
           ) : (
             dropdownOptions.map(option => this.constructDropdownOption(option))
           )}

@@ -17,12 +17,12 @@ export namespace Components {
     * If true, the placeholder will be hidden if there are selected options.
     */
     'autoHidePlaceholder': boolean;
+    'dropdownIsOpen': boolean;
+    'getSelectedOptions': (mode?: "option" | "value" | "label") => Promise<PwcChoices2.IOption[] | string[]>;
     /**
     * If not undefined, this will be displayed in dropdown instead of the default text when there are no options left to choose.
     */
-    'customNoOptionsString': string;
-    'dropdownIsOpen': boolean;
-    'getSelectedOptions': (mode?: "option" | "value" | "label") => Promise<PwcChoices2.IOption[] | string[]>;
+    'noOptionsString': string;
     'options': PwcChoices2.IOption[] | string;
     'placeholder': string;
     /**
@@ -68,11 +68,11 @@ declare namespace LocalJSX {
     * If true, the placeholder will be hidden if there are selected options.
     */
     'autoHidePlaceholder'?: boolean;
+    'dropdownIsOpen'?: boolean;
     /**
     * If not undefined, this will be displayed in dropdown instead of the default text when there are no options left to choose.
     */
-    'customNoOptionsString'?: string;
-    'dropdownIsOpen'?: boolean;
+    'noOptionsString'?: string;
     'options'?: PwcChoices2.IOption[] | string;
     'placeholder'?: string;
     /**
