@@ -5,7 +5,7 @@ import _ from "lodash";
 
 @Component({
   tag: "pwc-choices-2",
-  styleUrl: "pwc-choices-2.scss",
+  styleUrl: "../styles.scss",
   shadow: true
 })
 export class PwcChoices2Component {
@@ -21,6 +21,8 @@ export class PwcChoices2Component {
 
   @Prop() isDropDownOpen: boolean = false;
   @Prop() currentSelectedOptions: PwcChoices2.IOption[];
+  @Prop() placeholder: string;
+  @Prop() autoHidePlaceholder: boolean;
 
   @Listen("closeClicked")
   optionBubbleCloseClickedHandler(
@@ -43,7 +45,7 @@ export class PwcChoices2Component {
 
   render() {
     return (
-      <div>
+      <div class="container">
         {this.generateInputBar()}
         {this.isDropDownOpen && this.generateDropdown()}
       </div>
@@ -54,7 +56,23 @@ export class PwcChoices2Component {
     return (
       <div class="input-bar" onClick={e => this.onInputBarClick(e)}>
         {this.generateSelectedOptions()}
+        {this.generatePlaceholder()}
       </div>
+    );
+  }
+  generatePlaceholder() {
+    const selectedItemCount = this.currentSelectedOptions.length;
+    const shouldDisplay =
+      this.placeholder && !(this.autoHidePlaceholder && selectedItemCount > 0);
+
+    return (
+      shouldDisplay && (
+        <pwc-choices-2-option-bubble
+          option={{ value: "placeholder", label: this.placeholder }}
+          showCloseButton={false}
+          indexInSelectedList={-1}
+        ></pwc-choices-2-option-bubble>
+      )
     );
   }
 

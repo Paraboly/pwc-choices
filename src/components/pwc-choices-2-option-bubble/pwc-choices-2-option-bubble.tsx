@@ -10,7 +10,7 @@ import { PwcChoices2 } from "../../utils/PwcChoices2";
 
 @Component({
   tag: "pwc-choices-2-option-bubble",
-  styleUrl: "pwc-choices-2-option-bubble.scss",
+  styleUrl: "../styles.scss",
   shadow: true
 })
 export class PwcChoices2OptionBubbleComponent {
@@ -26,12 +26,22 @@ export class PwcChoices2OptionBubbleComponent {
 
   render() {
     return (
-      <div>
-        <span class="label">{this.option.label}</span>
+      <div class="bubble">
+        <span class="bubble-label">{this.option.label}</span>
         {this.showCloseButton && (
-          <button class="close-button" onClick={e => this.onCloseClicked(e)}>
-            X
-          </button>
+          <span
+            class="bubble-closeButton"
+            onClick={e => this.onCloseClicked(e)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+            >
+              <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" />
+            </svg>
+          </span>
         )}
       </div>
     );

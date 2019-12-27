@@ -13,9 +13,11 @@ import {
 
 export namespace Components {
   interface PwcChoices2 {
+    'autoHidePlaceholder': boolean;
     'currentSelectedOptions': PwcChoices2.IOption[];
     'isDropDownOpen': boolean;
     'options': PwcChoices2.IOption[] | string;
+    'placeholder': string;
     'type': "single" | "multi";
   }
   interface PwcChoices2OptionBubble {
@@ -47,9 +49,11 @@ declare global {
 
 declare namespace LocalJSX {
   interface PwcChoices2 {
+    'autoHidePlaceholder'?: boolean;
     'currentSelectedOptions'?: PwcChoices2.IOption[];
     'isDropDownOpen'?: boolean;
     'options'?: PwcChoices2.IOption[] | string;
+    'placeholder'?: string;
     'type'?: "single" | "multi";
   }
   interface PwcChoices2OptionBubble {
