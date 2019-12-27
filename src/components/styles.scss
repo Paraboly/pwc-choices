@@ -22,6 +22,10 @@
   overflow-y: scroll;
 }
 
+.input-bar + .dropdown {
+  margin-top: -1px;
+}
+
 .dropdown > ul {
   display: flex;
   flex-direction: column;

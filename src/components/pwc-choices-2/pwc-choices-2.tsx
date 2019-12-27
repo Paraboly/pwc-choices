@@ -19,7 +19,7 @@ import _ from "lodash";
 export class PwcChoices2Component {
   @Prop() type: "single" | "multi" = "multi";
 
-  @State() resolvedOptions: PwcChoices2.IOption[];
+  private resolvedOptions: PwcChoices2.IOption[];
   @Prop() options: PwcChoices2.IOption[] | string;
   @Watch("options")
   optionsWatchHandler(newValue: PwcChoices2.IOption[] | string) {
