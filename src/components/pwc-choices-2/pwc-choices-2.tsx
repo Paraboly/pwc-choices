@@ -70,14 +70,28 @@ export class PwcChoices2Component {
     }
   }
 
-  @Listen("closeClicked")
-  optionBubbleCloseClickedHandler(
-    event: CustomEvent<PwcChoices2.IOptionBubbleCloseClickedEventPayload>
+  @Listen("optionDiscarded")
+  optionDiscardedHandler(
+    event: CustomEvent<PwcChoices2.IOptionDiscardedEventPayload>
   ) {
     const payload = event.detail;
     const newSelectedItems = [...this.selectedOptions];
     newSelectedItems.splice(payload.index, 1);
     this.selectedOptions = newSelectedItems;
+  }
+
+  @Listen("inputBarClicked")
+  inputBarClickedHandler(
+    event: CustomEvent<PwcChoices2.IInputBarClickedEventPayload>
+  ) {
+    this.dropdownIsOpen = !this.dropdownIsOpen;
+  }
+
+  @Listen("dropdownOptionClicked")
+  dropdownOptionClickedHandler(
+    event: CustomEvent<PwcChoices2.IDropdownOptionClickedEventPayload>
+  ) {
+    this.selectedOptions = [...this.selectedOptions, event.detail.option];
   }
 
   componentWillLoad() {
@@ -95,10 +109,12 @@ export class PwcChoices2Component {
 
   constructInputBar() {
     return (
-      <div class="input-bar" onClick={e => this.onInputBarClick(e)}>
-        {this.constructSelectedOptions()}
-        {this.constructPlaceholder()}
-      </div>
+      <pwc-choices-2-input-bar
+        options={this.selectedOptions}
+        showCloseButtons={this.showCloseButtons}
+        placeholder={this.placeholder}
+        autoHidePlaceholder={this.autoHidePlaceholder}
+      ></pwc-choices-2-input-bar>
     );
   }
 
@@ -108,64 +124,10 @@ export class PwcChoices2Component {
       : this.resolvedOptions;
 
     return (
-      <div class="dropdown">
-        <ul>
-          {this.resolvedOptions && dropdownOptions.length === 0 ? (
-            <li> {this.noOptionsString}</li>
-          ) : (
-            dropdownOptions.map(option => this.constructDropdownOption(option))
-          )}
-        </ul>
-      </div>
+      <pwc-choices-2-dropdown
+        noOptionsString={this.noOptionsString}
+        options={dropdownOptions}
+      ></pwc-choices-2-dropdown>
     );
-  }
-
-  constructSelectedOptions() {
-    return this.selectedOptions.map((selectedOption, index) => (
-      <pwc-choices-2-option-bubble
-        option={selectedOption}
-        showCloseButton={this.showCloseButtons}
-        indexInSelectedList={index}
-      ></pwc-choices-2-option-bubble>
-    ));
-  }
-
-  constructPlaceholder() {
-    const selectedItemCount = this.selectedOptions.length;
-    const shouldDisplay =
-      this.placeholder && !(this.autoHidePlaceholder && selectedItemCount > 0);
-
-    return (
-      shouldDisplay && (
-        <pwc-choices-2-option-bubble
-          option={{ value: "placeholder", label: this.placeholder }}
-          showCloseButton={false}
-          indexInSelectedList={-1}
-        ></pwc-choices-2-option-bubble>
-      )
-    );
-  }
-
-  constructDropdownOption(option: PwcChoices2.IOption): any {
-    return (
-      <li onClick={e => this.onDropdownOptionClick(option, e)}>
-        {option.label}
-      </li>
-    );
-  }
-
-  onInputBarClick(e: MouseEvent): void {
-    e.preventDefault();
-    e.stopPropagation();
-    this.dropdownIsOpen = !this.dropdownIsOpen;
-  }
-
-  onDropdownOptionClick(
-    option: PwcChoices2.IOption,
-    clickEvent: MouseEvent
-  ): void {
-    clickEvent.preventDefault();
-    clickEvent.stopPropagation();
-    this.selectedOptions = [...this.selectedOptions, option];
   }
 }

@@ -10,4 +10,19 @@ export namespace PwcChoices2 {
     bubbleElement: HTMLPwcChoices2OptionBubbleElement;
     index: number;
   }
+
+  export interface IDropdownOptionClickedEventPayload {
+    originalEvent: MouseEvent;
+    option: IOption;
+  }
+
+  export interface IOptionDiscardedEventPayload {
+    originalEvent: CustomEvent<IOptionBubbleCloseClickedEventPayload>;
+    option: IOption;
+    index: number;
+  }
+
+  export interface IInputBarClickedEventPayload {
+    originalEvent: MouseEvent;
+  }
 }
