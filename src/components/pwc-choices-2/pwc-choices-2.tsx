@@ -81,9 +81,8 @@ export class PwcChoices2Component {
   }
 
   @Listen("inputBarClicked")
-  inputBarClickedHandler(
-    event: CustomEvent<PwcChoices2.IInputBarClickedEventPayload>
-  ) {
+  inputBarClickedHandler() // event: CustomEvent<PwcChoices2.IInputBarClickedEventPayload>
+  {
     this.dropdownIsOpen = !this.dropdownIsOpen;
   }
 

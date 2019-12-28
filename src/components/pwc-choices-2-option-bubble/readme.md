@@ -23,12 +23,12 @@
 
 ### Used by
 
- - [pwc-choices-2](../pwc-choices-2)
+ - [pwc-choices-2-input-bar](../pwc-choices-2-input-bar)
 
 ### Graph
 ```mermaid
 graph TD;
-  pwc-choices-2 --> pwc-choices-2-option-bubble
+  pwc-choices-2-input-bar --> pwc-choices-2-option-bubble
   style pwc-choices-2-option-bubble fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
