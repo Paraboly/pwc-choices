@@ -39,8 +39,20 @@ export class PwcChoices2InputBarComponent {
   constructInputBar() {
     return (
       <div class="input-bar" onClick={e => this.onInputBarClick(e)}>
-        {this.constructSelectedOptions()}
-        {this.constructPlaceholder()}
+        <div class="input-bar-main">
+          {this.constructSelectedOptions()}
+          {this.constructPlaceholder()}
+        </div>
+        <div class="input-bar-dropdown-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            viewBox="0 0 18 18"
+          >
+            <path d="M5 8l4 4 4-4z" />
+          </svg>
+        </div>
       </div>
     );
   }

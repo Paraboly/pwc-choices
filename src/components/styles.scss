@@ -15,7 +15,21 @@
   min-height: 44px;
   padding: 5px;
   display: flex;
+  flex-wrap: nowrap;
+}
+
+.input-bar-main {
+  display: flex;
   flex-wrap: wrap;
+  flex-grow: 1;
+}
+
+.input-bar-dropdown-icon {
+  flex-grow: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  margin: 0 10px 0 10px;
 }
 
 .dropdown {
