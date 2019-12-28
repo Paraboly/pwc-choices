@@ -8,6 +8,7 @@ import _ from "lodash";
   shadow: true
 })
 export class PwcChoices2InputBarComponent {
+  @Prop() type: "single" | "multi" = "multi";
   @Prop() options: PwcChoices2.IOption[];
   @Prop() showCloseButtons: boolean;
   @Prop() placeholder: string;
@@ -37,12 +38,30 @@ export class PwcChoices2InputBarComponent {
   }
 
   constructInputBar() {
+    let inputBarMainRender;
+
+    switch (this.type) {
+      case "single":
+        inputBarMainRender =
+          this.options && this.options.length > 0 ? (
+            <div class="singleSelectInputBarItem">{this.options[0].label}</div>
+          ) : (
+            <div class="singleSelectInputBarItem singleSelectInputBarPlaceholder">
+              {this.placeholder}
+            </div>
+          );
+        break;
+      case "multi":
+        inputBarMainRender = [
+          this.constructSelectedOptions(),
+          this.constructPlaceholder()
+        ];
+        break;
+    }
+
     return (
       <div class="input-bar" onClick={e => this.onInputBarClick(e)}>
-        <div class="input-bar-main">
-          {this.constructSelectedOptions()}
-          {this.constructPlaceholder()}
-        </div>
+        <div class="input-bar-main">{inputBarMainRender}</div>
         <div class="input-bar-dropdown-icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"

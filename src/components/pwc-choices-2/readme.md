@@ -19,6 +19,16 @@
 
 ## Methods
 
+### `getSelectedOption(mode?: "option" | "value" | "label") => Promise<string | PwcChoices2.IOption>`
+
+
+
+#### Returns
+
+Type: `Promise<string | IOption>`
+
+
+
 ### `getSelectedOptions(mode?: "option" | "value" | "label") => Promise<PwcChoices2.IOption[] | string[]>`
 
 

@@ -99,3 +99,13 @@
   cursor: default;
   color: grey;
 }
+
+.singleSelectInputBarItem {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.singleSelectInputBarPlaceholder {
+  color: grey;
+}

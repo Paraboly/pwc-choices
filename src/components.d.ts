@@ -18,6 +18,7 @@ export namespace Components {
     */
     'autoHidePlaceholder': boolean;
     'dropdownIsOpen': boolean;
+    'getSelectedOption': (mode?: "option" | "value" | "label") => Promise<string | PwcChoices2.IOption>;
     'getSelectedOptions': (mode?: "option" | "value" | "label") => Promise<PwcChoices2.IOption[] | string[]>;
     /**
     * This will be displayed in the dropdown when there are no options left to choose.
@@ -44,6 +45,7 @@ export namespace Components {
     'options': PwcChoices2.IOption[];
     'placeholder': string;
     'showCloseButtons': boolean;
+    'type': "single" | "multi";
   }
   interface PwcChoices2OptionBubble {
     'indexInSelectedList': number;
@@ -121,6 +123,7 @@ declare namespace LocalJSX {
     'options'?: PwcChoices2.IOption[];
     'placeholder'?: string;
     'showCloseButtons'?: boolean;
+    'type'?: "single" | "multi";
   }
   interface PwcChoices2OptionBubble {
     'indexInSelectedList'?: number;
