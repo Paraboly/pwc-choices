@@ -16,6 +16,9 @@
   padding: 5px;
   display: flex;
   flex-wrap: nowrap;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: white;
 }
 
 .input-bar-main {
@@ -36,10 +39,12 @@
   border: 1px solid black;
   max-height: 250px;
   overflow-y: scroll;
+  overflow-x: hidden;
   position: absolute;
-  background-color: white;
   box-sizing: border-box;
   width: 100%;
+  border-radius: 5px;
+  background-color: white;
 }
 
 .dropdown > ul {
