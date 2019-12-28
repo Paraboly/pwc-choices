@@ -5,7 +5,9 @@ import {
   State,
   Watch,
   Listen,
-  Method
+  Method,
+  Event,
+  EventEmitter
 } from "@stencil/core";
 import { PwcChoices2 } from "../../utils/PwcChoices2";
 import { resolveJson } from "../../utils/utils";
@@ -49,7 +51,13 @@ export class PwcChoices2Component {
    */
   @Prop() noOptionsString: string = "No options to choose from.";
 
+  @Event() selectedOptionsChanged: EventEmitter<PwcChoices2.IOption[]>;
+
   @State() selectedOptions: PwcChoices2.IOption[] = [];
+  @Watch("selectedOptions")
+  selectedOptionsWatchHandler(newValue: PwcChoices2.IOption[]) {
+    this.selectedOptionsChanged.emit(newValue);
+  }
 
   async getSelectedOptions(mode: "option"): Promise<PwcChoices2.IOption[]>;
   async getSelectedOptions(mode: "value" | "label"): Promise<string[]>;

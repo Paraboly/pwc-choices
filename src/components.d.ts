@@ -99,6 +99,7 @@ declare namespace LocalJSX {
     * This will be displayed in the dropdown when there are no options left to choose.
     */
     'noOptionsString'?: string;
+    'onSelectedOptionsChanged'?: (event: CustomEvent<PwcChoices2.IOption[]>) => void;
     'options'?: PwcChoices2.IOption[] | string;
     'placeholder'?: string;
     /**

@@ -85,8 +85,14 @@
           choices.getSelectedOptions("value").then(selectedOptions => {
             resultDiv.textContent =
               "Selected Options: " +
-              selectedOptions.map(a => JSON.stringify(a) + "\n\r");
+              selectedOptions.map(a => JSON.stringify(a) + " ");
           });
+        });
+
+        choices.addEventListener("selectedOptionsChanged", e => {
+          console.log(e);
+          resultDiv.textContent =
+            "Selected Options: " + e.details.map(a => JSON.stringify(a) + " ");
         });
       });
     </script>
