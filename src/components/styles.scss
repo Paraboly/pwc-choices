@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  transition: background-color ease 0.2s;
 }
 
 .container {
@@ -27,10 +28,6 @@
   width: 100%;
 }
 
-.input-bar + .dropdown {
-  margin-top: -1px;
-}
-
 .dropdown > ul {
   display: flex;
   flex-direction: column;
@@ -43,6 +40,10 @@
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
+}
+
+.dropdown > ul > li:hover {
+  background-color: #eee;
 }
 
 .dropdown > ul > li + li {
