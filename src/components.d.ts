@@ -20,7 +20,7 @@ export namespace Components {
     'dropdownIsOpen': boolean;
     'getSelectedOptions': (mode?: "option" | "value" | "label") => Promise<PwcChoices2.IOption[] | string[]>;
     /**
-    * If not undefined, this will be displayed in dropdown instead of the default text when there are no options left to choose.
+    * This will be displayed in the dropdown when there are no options left to choose.
     */
     'noOptionsString': string;
     'options': PwcChoices2.IOption[] | string;
@@ -94,7 +94,7 @@ declare namespace LocalJSX {
     'autoHidePlaceholder'?: boolean;
     'dropdownIsOpen'?: boolean;
     /**
-    * If not undefined, this will be displayed in dropdown instead of the default text when there are no options left to choose.
+    * This will be displayed in the dropdown when there are no options left to choose.
     */
     'noOptionsString'?: string;
     'options'?: PwcChoices2.IOption[] | string;

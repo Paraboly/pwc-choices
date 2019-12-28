@@ -5,16 +5,16 @@
 
 ## Properties
 
-| Property              | Attribute               | Description                                                                                                                | Type                  | Default                        |
-| --------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------ |
-| `autoHidePlaceholder` | `auto-hide-placeholder` | If true, the placeholder will be hidden if there are selected options.                                                     | `boolean`             | `true`                         |
-| `dropdownIsOpen`      | `dropdown-is-open`      |                                                                                                                            | `boolean`             | `false`                        |
-| `noOptionsString`     | `no-options-string`     | If not undefined, this will be displayed in dropdown instead of the default text when there are no options left to choose. | `string`              | `"No options to choose from."` |
-| `options`             | `options`               |                                                                                                                            | `IOption[] \| string` | `undefined`                    |
-| `placeholder`         | `placeholder`           |                                                                                                                            | `string`              | `undefined`                    |
-| `showCloseButtons`    | `show-close-buttons`    | If true, selected option bubbles will have close buttons.                                                                  | `boolean`             | `true`                         |
-| `type`                | `type`                  |                                                                                                                            | `"multi" \| "single"` | `"multi"`                      |
-| `uniqueSelections`    | `unique-selections`     | If true, the option will be removed from available options after selection.                                                | `boolean`             | `true`                         |
+| Property              | Attribute               | Description                                                                      | Type                  | Default                        |
+| --------------------- | ----------------------- | -------------------------------------------------------------------------------- | --------------------- | ------------------------------ |
+| `autoHidePlaceholder` | `auto-hide-placeholder` | If true, the placeholder will be hidden if there are selected options.           | `boolean`             | `true`                         |
+| `dropdownIsOpen`      | `dropdown-is-open`      |                                                                                  | `boolean`             | `false`                        |
+| `noOptionsString`     | `no-options-string`     | This will be displayed in the dropdown when there are no options left to choose. | `string`              | `"No options to choose from."` |
+| `options`             | `options`               |                                                                                  | `IOption[] \| string` | `undefined`                    |
+| `placeholder`         | `placeholder`           |                                                                                  | `string`              | `undefined`                    |
+| `showCloseButtons`    | `show-close-buttons`    | If true, selected option bubbles will have close buttons.                        | `boolean`             | `true`                         |
+| `type`                | `type`                  |                                                                                  | `"multi" \| "single"` | `"multi"`                      |
+| `uniqueSelections`    | `unique-selections`     | If true, the option will be removed from available options after selection.      | `boolean`             | `true`                         |
 
 
 ## Methods

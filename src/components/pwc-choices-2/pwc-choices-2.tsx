@@ -45,7 +45,7 @@ export class PwcChoices2Component {
   @Prop() uniqueSelections: boolean = true;
 
   /**
-   * If not undefined, this will be displayed in dropdown instead of the default text when there are no options left to choose.
+   * This will be displayed in the dropdown when there are no options left to choose.
    */
   @Prop() noOptionsString: string = "No options to choose from.";
 
