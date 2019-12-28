@@ -1,11 +1,12 @@
 * {
   margin: 0;
   padding: 0;
-  transition: all 0.1s;
 }
 
 .container {
   user-select: none;
+  position: relative;
+  width: 100%;
 }
 
 .input-bar {
@@ -20,6 +21,10 @@
   border: 1px solid black;
   max-height: 250px;
   overflow-y: scroll;
+  position: absolute;
+  background-color: white;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .input-bar + .dropdown {
