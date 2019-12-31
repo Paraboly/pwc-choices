@@ -1,6 +1,15 @@
-import { Component, Prop, h, Event, EventEmitter } from "@stencil/core";
+import {
+  Component,
+  Prop,
+  h,
+  Event,
+  EventEmitter,
+  Element,
+  State
+} from "@stencil/core";
 import { PwcChoices2 } from "../../utils/PwcChoices2";
 import _ from "lodash";
+import fuzzy, { FilterResult } from "fuzzy";
 
 @Component({
   tag: "pwc-choices-2-dropdown",
@@ -8,12 +17,20 @@ import _ from "lodash";
   shadow: true
 })
 export class PwcChoices2DropdownComponent {
+  @Element() root: HTMLElement;
+
   @Prop() options: PwcChoices2.IOption[];
   @Prop() noOptionsString: string;
 
   @Event() dropdownOptionClicked: EventEmitter<
     PwcChoices2.IDropdownOptionClickedEventPayload
   >;
+
+  @State() filteredOptions: Array<FilterResult<PwcChoices2.IOption>>;
+
+  componentWillLoad() {
+    this.filteredOptions = this.makeOptionsWholeFilterResult();
+  }
 
   render() {
     return this.constructDropdown();
@@ -22,21 +39,52 @@ export class PwcChoices2DropdownComponent {
   constructDropdown() {
     return (
       <div class="dropdown">
+        <input
+          type="text"
+          class="search"
+          placeholder="Search by typing..."
+          onInput={e => this.onSearchInput(e)}
+        ></input>
         <ul>
-          {this.options && this.options.length === 0 ? (
+          {this.filteredOptions && this.filteredOptions.length === 0 ? (
             <li id="noOptionsListItem"> {this.noOptionsString}</li>
           ) : (
-            this.options.map(option => this.constructDropdownOption(option))
+            this.filteredOptions.map(option =>
+              this.constructDropdownOption(option)
+            )
           )}
         </ul>
       </div>
     );
   }
 
-  constructDropdownOption(option: PwcChoices2.IOption): any {
+  onSearchInput(e: Event): void {
+    e.stopPropagation();
+    const wholeSearchInput = this.getWholeSearchInput();
+
+    if (wholeSearchInput.length === 0) {
+      this.filteredOptions = this.makeOptionsWholeFilterResult();
+      return;
+    }
+
+    this.filteredOptions = fuzzy.filter(wholeSearchInput, this.options, {
+      pre: "<mark>",
+      post: "</mark>",
+      extract: el => el.label
+    });
+  }
+
+  getWholeSearchInput(): string {
+    const searchBar = this.root.shadowRoot.querySelector(
+      ".search"
+    ) as HTMLInputElement;
+    return searchBar.value;
+  }
+
+  constructDropdownOption(option: FilterResult<PwcChoices2.IOption>): any {
     return (
-      <li onClick={e => this.onDropdownOptionClick(option, e)}>
-        {option.label}
+      <li onClick={e => this.onDropdownOptionClick(option.original, e)}>
+        <span innerHTML={option.string}></span>
       </li>
     );
   }
@@ -50,6 +98,17 @@ export class PwcChoices2DropdownComponent {
     this.dropdownOptionClicked.emit({
       originalEvent: clickEvent,
       option: option
+    });
+  }
+
+  makeOptionsWholeFilterResult() {
+    return this.options.map(o => {
+      return {
+        string: o.label,
+        score: 0,
+        index: 0,
+        original: o
+      };
     });
   }
 }

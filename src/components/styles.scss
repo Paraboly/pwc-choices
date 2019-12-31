@@ -2,6 +2,9 @@
   margin: 0;
   padding: 0;
   transition: background-color ease 0.2s;
+
+  font-size: medium;
+  font-family: Calibri, sans-serif;
 }
 
 .container {
@@ -37,19 +40,28 @@
 
 .dropdown {
   border: 1px solid black;
-  max-height: 250px;
-  overflow-y: scroll;
-  overflow-x: hidden;
   position: absolute;
   box-sizing: border-box;
   width: 100%;
   border-radius: 5px;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.search {
+  padding: 10px;
+  border: 0;
+  border-bottom: 1px solid black;
 }
 
 .dropdown > ul {
   display: flex;
   flex-direction: column;
+  max-height: 250px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .dropdown > ul > li {
