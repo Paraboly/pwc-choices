@@ -17,8 +17,12 @@ export namespace Components {
     * If true, the placeholder will be hidden if there are selected options.
     */
     'autoHidePlaceholder': boolean;
+    /**
+    * This is the mode of filtering we use to make given option objects distinct.
+    */
+    'distinctMode': PwcChoices2.DistinctMode;
     'dropdownIsOpen': boolean;
-    'getSelectedOptions': (mode?: "option" | "value" | "label") => Promise<PwcChoices2.IOption[] | string[]>;
+    'getSelectedOptions': (mode?: "value" | "label" | "option") => Promise<PwcChoices2.IOption[] | string[]>;
     /**
     * This will be displayed in the dropdown when there are no options left to choose.
     */
@@ -93,6 +97,10 @@ declare namespace LocalJSX {
     * If true, the placeholder will be hidden if there are selected options.
     */
     'autoHidePlaceholder'?: boolean;
+    /**
+    * This is the mode of filtering we use to make given option objects distinct.
+    */
+    'distinctMode'?: PwcChoices2.DistinctMode;
     'dropdownIsOpen'?: boolean;
     /**
     * This will be displayed in the dropdown when there are no options left to choose.

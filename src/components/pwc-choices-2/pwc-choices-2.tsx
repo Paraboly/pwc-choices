@@ -10,7 +10,7 @@ import {
   EventEmitter
 } from "@stencil/core";
 import { PwcChoices2 } from "../../utils/PwcChoices2";
-import { resolveJson } from "../../utils/utils";
+import { resolveJson, distinctFilter } from "../../utils/utils";
 import _ from "lodash";
 
 @Component({
@@ -25,11 +25,14 @@ export class PwcChoices2Component {
   @Prop() options: PwcChoices2.IOption[] | string;
   @Watch("options")
   optionsWatchHandler(newValue: PwcChoices2.IOption[] | string) {
-    this.resolvedOptions = resolveJson(newValue);
+    this.resolvedOptions = distinctFilter(
+      resolveJson(newValue),
+      this.distinctMode
+    );
   }
 
-  @Prop() dropdownIsOpen: boolean = false;
   @Prop() placeholder: string;
+  @Prop() dropdownIsOpen: boolean = false;
 
   /**
    * If true, the placeholder will be hidden if there are selected options.
@@ -50,6 +53,11 @@ export class PwcChoices2Component {
    * This will be displayed in the dropdown when there are no options left to choose.
    */
   @Prop() noOptionsString: string = "No options to choose from.";
+
+  /**
+   * This is the mode of filtering we use to make given option objects distinct.
+   */
+  @Prop() distinctMode: PwcChoices2.DistinctMode = "none";
 
   @Event() selectedOptionsChanged: EventEmitter<PwcChoices2.IOption[]>;
 
