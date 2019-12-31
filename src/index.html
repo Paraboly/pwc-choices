@@ -75,7 +75,7 @@
         choices.autoHidePlaceholder = true;
         choices.showCloseButtons = true;
         choices.noOptionsString = "Seçecek bir şey kalmadı :(";
-        choices.type = "single";
+        choices.type = "multi";
 
         console.log(choices.options);
 
@@ -92,7 +92,7 @@
         choices.addEventListener("selectedOptionsChanged", e => {
           console.log(e);
           resultDiv.textContent =
-            "Selected Options: " + e.details.map(a => JSON.stringify(a) + " ");
+            "Selected Options: " + e.detail.map(a => JSON.stringify(a) + " ");
         });
       });
     </script>
