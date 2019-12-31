@@ -69,15 +69,6 @@ export class PwcChoices2Component {
   async getSelectedOptions(
     mode: "option" | "value" | "label" = "option"
   ): Promise<string[] | PwcChoices2.IOption[]> {
-    if (this.type === "single") {
-      // tslint:disable-next-line: no-console
-      console.warn(
-        "You are using single select mode, but using 'getSelectedOptions' method, " +
-          "which returns an array. The result you get is still correct, but you " +
-          "can use 'getSelectedOption' method, which returns a single value."
-      );
-    }
-
     switch (mode) {
       case "option":
         return this.selectedOptions;
@@ -93,28 +84,6 @@ export class PwcChoices2Component {
           `mode value of "${mode}" is invalid. valid values are: "option", "value", "label"`
         );
     }
-  }
-
-  async getSelectedOption(mode: "option"): Promise<PwcChoices2.IOption>;
-  async getSelectedOption(mode: "value" | "label"): Promise<string>;
-  async getSelectedOption(
-    mode: "option" | "value" | "label"
-  ): Promise<string | PwcChoices2.IOption>;
-
-  @Method()
-  async getSelectedOption(
-    mode: "option" | "value" | "label" = "option"
-  ): Promise<string | PwcChoices2.IOption> {
-    if (this.type === "multi") {
-      // tslint:disable-next-line: no-console
-      console.warn(
-        "You are using multi select mode, but using 'getSelectedOption' method, " +
-          "which returns a single value. The result you get is INCORRECT. You " +
-          "should use 'getSelectedOptions' method, which returns an array."
-      );
-    }
-
-    return this.getSelectedOptions(mode)[0];
   }
 
   @Listen("optionDiscarded")

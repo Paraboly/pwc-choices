@@ -18,7 +18,6 @@ export namespace Components {
     */
     'autoHidePlaceholder': boolean;
     'dropdownIsOpen': boolean;
-    'getSelectedOption': (mode?: "option" | "value" | "label") => Promise<string | PwcChoices2.IOption>;
     'getSelectedOptions': (mode?: "option" | "value" | "label") => Promise<PwcChoices2.IOption[] | string[]>;
     /**
     * This will be displayed in the dropdown when there are no options left to choose.
