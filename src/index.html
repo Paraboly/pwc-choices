@@ -91,14 +91,15 @@
           choices.getSelectedOptions("value").then(selectedOptions => {
             resultDiv.textContent =
               "Selected Options: " +
-              selectedOptions.map(a => JSON.stringify(a) + " ");
+              selectedOptions.map(a => JSON.stringify(a)).join(", ");
           });
         });
 
         choices.addEventListener("selectedOptionsChanged", e => {
           console.log(e);
           resultDiv.textContent =
-            "Selected Options: " + e.detail.map(a => JSON.stringify(a) + " ");
+            "Selected Options: " +
+            e.detail.map(a => JSON.stringify(a)).join(", ");
         });
       });
     </script>
