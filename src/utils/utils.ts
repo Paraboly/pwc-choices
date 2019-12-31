@@ -41,11 +41,23 @@ export function distinctFilter(
       break;
 
     default:
-      throw new Error(
-        `distinctMode value of "${mode}" is invalid. 
-        valid values are: ${PwcChoices2.AllDistinctModeLiterals.join(", ")}`
+      throwTypeLiteralNotSupported(
+        "distinctMode",
+        mode,
+        PwcChoices2.AllDistinctModeLiterals
       );
   }
 
   return output;
+}
+
+export function throwTypeLiteralNotSupported<T>(
+  name: string,
+  value: T,
+  allValues: readonly T[]
+) {
+  throw new Error(
+    `${name} value of "${value}" is invalid. 
+    valid values are: ${allValues.join(", ")}`
+  );
 }

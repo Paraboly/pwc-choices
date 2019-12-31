@@ -5,8 +5,14 @@ export namespace PwcChoices2 {
     "all",
     "any",
     "none"
-  ] as const; // TS 3.4
-  export type DistinctMode = typeof AllDistinctModeLiterals[number]; // union type
+  ] as const;
+  export type DistinctMode = typeof AllDistinctModeLiterals[number];
+
+  export const AllRetreiveModeLiterals = ["option", "value", "label"] as const;
+  export type RetreiveMode = typeof AllRetreiveModeLiterals[number];
+
+  export const AllTypeLiterals = ["single", "multi"] as const;
+  export type Type = typeof AllTypeLiterals[number];
 
   export interface IOption {
     value: string;

@@ -10,7 +10,11 @@ import {
   EventEmitter
 } from "@stencil/core";
 import { PwcChoices2 } from "../../utils/PwcChoices2";
-import { resolveJson, distinctFilter } from "../../utils/utils";
+import {
+  resolveJson,
+  distinctFilter,
+  throwTypeLiteralNotSupported
+} from "../../utils/utils";
 import _ from "lodash";
 
 @Component({
@@ -19,7 +23,17 @@ import _ from "lodash";
   shadow: true
 })
 export class PwcChoices2Component {
-  @Prop() type: "single" | "multi" = "multi";
+  @Prop() type: PwcChoices2.Type = "multi";
+  @Watch("type")
+  typeWatchHandler(newValue) {
+    if (!PwcChoices2.AllTypeLiterals.includes(newValue)) {
+      throwTypeLiteralNotSupported(
+        "type",
+        newValue,
+        PwcChoices2.AllTypeLiterals
+      );
+    }
+  }
 
   private resolvedOptions: PwcChoices2.IOption[];
   @Prop() options: PwcChoices2.IOption[] | string;
@@ -58,6 +72,16 @@ export class PwcChoices2Component {
    * This is the mode of filtering we use to make given option objects distinct.
    */
   @Prop() distinctMode: PwcChoices2.DistinctMode = "none";
+  @Watch("distinctMode")
+  distinctModeWatchHandler(newValue) {
+    if (!PwcChoices2.AllDistinctModeLiterals.includes(newValue)) {
+      throwTypeLiteralNotSupported(
+        "distinctMode",
+        newValue,
+        PwcChoices2.AllDistinctModeLiterals
+      );
+    }
+  }
 
   @Event() selectedOptionsChanged: EventEmitter<PwcChoices2.IOption[]>;
 
@@ -70,12 +94,12 @@ export class PwcChoices2Component {
   async getSelectedOptions(mode: "option"): Promise<PwcChoices2.IOption[]>;
   async getSelectedOptions(mode: "value" | "label"): Promise<string[]>;
   async getSelectedOptions(
-    mode: "option" | "value" | "label"
+    mode: PwcChoices2.RetreiveMode
   ): Promise<string[] | PwcChoices2.IOption[]>;
 
   @Method()
   async getSelectedOptions(
-    mode: "option" | "value" | "label" = "option"
+    mode: PwcChoices2.RetreiveMode = "option"
   ): Promise<string[] | PwcChoices2.IOption[]> {
     switch (mode) {
       case "option":
@@ -88,8 +112,10 @@ export class PwcChoices2Component {
         return this.selectedOptions.map(o => o.label);
 
       default:
-        throw new Error(
-          `mode value of "${mode}" is invalid. valid values are: "option", "value", "label"`
+        throwTypeLiteralNotSupported(
+          "mode",
+          mode,
+          PwcChoices2.AllRetreiveModeLiterals
         );
     }
   }
@@ -121,15 +147,13 @@ export class PwcChoices2Component {
       case "single":
         this.selectedOptions = [event.detail.option];
         break;
-      default:
-        throw new Error(
-          `type value of "${this.type}" is invalid. valid values are: "multi", "single"`
-        );
     }
   }
 
   componentWillLoad() {
     this.optionsWatchHandler(this.options);
+    this.typeWatchHandler(this.type);
+    this.distinctModeWatchHandler(this.distinctMode);
   }
 
   render() {

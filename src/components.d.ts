@@ -33,7 +33,7 @@ export namespace Components {
     * If true, selected option bubbles will have close buttons.
     */
     'showCloseButtons': boolean;
-    'type': "single" | "multi";
+    'type': PwcChoices2.Type;
     /**
     * If true, the option will be removed from available options after selection.
     */
@@ -113,7 +113,7 @@ declare namespace LocalJSX {
     * If true, selected option bubbles will have close buttons.
     */
     'showCloseButtons'?: boolean;
-    'type'?: "single" | "multi";
+    'type'?: PwcChoices2.Type;
     /**
     * If true, the option will be removed from available options after selection.
     */
