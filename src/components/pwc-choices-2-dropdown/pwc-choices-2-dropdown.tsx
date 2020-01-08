@@ -83,22 +83,34 @@ export class PwcChoices2DropdownComponent {
 
   constructDropdownOption(option: FilterResult<PwcChoices2.IOption>): any {
     return (
-      <li onClick={e => this.onDropdownOptionClick(option.original, e)}>
+      <li onClick={e => this.onDropdownOptionClick(option, e)}>
         <span innerHTML={option.string}></span>
       </li>
     );
   }
 
   onDropdownOptionClick(
-    option: PwcChoices2.IOption,
+    optionFilterResult: FilterResult<PwcChoices2.IOption>,
     clickEvent: MouseEvent
   ): void {
+    const originalOption = optionFilterResult.original;
+
     clickEvent.preventDefault();
     clickEvent.stopPropagation();
     this.dropdownOptionClicked.emit({
       originalEvent: clickEvent,
-      option: option
+      option: originalOption
     });
+
+    /* We need to remove them here if we want to keep the
+     * dropdown open after a selection. A bit unplesant,
+     * but we have to.
+     */
+    this.options.splice(this.options.indexOf(originalOption), 1);
+    this.filteredOptions.splice(
+      this.filteredOptions.indexOf(optionFilterResult),
+      1
+    );
   }
 
   makeOptionsWholeFilterResult() {
