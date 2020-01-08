@@ -9,7 +9,7 @@
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
   PwcChoices2,
-} from './utils/PwcChoices2';
+} from './interfaces/PwcChoices2';
 
 export namespace Components {
   interface PwcChoices2 {

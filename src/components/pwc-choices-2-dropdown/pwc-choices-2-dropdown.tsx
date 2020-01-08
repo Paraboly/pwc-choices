@@ -7,7 +7,7 @@ import {
   Element,
   State
 } from "@stencil/core";
-import { PwcChoices2 } from "../../utils/PwcChoices2";
+import { PwcChoices2 } from "../../interfaces/PwcChoices2";
 import _ from "lodash";
 import fuzzy, { FilterResult } from "fuzzy";
 

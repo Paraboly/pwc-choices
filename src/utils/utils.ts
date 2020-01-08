@@ -1,4 +1,4 @@
-import { PwcChoices2 } from "./PwcChoices2";
+import { PwcChoices2 } from "../interfaces/PwcChoices2";
 import _ from "lodash";
 
 export function resolveJson<TReturnType>(
