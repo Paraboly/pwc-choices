@@ -16,7 +16,6 @@ import {
   throwTypeLiteralNotSupported
 } from "../../utils/utils";
 import _ from "lodash";
-import { Mouse } from "puppeteer";
 
 @Component({
   tag: "pwc-choices-2",
