@@ -7,14 +7,101 @@
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
     />
     <title>Stencil Component Starter</title>
-
     <script type="module" src="/build/pwc-choices-2.esm.js"></script>
     <script nomodule src="/build/pwc-choices-2.js"></script>
+    <style>
+      body {
+        background-color: aqua;
+      }
+    </style>
   </head>
   <body>
-    <pwc-choices-2
-      first="Stencil"
-      last="'Don't call me a framework' JS"
-    ></pwc-choices-2>
+    <br />
+    <br />
+
+    <pwc-choices-2></pwc-choices-2>
+
+    <br />
+    <hr />
+    <br />
+
+    <button id="printResult">Print Result</button>
+
+    <br />
+    <br />
+
+    <div id="result">Result goes here...</div>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", e => {
+        const choices = document.querySelector("pwc-choices-2");
+        choices.options = [
+          {
+            value: "foo",
+            label: "Foo"
+          },
+          {
+            value: "foo",
+            label: "Foo2"
+          },
+          {
+            value: "bar",
+            label: "Bar"
+          },
+          {
+            value: "baz",
+            label: "Baz"
+          },
+          {
+            value: "long1",
+            label:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+          },
+          {
+            value: "long2",
+            label:
+              "Te decore mollis sed, graece prodesset deseruisse ut has. Oblique omnesque prodesset has eu, eu tale percipitur efficiendi eos. Nec te sonet laoreet, duo solum nobis pericula ut. Ea vis erat mollis, et mel putent virtute, at epicuri dignissim instructior eam. Ne vix quidam deseruisse, assentior intellegat consetetur no duo."
+          },
+          {
+            value: "long3",
+            label:
+              "long3 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+          },
+          {
+            value: "long4",
+            label:
+              "long4 Te decore mollis sed, graece prodesset deseruisse ut has. Oblique omnesque prodesset has eu, eu tale percipitur efficiendi eos. Nec te sonet laoreet, duo solum nobis pericula ut. Ea vis erat mollis, et mel putent virtute, at epicuri dignissim instructior eam. Ne vix quidam deseruisse, assentior intellegat consetetur no duo."
+          }
+        ];
+
+        choices.type = "single";
+
+        choices.distinctMode = "none";
+        choices.placeholder = "Placeholder text";
+        choices.autoHidePlaceholder = true;
+        choices.showCloseButtons = true;
+        choices.noOptionsString = "Seçecek bir şey kalmadı :(";
+        choices.uniqueSelection = true;
+
+        console.log(choices.options);
+
+        const resultDiv = document.querySelector("#result");
+
+        document.querySelector("#printResult").addEventListener("click", e => {
+          choices.getSelectedOptions("value").then(selectedOptions => {
+            resultDiv.textContent =
+              "Selected Options: " +
+              selectedOptions.map(a => JSON.stringify(a)).join(", ");
+          });
+        });
+
+        choices.addEventListener("selectedOptionsChanged", e => {
+          console.log(e);
+          resultDiv.textContent =
+            "Selected Options: " +
+            e.detail.map(a => JSON.stringify(a)).join(", ");
+        });
+      });
+    </script>
   </body>
 </html>
