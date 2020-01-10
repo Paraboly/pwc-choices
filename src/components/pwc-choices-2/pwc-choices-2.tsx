@@ -156,15 +156,6 @@ export class PwcChoices2Component {
     this.distinctModeWatchHandler(this.distinctMode);
   }
 
-  render() {
-    return (
-      <div class="container">
-        {this.constructInputBar()}
-        {this.dropdownIsOpen && this.constructDropdown()}
-      </div>
-    );
-  }
-
   constructInputBar() {
     return (
       <pwc-choices-2-input-bar
@@ -187,6 +178,15 @@ export class PwcChoices2Component {
         noOptionsString={this.noOptionsString}
         options={dropdownOptions}
       ></pwc-choices-2-dropdown>
+    );
+  }
+
+  render() {
+    return (
+      <div class="container">
+        {this.constructInputBar()}
+        {this.dropdownIsOpen && this.constructDropdown()}
+      </div>
     );
   }
 }

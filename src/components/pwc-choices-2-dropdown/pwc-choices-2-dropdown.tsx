@@ -32,10 +32,6 @@ export class PwcChoices2DropdownComponent {
     this.filteredOptions = this.makeOptionsWholeFilterResult();
   }
 
-  render() {
-    return this.constructDropdown();
-  }
-
   constructDropdown() {
     return (
       <div class="dropdown">
@@ -122,5 +118,9 @@ export class PwcChoices2DropdownComponent {
         original: o
       };
     });
+  }
+
+  render() {
+    return this.constructDropdown();
   }
 }

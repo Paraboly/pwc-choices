@@ -33,10 +33,6 @@ export class PwcChoices2InputBarComponent {
     });
   }
 
-  render() {
-    return this.constructInputBar();
-  }
-
   constructInputBar() {
     let inputBarMainRender;
 
@@ -107,5 +103,9 @@ export class PwcChoices2InputBarComponent {
     e.preventDefault();
     e.stopPropagation();
     this.inputBarClicked.emit({ originalEvent: e });
+  }
+
+  render() {
+    return this.constructInputBar();
   }
 }

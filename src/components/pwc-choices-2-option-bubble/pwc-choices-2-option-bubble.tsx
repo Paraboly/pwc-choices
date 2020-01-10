@@ -24,6 +24,17 @@ export class PwcChoices2OptionBubbleComponent {
     PwcChoices2.IOptionBubbleCloseClickedEventPayload
   >;
 
+  onCloseClicked(event: MouseEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.closeClicked.emit({
+      originalEvent: event,
+      option: this.option,
+      bubbleElement: this.rootElement,
+      index: this.indexInSelectedList
+    });
+  }
+
   render() {
     return (
       <div class="bubble">
@@ -45,16 +56,5 @@ export class PwcChoices2OptionBubbleComponent {
         )}
       </div>
     );
-  }
-
-  onCloseClicked(event: MouseEvent): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this.closeClicked.emit({
-      originalEvent: event,
-      option: this.option,
-      bubbleElement: this.rootElement,
-      index: this.indexInSelectedList
-    });
   }
 }
