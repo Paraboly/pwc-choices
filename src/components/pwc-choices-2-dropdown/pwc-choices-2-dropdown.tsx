@@ -29,7 +29,7 @@ export class PwcChoices2DropdownComponent {
   @State() filteredOptions: Array<FilterResult<PwcChoices2.IOption>>;
 
   componentWillLoad() {
-    this.filteredOptions = this.makeOptionsWholeFilterResult();
+    this.filteredOptions = this.convertOptionsToFilterResultsAsIs();
   }
 
   constructDropdown() {
@@ -59,7 +59,7 @@ export class PwcChoices2DropdownComponent {
     const wholeSearchInput = this.getWholeSearchInput();
 
     if (wholeSearchInput.length === 0) {
-      this.filteredOptions = this.makeOptionsWholeFilterResult();
+      this.filteredOptions = this.convertOptionsToFilterResultsAsIs();
       return;
     }
 
@@ -109,7 +109,7 @@ export class PwcChoices2DropdownComponent {
     );
   }
 
-  makeOptionsWholeFilterResult() {
+  convertOptionsToFilterResultsAsIs() {
     return this.options.map(o => {
       return {
         string: o.label,
