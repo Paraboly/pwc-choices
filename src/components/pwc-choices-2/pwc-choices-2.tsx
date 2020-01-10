@@ -108,7 +108,7 @@ export class PwcChoices2Component {
       case "value":
         return this.selectedOptions.map(o => o.value);
 
-      case "option":
+      case "label":
         return this.selectedOptions.map(o => o.label);
 
       default:
