@@ -150,6 +150,13 @@ export class PwcChoices2Component {
     }
   }
 
+  @Listen("click", {
+    target: "window"
+  })
+  windowClickHandler() {
+    this.dropdownIsOpen = false;
+  }
+
   componentWillLoad() {
     this.optionsWatchHandler(this.options);
     this.typeWatchHandler(this.type);
