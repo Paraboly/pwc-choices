@@ -16,6 +16,7 @@ import {
   throwTypeLiteralNotSupported
 } from "../../utils/utils";
 import _ from "lodash";
+import { Mouse } from "puppeteer";
 
 @Component({
   tag: "pwc-choices-2",
@@ -89,6 +90,7 @@ export class PwcChoices2Component {
   @Watch("selectedOptions")
   selectedOptionsWatchHandler(newValue: PwcChoices2.IOption[]) {
     this.selectedOptionsChanged.emit(newValue);
+    this.selectedOptions = newValue;
   }
 
   async getSelectedOptions(mode: "option"): Promise<PwcChoices2.IOption[]>;
@@ -155,6 +157,12 @@ export class PwcChoices2Component {
   })
   windowClickHandler() {
     this.dropdownIsOpen = false;
+  }
+
+  @Listen("click")
+  selfClickHandler(event: MouseEvent) {
+    // stop propagation so windowClickHandler doesn't capture it.
+    event.stopPropagation();
   }
 
   componentWillLoad() {

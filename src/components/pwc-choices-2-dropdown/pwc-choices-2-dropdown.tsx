@@ -5,7 +5,8 @@ import {
   Event,
   EventEmitter,
   Element,
-  State
+  State,
+  Watch
 } from "@stencil/core";
 import { PwcChoices2 } from "../../interfaces/PwcChoices2";
 import _ from "lodash";
@@ -20,6 +21,11 @@ export class PwcChoices2DropdownComponent {
   @Element() root: HTMLElement;
 
   @Prop() options: PwcChoices2.IOption[];
+  @Watch("options")
+  optionsWatchHandler(newValue: PwcChoices2.IOption[]) {
+    this.filteredOptions = this.doFilter(this.getWholeSearchInput(), newValue);
+  }
+
   @Prop() noOptionsString: string;
 
   @Event() dropdownOptionClicked: EventEmitter<
@@ -29,7 +35,7 @@ export class PwcChoices2DropdownComponent {
   @State() filteredOptions: Array<FilterResult<PwcChoices2.IOption>>;
 
   componentWillLoad() {
-    this.filteredOptions = this.convertOptionsToFilterResultsAsIs();
+    this.filteredOptions = this.convertOptionsToFilterResultsAsIs(this.options);
   }
 
   constructDropdown() {
@@ -54,20 +60,27 @@ export class PwcChoices2DropdownComponent {
     );
   }
 
-  onSearchInput(e: Event): void {
-    e.stopPropagation();
-    const wholeSearchInput = this.getWholeSearchInput();
-
-    if (wholeSearchInput.length === 0) {
-      this.filteredOptions = this.convertOptionsToFilterResultsAsIs();
-      return;
+  doFilter(
+    phrase: string,
+    rawOptions: PwcChoices2.IOption[]
+  ): Array<FilterResult<PwcChoices2.IOption>> {
+    if (phrase.length === 0) {
+      return this.convertOptionsToFilterResultsAsIs(rawOptions);
     }
 
-    this.filteredOptions = fuzzy.filter(wholeSearchInput, this.options, {
+    return fuzzy.filter(phrase, rawOptions, {
       pre: "<mark>",
       post: "</mark>",
       extract: el => el.label
     });
+  }
+
+  onSearchInput(e: Event): void {
+    e.stopPropagation();
+    this.filteredOptions = this.doFilter(
+      this.getWholeSearchInput(),
+      this.options
+    );
   }
 
   getWholeSearchInput(): string {
@@ -109,8 +122,8 @@ export class PwcChoices2DropdownComponent {
     );
   }
 
-  convertOptionsToFilterResultsAsIs() {
-    return this.options.map(o => {
+  convertOptionsToFilterResultsAsIs(rawOptions: PwcChoices2.IOption[]) {
+    return rawOptions.map(o => {
       return {
         string: o.label,
         score: 0,
