@@ -148,6 +148,7 @@ export class PwcChoices2Component {
         break;
       case "single":
         this.selectedOptions = [event.detail.option];
+        this.dropdownIsOpen = false;
         break;
     }
   }
