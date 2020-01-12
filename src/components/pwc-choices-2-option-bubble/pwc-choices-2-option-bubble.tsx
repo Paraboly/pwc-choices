@@ -11,7 +11,7 @@ import { PwcChoices2 } from "../../interfaces/PwcChoices2";
 @Component({
   tag: "pwc-choices-2-option-bubble",
   styleUrl: "../styles.scss",
-  shadow: true
+  shadow: false
 })
 export class PwcChoices2OptionBubbleComponent {
   @Element() rootElement: HTMLPwcChoices2OptionBubbleElement;

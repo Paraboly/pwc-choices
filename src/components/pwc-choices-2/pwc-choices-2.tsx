@@ -20,7 +20,7 @@ import _ from "lodash";
 @Component({
   tag: "pwc-choices-2",
   styleUrl: "../styles.scss",
-  shadow: true
+  shadow: false
 })
 export class PwcChoices2Component {
   @Prop() type: PwcChoices2.Type = "multi";

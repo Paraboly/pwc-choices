@@ -5,7 +5,7 @@ import _ from "lodash";
 @Component({
   tag: "pwc-choices-2-input-bar",
   styleUrl: "../styles.scss",
-  shadow: true
+  shadow: false
 })
 export class PwcChoices2InputBarComponent {
   @Prop() type: "single" | "multi" = "multi";

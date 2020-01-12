@@ -15,7 +15,7 @@ import fuzzy, { FilterResult } from "fuzzy";
 @Component({
   tag: "pwc-choices-2-dropdown",
   styleUrl: "../styles.scss",
-  shadow: true
+  shadow: false
 })
 export class PwcChoices2DropdownComponent {
   @Element() root: HTMLElement;
@@ -84,9 +84,7 @@ export class PwcChoices2DropdownComponent {
   }
 
   getWholeSearchInput(): string {
-    const searchBar = this.root.shadowRoot.querySelector(
-      ".search"
-    ) as HTMLInputElement;
+    const searchBar = this.root.querySelector(".search") as HTMLInputElement;
     return searchBar.value;
   }
 
