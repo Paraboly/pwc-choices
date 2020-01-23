@@ -10,6 +10,7 @@
 | `autoHidePlaceholder` | `auto-hide-placeholder` | If true, the placeholder will be hidden if there are selected options.           | `boolean`                                        | `true`                         |
 | `distinctMode`        | `distinct-mode`         | This is the mode of filtering we use to make given option objects distinct.      | `"all" \| "any" \| "label" \| "none" \| "value"` | `"none"`                       |
 | `dropdownIsOpen`      | `dropdown-is-open`      |                                                                                  | `boolean`                                        | `false`                        |
+| `name`                | `name`                  |                                                                                  | `string`                                         | `undefined`                    |
 | `noOptionsString`     | `no-options-string`     | This will be displayed in the dropdown when there are no options left to choose. | `string`                                         | `"No options to choose from."` |
 | `options`             | `options`               |                                                                                  | `IOption[] \| string`                            | `undefined`                    |
 | `placeholder`         | `placeholder`           |                                                                                  | `string`                                         | `undefined`                    |

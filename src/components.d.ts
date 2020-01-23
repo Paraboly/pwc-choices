@@ -23,6 +23,7 @@ export namespace Components {
     'distinctMode': PwcChoices.DistinctMode;
     'dropdownIsOpen': boolean;
     'getSelectedOptions': (mode?: "value" | "label" | "option") => Promise<PwcChoices.IOption[] | string[]>;
+    'name': string;
     /**
     * This will be displayed in the dropdown when there are no options left to choose.
     */
@@ -102,6 +103,7 @@ declare namespace LocalJSX {
     */
     'distinctMode'?: PwcChoices.DistinctMode;
     'dropdownIsOpen'?: boolean;
+    'name'?: string;
     /**
     * This will be displayed in the dropdown when there are no options left to choose.
     */

@@ -23,6 +23,8 @@ import _ from "lodash";
   shadow: false
 })
 export class PwcChoicesComponent {
+  @Prop() name: string;
+
   @Prop() type: PwcChoices.Type = "multi";
   @Watch("type")
   typeWatchHandler(newValue) {
