@@ -1,4 +1,4 @@
-export namespace PwcChoices {
+export namespace PwcChoicesInterfaces {
   export const AllDistinctModeLiterals = [
     "value",
     "label",

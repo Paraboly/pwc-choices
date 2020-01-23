@@ -1,5 +1,5 @@
 import { Component, Prop, h, Listen, Event, EventEmitter } from "@stencil/core";
-import { PwcChoices } from "../../interfaces/PwcChoices";
+import { PwcChoicesInterfaces } from "../../interfaces/pwc-choices-interfaces";
 import _ from "lodash";
 
 @Component({
@@ -7,24 +7,26 @@ import _ from "lodash";
   styleUrl: "../styles.scss",
   shadow: false
 })
-export class PwcChoicesInputBarComponent {
+export class PwcChoicesInputBar {
   @Prop() type: "single" | "multi" = "multi";
-  @Prop() options: PwcChoices.IOption[];
+  @Prop() options: PwcChoicesInterfaces.IOption[];
   @Prop() showCloseButtons: boolean;
   @Prop() placeholder: string;
   @Prop() autoHidePlaceholder: boolean;
 
   @Event() optionDiscarded: EventEmitter<
-    PwcChoices.IOptionDiscardedEventPayload
+    PwcChoicesInterfaces.IOptionDiscardedEventPayload
   >;
 
   @Event() inputBarClicked: EventEmitter<
-    PwcChoices.IInputBarClickedEventPayload
+    PwcChoicesInterfaces.IInputBarClickedEventPayload
   >;
 
   @Listen("closeClicked")
   optionBubbleCloseClickedHandler(
-    event: CustomEvent<PwcChoices.IOptionBubbleCloseClickedEventPayload>
+    event: CustomEvent<
+      PwcChoicesInterfaces.IOptionBubbleCloseClickedEventPayload
+    >
   ) {
     this.optionDiscarded.emit({
       originalEvent: event,

@@ -1,4 +1,4 @@
-import { PwcChoices } from "../interfaces/PwcChoices";
+import { PwcChoicesInterfaces } from "../interfaces/pwc-choices-interfaces";
 import _ from "lodash";
 
 export function resolveJson<TReturnType>(
@@ -8,10 +8,10 @@ export function resolveJson<TReturnType>(
 }
 
 export function distinctFilter(
-  input: PwcChoices.IOption[],
-  mode: PwcChoices.DistinctMode
-): PwcChoices.IOption[] {
-  let output: PwcChoices.IOption[];
+  input: PwcChoicesInterfaces.IOption[],
+  mode: PwcChoicesInterfaces.DistinctMode
+): PwcChoicesInterfaces.IOption[] {
+  let output: PwcChoicesInterfaces.IOption[];
 
   switch (mode) {
     case "none":
@@ -44,7 +44,7 @@ export function distinctFilter(
       throwTypeLiteralNotSupported(
         "distinctMode",
         mode,
-        PwcChoices.AllDistinctModeLiterals
+        PwcChoicesInterfaces.AllDistinctModeLiterals
       );
   }
 
