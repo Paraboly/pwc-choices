@@ -6,7 +6,7 @@ import {
   Event,
   Element
 } from "@stencil/core";
-import { PwcChoicesInterfaces } from "../../interfaces/pwc-choices-interfaces";
+import { PwcChoicesInterfaces } from "../../interfaces/PwcChoicesInterfaces";
 
 @Component({
   tag: "pwc-choices-option-bubble",

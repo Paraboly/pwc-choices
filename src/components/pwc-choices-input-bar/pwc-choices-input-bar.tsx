@@ -1,5 +1,5 @@
 import { Component, Prop, h, Listen, Event, EventEmitter } from "@stencil/core";
-import { PwcChoicesInterfaces } from "../../interfaces/pwc-choices-interfaces";
+import { PwcChoicesInterfaces } from "../../interfaces/PwcChoicesInterfaces";
 import _ from "lodash";
 
 @Component({

@@ -8,7 +8,7 @@ import {
   State,
   Watch
 } from "@stencil/core";
-import { PwcChoicesInterfaces } from "../../interfaces/pwc-choices-interfaces";
+import { PwcChoicesInterfaces } from "../../interfaces/PwcChoicesInterfaces";
 import _ from "lodash";
 import fuzzy, { FilterResult } from "fuzzy";
 
