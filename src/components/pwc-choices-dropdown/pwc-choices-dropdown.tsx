@@ -32,7 +32,7 @@ export class PwcChoicesDropdownComponent {
     PwcChoices.IDropdownOptionClickedEventPayload
   >;
 
-  @State() filteredOptions: Array<FilterResult<PwcChoices.IOption>>;
+  @State() filteredOptions: FilterResult<PwcChoices.IOption>[];
 
   componentWillLoad() {
     this.filteredOptions = this.convertOptionsToFilterResultsAsIs(this.options);
@@ -63,7 +63,7 @@ export class PwcChoicesDropdownComponent {
   doFilter(
     phrase: string,
     rawOptions: PwcChoices.IOption[]
-  ): Array<FilterResult<PwcChoices.IOption>> {
+  ): FilterResult<PwcChoices.IOption>[] {
     if (phrase.length === 0) {
       return this.convertOptionsToFilterResultsAsIs(rawOptions);
     }
