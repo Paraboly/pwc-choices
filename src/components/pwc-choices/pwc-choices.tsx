@@ -7,7 +7,8 @@ import {
   Listen,
   Method,
   Event,
-  EventEmitter
+  EventEmitter,
+  Element
 } from "@stencil/core";
 import { PwcChoices } from "../../interfaces/PwcChoices";
 import {
@@ -23,9 +24,12 @@ import _ from "lodash";
   shadow: false
 })
 export class PwcChoicesComponent {
+  @Element() root: HTMLElement;
+
   @Prop() name: string;
 
   @Prop() type: PwcChoices.Type = "multi";
+  form: HTMLFormElement;
   @Watch("type")
   typeWatchHandler(newValue) {
     if (!PwcChoices.AllTypeLiterals.includes(newValue)) {
@@ -171,6 +175,24 @@ export class PwcChoicesComponent {
     this.optionsWatchHandler(this.options);
     this.typeWatchHandler(this.type);
     this.distinctModeWatchHandler(this.distinctMode);
+  }
+
+  componentDidLoad() {
+    this.form = this.root.closest("form");
+
+    if (this.form) {
+      this.form.addEventListener("reset", this.handleFormReset.bind(this));
+    }
+  }
+
+  componentDidUnload() {
+    if (this.form) {
+      this.form.removeEventListener("reset", this.handleFormReset.bind(this));
+    }
+  }
+
+  handleFormReset() {
+    this.selectedOptions = [];
   }
 
   constructInputBar() {
