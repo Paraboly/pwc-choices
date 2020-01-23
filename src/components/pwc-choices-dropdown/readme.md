@@ -1,4 +1,4 @@
-# pwc-choices-2
+# pwc-choices
 
 <!-- Auto Generated Below -->
 
@@ -22,13 +22,13 @@
 
 ### Used by
 
- - [pwc-choices-2](../pwc-choices-2)
+ - [pwc-choices](../pwc-choices)
 
 ### Graph
 ```mermaid
 graph TD;
-  pwc-choices-2 --> pwc-choices-2-dropdown
-  style pwc-choices-2-dropdown fill:#f9f,stroke:#333,stroke-width:4px
+  pwc-choices --> pwc-choices-dropdown
+  style pwc-choices-dropdown fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

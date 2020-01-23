@@ -9,7 +9,7 @@ import {
   Event,
   EventEmitter
 } from "@stencil/core";
-import { PwcChoices2 } from "../../interfaces/PwcChoices2";
+import { PwcChoices } from "../../interfaces/PwcChoices";
 import {
   resolveJson,
   distinctFilter,
@@ -18,27 +18,27 @@ import {
 import _ from "lodash";
 
 @Component({
-  tag: "pwc-choices-2",
+  tag: "pwc-choices",
   styleUrl: "../styles.scss",
   shadow: false
 })
-export class PwcChoices2Component {
-  @Prop() type: PwcChoices2.Type = "multi";
+export class PwcChoicesComponent {
+  @Prop() type: PwcChoices.Type = "multi";
   @Watch("type")
   typeWatchHandler(newValue) {
-    if (!PwcChoices2.AllTypeLiterals.includes(newValue)) {
+    if (!PwcChoices.AllTypeLiterals.includes(newValue)) {
       throwTypeLiteralNotSupported(
         "type",
         newValue,
-        PwcChoices2.AllTypeLiterals
+        PwcChoices.AllTypeLiterals
       );
     }
   }
 
-  private resolvedOptions: PwcChoices2.IOption[];
-  @Prop() options: PwcChoices2.IOption[] | string;
+  private resolvedOptions: PwcChoices.IOption[];
+  @Prop() options: PwcChoices.IOption[] | string;
   @Watch("options")
-  optionsWatchHandler(newValue: PwcChoices2.IOption[] | string) {
+  optionsWatchHandler(newValue: PwcChoices.IOption[] | string) {
     this.resolvedOptions = distinctFilter(
       resolveJson(newValue),
       this.distinctMode
@@ -71,37 +71,37 @@ export class PwcChoices2Component {
   /**
    * This is the mode of filtering we use to make given option objects distinct.
    */
-  @Prop() distinctMode: PwcChoices2.DistinctMode = "none";
+  @Prop() distinctMode: PwcChoices.DistinctMode = "none";
   @Watch("distinctMode")
   distinctModeWatchHandler(newValue) {
-    if (!PwcChoices2.AllDistinctModeLiterals.includes(newValue)) {
+    if (!PwcChoices.AllDistinctModeLiterals.includes(newValue)) {
       throwTypeLiteralNotSupported(
         "distinctMode",
         newValue,
-        PwcChoices2.AllDistinctModeLiterals
+        PwcChoices.AllDistinctModeLiterals
       );
     }
   }
 
-  @Event() selectedOptionsChanged: EventEmitter<PwcChoices2.IOption[]>;
+  @Event() selectedOptionsChanged: EventEmitter<PwcChoices.IOption[]>;
 
-  @State() selectedOptions: PwcChoices2.IOption[] = [];
+  @State() selectedOptions: PwcChoices.IOption[] = [];
   @Watch("selectedOptions")
-  selectedOptionsWatchHandler(newValue: PwcChoices2.IOption[]) {
+  selectedOptionsWatchHandler(newValue: PwcChoices.IOption[]) {
     this.selectedOptionsChanged.emit(newValue);
     this.selectedOptions = newValue;
   }
 
-  async getSelectedOptions(mode: "option"): Promise<PwcChoices2.IOption[]>;
+  async getSelectedOptions(mode: "option"): Promise<PwcChoices.IOption[]>;
   async getSelectedOptions(mode: "value" | "label"): Promise<string[]>;
   async getSelectedOptions(
-    mode: PwcChoices2.RetreiveMode
-  ): Promise<string[] | PwcChoices2.IOption[]>;
+    mode: PwcChoices.RetreiveMode
+  ): Promise<string[] | PwcChoices.IOption[]>;
 
   @Method()
   async getSelectedOptions(
-    mode: PwcChoices2.RetreiveMode = "option"
-  ): Promise<string[] | PwcChoices2.IOption[]> {
+    mode: PwcChoices.RetreiveMode = "option"
+  ): Promise<string[] | PwcChoices.IOption[]> {
     switch (mode) {
       case "option":
         return this.selectedOptions;
@@ -116,14 +116,14 @@ export class PwcChoices2Component {
         throwTypeLiteralNotSupported(
           "mode",
           mode,
-          PwcChoices2.AllRetreiveModeLiterals
+          PwcChoices.AllRetreiveModeLiterals
         );
     }
   }
 
   @Listen("optionDiscarded")
   optionDiscardedHandler(
-    event: CustomEvent<PwcChoices2.IOptionDiscardedEventPayload>
+    event: CustomEvent<PwcChoices.IOptionDiscardedEventPayload>
   ) {
     const payload = event.detail;
     const newSelectedItems = [...this.selectedOptions];
@@ -132,14 +132,14 @@ export class PwcChoices2Component {
   }
 
   @Listen("inputBarClicked")
-  inputBarClickedHandler() // event: CustomEvent<PwcChoices2.IInputBarClickedEventPayload>
+  inputBarClickedHandler() // event: CustomEvent<PwcChoices.IInputBarClickedEventPayload>
   {
     this.dropdownIsOpen = !this.dropdownIsOpen;
   }
 
   @Listen("dropdownOptionClicked")
   dropdownOptionClickedHandler(
-    event: CustomEvent<PwcChoices2.IDropdownOptionClickedEventPayload>
+    event: CustomEvent<PwcChoices.IDropdownOptionClickedEventPayload>
   ) {
     switch (this.type) {
       case "multi":
@@ -173,13 +173,13 @@ export class PwcChoices2Component {
 
   constructInputBar() {
     return (
-      <pwc-choices-2-input-bar
+      <pwc-choices-input-bar
         options={this.selectedOptions}
         showCloseButtons={this.showCloseButtons}
         placeholder={this.placeholder}
         autoHidePlaceholder={this.autoHidePlaceholder}
         type={this.type}
-      ></pwc-choices-2-input-bar>
+      ></pwc-choices-input-bar>
     );
   }
 
@@ -189,10 +189,10 @@ export class PwcChoices2Component {
       : this.resolvedOptions;
 
     return (
-      <pwc-choices-2-dropdown
+      <pwc-choices-dropdown
         noOptionsString={this.noOptionsString}
         options={dropdownOptions}
-      ></pwc-choices-2-dropdown>
+      ></pwc-choices-dropdown>
     );
   }
 

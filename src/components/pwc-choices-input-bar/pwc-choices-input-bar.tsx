@@ -1,30 +1,30 @@
 import { Component, Prop, h, Listen, Event, EventEmitter } from "@stencil/core";
-import { PwcChoices2 } from "../../interfaces/PwcChoices2";
+import { PwcChoices } from "../../interfaces/PwcChoices";
 import _ from "lodash";
 
 @Component({
-  tag: "pwc-choices-2-input-bar",
+  tag: "pwc-choices-input-bar",
   styleUrl: "../styles.scss",
   shadow: false
 })
-export class PwcChoices2InputBarComponent {
+export class PwcChoicesInputBarComponent {
   @Prop() type: "single" | "multi" = "multi";
-  @Prop() options: PwcChoices2.IOption[];
+  @Prop() options: PwcChoices.IOption[];
   @Prop() showCloseButtons: boolean;
   @Prop() placeholder: string;
   @Prop() autoHidePlaceholder: boolean;
 
   @Event() optionDiscarded: EventEmitter<
-    PwcChoices2.IOptionDiscardedEventPayload
+    PwcChoices.IOptionDiscardedEventPayload
   >;
 
   @Event() inputBarClicked: EventEmitter<
-    PwcChoices2.IInputBarClickedEventPayload
+    PwcChoices.IInputBarClickedEventPayload
   >;
 
   @Listen("closeClicked")
   optionBubbleCloseClickedHandler(
-    event: CustomEvent<PwcChoices2.IOptionBubbleCloseClickedEventPayload>
+    event: CustomEvent<PwcChoices.IOptionBubbleCloseClickedEventPayload>
   ) {
     this.optionDiscarded.emit({
       originalEvent: event,
@@ -69,11 +69,11 @@ export class PwcChoices2InputBarComponent {
 
   constructSelectedOptions() {
     return this.options.map((selectedOption, index) => (
-      <pwc-choices-2-option-bubble
+      <pwc-choices-option-bubble
         option={selectedOption}
         showCloseButton={this.showCloseButtons}
         indexInSelectedList={index}
-      ></pwc-choices-2-option-bubble>
+      ></pwc-choices-option-bubble>
     ));
   }
 
@@ -84,12 +84,12 @@ export class PwcChoices2InputBarComponent {
 
     return (
       shouldDisplay && (
-        <pwc-choices-2-option-bubble
+        <pwc-choices-option-bubble
           id="placeholderBubble"
           option={{ value: "placeholder", label: this.placeholder }}
           showCloseButton={false}
           indexInSelectedList={-1}
-        ></pwc-choices-2-option-bubble>
+        ></pwc-choices-option-bubble>
       )
     );
   }

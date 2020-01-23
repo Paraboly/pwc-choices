@@ -7,8 +7,8 @@
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
     />
     <title>Stencil Component Starter</title>
-    <script type="module" src="/build/pwc-choices-2.esm.js"></script>
-    <script nomodule src="/build/pwc-choices-2.js"></script>
+    <script type="module" src="/build/pwc-choices.esm.js"></script>
+    <script nomodule src="/build/pwc-choices.js"></script>
     <style>
       body {
         background-color: aqua;
@@ -19,7 +19,7 @@
     <br />
     <br />
 
-    <pwc-choices-2></pwc-choices-2>
+    <pwc-choices></pwc-choices>
 
     <br />
     <hr />
@@ -34,7 +34,7 @@
 
     <script>
       window.addEventListener("DOMContentLoaded", e => {
-        const choices = document.querySelector("pwc-choices-2");
+        const choices = document.querySelector("pwc-choices");
         choices.options = [
           {
             value: "foo",

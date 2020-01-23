@@ -1,4 +1,4 @@
-export namespace PwcChoices2 {
+export namespace PwcChoices {
   export const AllDistinctModeLiterals = [
     "value",
     "label",
@@ -22,7 +22,7 @@ export namespace PwcChoices2 {
   export interface IOptionBubbleCloseClickedEventPayload {
     originalEvent: MouseEvent;
     option: IOption;
-    bubbleElement: HTMLPwcChoices2OptionBubbleElement;
+    bubbleElement: HTMLPwcChoicesOptionBubbleElement;
     index: number;
   }
 

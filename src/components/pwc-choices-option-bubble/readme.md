@@ -1,4 +1,4 @@
-# pwc-choices-2-option-bubble
+# pwc-choices-option-bubble
 
 <!-- Auto Generated Below -->
 
@@ -23,13 +23,13 @@
 
 ### Used by
 
- - [pwc-choices-2-input-bar](../pwc-choices-2-input-bar)
+ - [pwc-choices-input-bar](../pwc-choices-input-bar)
 
 ### Graph
 ```mermaid
 graph TD;
-  pwc-choices-2-input-bar --> pwc-choices-2-option-bubble
-  style pwc-choices-2-option-bubble fill:#f9f,stroke:#333,stroke-width:4px
+  pwc-choices-input-bar --> pwc-choices-option-bubble
+  style pwc-choices-option-bubble fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

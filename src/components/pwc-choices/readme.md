@@ -1,4 +1,4 @@
-# pwc-choices-2
+# pwc-choices
 
 <!-- Auto Generated Below -->
 
@@ -27,7 +27,7 @@
 
 ## Methods
 
-### `getSelectedOptions(mode?: "value" | "label" | "option") => Promise<PwcChoices2.IOption[] | string[]>`
+### `getSelectedOptions(mode?: "value" | "label" | "option") => Promise<PwcChoices.IOption[] | string[]>`
 
 
 
@@ -42,16 +42,16 @@ Type: `Promise<IOption[] | string[]>`
 
 ### Depends on
 
-- [pwc-choices-2-input-bar](../pwc-choices-2-input-bar)
-- [pwc-choices-2-dropdown](../pwc-choices-2-dropdown)
+- [pwc-choices-input-bar](../pwc-choices-input-bar)
+- [pwc-choices-dropdown](../pwc-choices-dropdown)
 
 ### Graph
 ```mermaid
 graph TD;
-  pwc-choices-2 --> pwc-choices-2-input-bar
-  pwc-choices-2 --> pwc-choices-2-dropdown
-  pwc-choices-2-input-bar --> pwc-choices-2-option-bubble
-  style pwc-choices-2 fill:#f9f,stroke:#333,stroke-width:4px
+  pwc-choices --> pwc-choices-input-bar
+  pwc-choices --> pwc-choices-dropdown
+  pwc-choices-input-bar --> pwc-choices-option-bubble
+  style pwc-choices fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
