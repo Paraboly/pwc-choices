@@ -5,184 +5,184 @@
  * It contains typing information for all components that exist in this project.
  */
 
-import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Type } from "./components/pwc-choices/Type";
-import { IOption } from "./components/pwc-choices/IOption";
-import { DistinctMode } from "./components/pwc-choices/DistinctMode";
-import { RetreiveMode } from "./components/pwc-choices/RetreiveMode";
-import { IDropdownOptionClickedEventPayload } from "./components/pwc-choices-dropdown/IDropdownOptionClickedEventPayload";
-import { IOptionDiscardedEventPayload } from "./components/pwc-choices-input-bar/IOptionDiscardedEventPayload";
-import { IInputBarClickedEventPayload } from "./components/pwc-choices-input-bar/IInputBarClickedEventPayload";
-import { IOptionBubbleCloseClickedEventPayload } from "./components/pwc-choices-option-bubble/IOptionBubbleCloseClickedEventPayload";
+
+import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
+import {
+  Type,
+} from './components/pwc-choices/Type';
+import {
+  IOption,
+} from './components/pwc-choices/IOption';
+import {
+  DistinctMode,
+} from './components/pwc-choices/DistinctMode';
+import {
+  RetreiveMode,
+} from './components/pwc-choices/RetreiveMode';
+import {
+  IDropdownOptionClickedEventPayload,
+} from './components/pwc-choices-dropdown/IDropdownOptionClickedEventPayload';
+import {
+  IOptionDiscardedEventPayload,
+} from './components/pwc-choices-input-bar/IOptionDiscardedEventPayload';
+import {
+  IInputBarClickedEventPayload,
+} from './components/pwc-choices-input-bar/IInputBarClickedEventPayload';
+import {
+  IOptionBubbleCloseClickedEventPayload,
+} from './components/pwc-choices-option-bubble/IOptionBubbleCloseClickedEventPayload';
 
 export namespace Components {
   interface PwcChoices {
     /**
-     * If true, the placeholder will be hidden if there are selected options.
-     */
-    autoHidePlaceholder: boolean;
+    * If true, the placeholder will be hidden if there are selected options.
+    */
+    'autoHidePlaceholder': boolean;
     /**
-     * This is the mode of filtering we use to make given option objects distinct.
-     */
-    distinctMode: DistinctMode;
-    dropdownIsOpen: boolean;
-    getSelectedOptions: (
-      mode?: "value" | "label" | "option"
-    ) => Promise<IOption[] | string[]>;
-    name: string;
+    * This is the mode of filtering we use to make given option objects distinct.
+    */
+    'distinctMode': DistinctMode;
+    'dropdownIsOpen': boolean;
+    'getSelectedOptions': (mode?: "value" | "label" | "option") => Promise<IOption[] | string[]>;
+    'name': string;
     /**
-     * This will be displayed in the dropdown when there are no options left to choose.
-     */
-    noOptionsString: string;
-    options: IOption[] | string;
-    placeholder: string;
+    * This will be displayed in the dropdown when there are no options left to choose.
+    */
+    'noOptionsString': string;
+    'options': IOption[] | string;
+    'placeholder': string;
     /**
-     * If true, selected option bubbles will have close buttons.
-     */
-    showCloseButtons: boolean;
-    type: Type;
+    * If true, selected option bubbles will have close buttons.
+    */
+    'showCloseButtons': boolean;
+    'type': Type;
     /**
-     * If true, the option will be removed from available options after selection.
-     */
-    uniqueSelections: boolean;
+    * If true, the option will be removed from available options after selection.
+    */
+    'uniqueSelections': boolean;
   }
   interface PwcChoicesDropdown {
-    noOptionsString: string;
-    options: IOption[];
+    'noOptionsString': string;
+    'options': IOption[];
   }
   interface PwcChoicesInputBar {
-    autoHidePlaceholder: boolean;
-    options: IOption[];
-    placeholder: string;
-    showCloseButtons: boolean;
-    type: "single" | "multi";
+    'autoHidePlaceholder': boolean;
+    'options': IOption[];
+    'placeholder': string;
+    'showCloseButtons': boolean;
+    'type': "single" | "multi";
   }
   interface PwcChoicesOptionBubble {
-    indexInSelectedList: number;
-    option: IOption;
-    showCloseButton: boolean;
+    'indexInSelectedList': number;
+    'option': IOption;
+    'showCloseButton': boolean;
   }
 }
 
 declare global {
-  interface HTMLPwcChoicesElement
-    extends Components.PwcChoices,
-      HTMLStencilElement {}
+
+
+  interface HTMLPwcChoicesElement extends Components.PwcChoices, HTMLStencilElement {}
   var HTMLPwcChoicesElement: {
     prototype: HTMLPwcChoicesElement;
     new (): HTMLPwcChoicesElement;
   };
 
-  interface HTMLPwcChoicesDropdownElement
-    extends Components.PwcChoicesDropdown,
-      HTMLStencilElement {}
+  interface HTMLPwcChoicesDropdownElement extends Components.PwcChoicesDropdown, HTMLStencilElement {}
   var HTMLPwcChoicesDropdownElement: {
     prototype: HTMLPwcChoicesDropdownElement;
     new (): HTMLPwcChoicesDropdownElement;
   };
 
-  interface HTMLPwcChoicesInputBarElement
-    extends Components.PwcChoicesInputBar,
-      HTMLStencilElement {}
+  interface HTMLPwcChoicesInputBarElement extends Components.PwcChoicesInputBar, HTMLStencilElement {}
   var HTMLPwcChoicesInputBarElement: {
     prototype: HTMLPwcChoicesInputBarElement;
     new (): HTMLPwcChoicesInputBarElement;
   };
 
-  interface HTMLPwcChoicesOptionBubbleElement
-    extends Components.PwcChoicesOptionBubble,
-      HTMLStencilElement {}
+  interface HTMLPwcChoicesOptionBubbleElement extends Components.PwcChoicesOptionBubble, HTMLStencilElement {}
   var HTMLPwcChoicesOptionBubbleElement: {
     prototype: HTMLPwcChoicesOptionBubbleElement;
     new (): HTMLPwcChoicesOptionBubbleElement;
   };
   interface HTMLElementTagNameMap {
-    "pwc-choices": HTMLPwcChoicesElement;
-    "pwc-choices-dropdown": HTMLPwcChoicesDropdownElement;
-    "pwc-choices-input-bar": HTMLPwcChoicesInputBarElement;
-    "pwc-choices-option-bubble": HTMLPwcChoicesOptionBubbleElement;
+    'pwc-choices': HTMLPwcChoicesElement;
+    'pwc-choices-dropdown': HTMLPwcChoicesDropdownElement;
+    'pwc-choices-input-bar': HTMLPwcChoicesInputBarElement;
+    'pwc-choices-option-bubble': HTMLPwcChoicesOptionBubbleElement;
   }
 }
 
 declare namespace LocalJSX {
   interface PwcChoices {
     /**
-     * If true, the placeholder will be hidden if there are selected options.
-     */
-    autoHidePlaceholder?: boolean;
+    * If true, the placeholder will be hidden if there are selected options.
+    */
+    'autoHidePlaceholder'?: boolean;
     /**
-     * This is the mode of filtering we use to make given option objects distinct.
-     */
-    distinctMode?: DistinctMode;
-    dropdownIsOpen?: boolean;
-    name?: string;
+    * This is the mode of filtering we use to make given option objects distinct.
+    */
+    'distinctMode'?: DistinctMode;
+    'dropdownIsOpen'?: boolean;
+    'name'?: string;
     /**
-     * This will be displayed in the dropdown when there are no options left to choose.
-     */
-    noOptionsString?: string;
-    onSelectedOptionsChanged?: (event: CustomEvent<IOption[]>) => void;
-    options?: IOption[] | string;
-    placeholder?: string;
+    * This will be displayed in the dropdown when there are no options left to choose.
+    */
+    'noOptionsString'?: string;
+    'onSelectedOptionsChanged'?: (event: CustomEvent<IOption[]>) => void;
+    'options'?: IOption[] | string;
+    'placeholder'?: string;
     /**
-     * If true, selected option bubbles will have close buttons.
-     */
-    showCloseButtons?: boolean;
-    type?: Type;
+    * If true, selected option bubbles will have close buttons.
+    */
+    'showCloseButtons'?: boolean;
+    'type'?: Type;
     /**
-     * If true, the option will be removed from available options after selection.
-     */
-    uniqueSelections?: boolean;
+    * If true, the option will be removed from available options after selection.
+    */
+    'uniqueSelections'?: boolean;
   }
   interface PwcChoicesDropdown {
-    noOptionsString?: string;
-    onDropdownOptionClicked?: (
-      event: CustomEvent<IDropdownOptionClickedEventPayload>
-    ) => void;
-    options?: IOption[];
+    'noOptionsString'?: string;
+    'onDropdownOptionClicked'?: (event: CustomEvent<IDropdownOptionClickedEventPayload>) => void;
+    'options'?: IOption[];
   }
   interface PwcChoicesInputBar {
-    autoHidePlaceholder?: boolean;
-    onInputBarClicked?: (
-      event: CustomEvent<IInputBarClickedEventPayload>
-    ) => void;
-    onOptionDiscarded?: (
-      event: CustomEvent<IOptionDiscardedEventPayload>
-    ) => void;
-    options?: IOption[];
-    placeholder?: string;
-    showCloseButtons?: boolean;
-    type?: "single" | "multi";
+    'autoHidePlaceholder'?: boolean;
+    'onInputBarClicked'?: (event: CustomEvent<IInputBarClickedEventPayload>) => void;
+    'onOptionDiscarded'?: (event: CustomEvent<IOptionDiscardedEventPayload>) => void;
+    'options'?: IOption[];
+    'placeholder'?: string;
+    'showCloseButtons'?: boolean;
+    'type'?: "single" | "multi";
   }
   interface PwcChoicesOptionBubble {
-    indexInSelectedList?: number;
-    onCloseClicked?: (
-      event: CustomEvent<IOptionBubbleCloseClickedEventPayload>
-    ) => void;
-    option?: IOption;
-    showCloseButton?: boolean;
+    'indexInSelectedList'?: number;
+    'onCloseClicked'?: (event: CustomEvent<IOptionBubbleCloseClickedEventPayload>) => void;
+    'option'?: IOption;
+    'showCloseButton'?: boolean;
   }
 
   interface IntrinsicElements {
-    "pwc-choices": PwcChoices;
-    "pwc-choices-dropdown": PwcChoicesDropdown;
-    "pwc-choices-input-bar": PwcChoicesInputBar;
-    "pwc-choices-option-bubble": PwcChoicesOptionBubble;
+    'pwc-choices': PwcChoices;
+    'pwc-choices-dropdown': PwcChoicesDropdown;
+    'pwc-choices-input-bar': PwcChoicesInputBar;
+    'pwc-choices-option-bubble': PwcChoicesOptionBubble;
   }
 }
 
 export { LocalJSX as JSX };
 
+
 declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
-      "pwc-choices": LocalJSX.PwcChoices &
-        JSXBase.HTMLAttributes<HTMLPwcChoicesElement>;
-      "pwc-choices-dropdown": LocalJSX.PwcChoicesDropdown &
-        JSXBase.HTMLAttributes<HTMLPwcChoicesDropdownElement>;
-      "pwc-choices-input-bar": LocalJSX.PwcChoicesInputBar &
-        JSXBase.HTMLAttributes<HTMLPwcChoicesInputBarElement>;
-      "pwc-choices-option-bubble": LocalJSX.PwcChoicesOptionBubble &
-        JSXBase.HTMLAttributes<HTMLPwcChoicesOptionBubbleElement>;
+      'pwc-choices': LocalJSX.PwcChoices & JSXBase.HTMLAttributes<HTMLPwcChoicesElement>;
+      'pwc-choices-dropdown': LocalJSX.PwcChoicesDropdown & JSXBase.HTMLAttributes<HTMLPwcChoicesDropdownElement>;
+      'pwc-choices-input-bar': LocalJSX.PwcChoicesInputBar & JSXBase.HTMLAttributes<HTMLPwcChoicesInputBarElement>;
+      'pwc-choices-option-bubble': LocalJSX.PwcChoicesOptionBubble & JSXBase.HTMLAttributes<HTMLPwcChoicesOptionBubbleElement>;
     }
   }
 }
+
+
