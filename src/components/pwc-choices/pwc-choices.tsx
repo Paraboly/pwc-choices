@@ -10,13 +10,19 @@ import {
   EventEmitter,
   Element
 } from "@stencil/core";
-import { PwcChoicesInterfaces } from "../../interfaces/PwcChoicesInterfaces";
-import {
-  resolveJson,
-  distinctFilter,
-  throwTypeLiteralNotSupported
-} from "../../utils/utils";
+import { resolveJson } from "../../utils/resolveJson";
+import { throwTypeLiteralNotSupported } from "../../utils/throwTypeLiteralNotSupported";
+import { distinctFilter } from "../../utils/distinctFilter";
 import _ from "lodash";
+import { Type } from "./Type";
+import { AllTypeLiterals } from "./AllTypeLiterals";
+import { IOption } from "./IOption";
+import { DistinctMode } from "./DistinctMode";
+import { AllDistinctModeLiterals } from "./AllDistinctModeLiterals";
+import { RetreiveMode } from "./RetreiveMode";
+import { AllRetreiveModeLiterals } from "./AllRetreiveModeLiterals";
+import { IOptionDiscardedEventPayload } from "../pwc-choices-input-bar/IOptionDiscardedEventPayload";
+import { IDropdownOptionClickedEventPayload } from "../pwc-choices-dropdown/IDropdownOptionClickedEventPayload";
 
 @Component({
   tag: "pwc-choices",
@@ -28,23 +34,19 @@ export class PwcChoices {
 
   @Prop() name: string;
 
-  @Prop() type: PwcChoicesInterfaces.Type = "multi";
+  @Prop() type: Type = "multi";
   form: HTMLFormElement;
   @Watch("type")
   typeWatchHandler(newValue) {
-    if (!PwcChoicesInterfaces.AllTypeLiterals.includes(newValue)) {
-      throwTypeLiteralNotSupported(
-        "type",
-        newValue,
-        PwcChoicesInterfaces.AllTypeLiterals
-      );
+    if (!AllTypeLiterals.includes(newValue)) {
+      throwTypeLiteralNotSupported("type", newValue, AllTypeLiterals);
     }
   }
 
-  private resolvedOptions: PwcChoicesInterfaces.IOption[];
-  @Prop() options: PwcChoicesInterfaces.IOption[] | string;
+  private resolvedOptions: IOption[];
+  @Prop() options: IOption[] | string;
   @Watch("options")
-  optionsWatchHandler(newValue: PwcChoicesInterfaces.IOption[] | string) {
+  optionsWatchHandler(newValue: IOption[] | string) {
     this.resolvedOptions = distinctFilter(
       resolveJson(newValue),
       this.distinctMode
@@ -77,39 +79,35 @@ export class PwcChoices {
   /**
    * This is the mode of filtering we use to make given option objects distinct.
    */
-  @Prop() distinctMode: PwcChoicesInterfaces.DistinctMode = "none";
+  @Prop() distinctMode: DistinctMode = "none";
   @Watch("distinctMode")
   distinctModeWatchHandler(newValue) {
-    if (!PwcChoicesInterfaces.AllDistinctModeLiterals.includes(newValue)) {
+    if (!AllDistinctModeLiterals.includes(newValue)) {
       throwTypeLiteralNotSupported(
         "distinctMode",
         newValue,
-        PwcChoicesInterfaces.AllDistinctModeLiterals
+        AllDistinctModeLiterals
       );
     }
   }
 
-  @Event() selectedOptionsChanged: EventEmitter<PwcChoicesInterfaces.IOption[]>;
+  @Event() selectedOptionsChanged: EventEmitter<IOption[]>;
 
-  @State() selectedOptions: PwcChoicesInterfaces.IOption[] = [];
+  @State() selectedOptions: IOption[] = [];
   @Watch("selectedOptions")
-  selectedOptionsWatchHandler(newValue: PwcChoicesInterfaces.IOption[]) {
+  selectedOptionsWatchHandler(newValue: IOption[]) {
     this.selectedOptionsChanged.emit(newValue);
     this.selectedOptions = newValue;
   }
 
-  async getSelectedOptions(
-    mode: "option"
-  ): Promise<PwcChoicesInterfaces.IOption[]>;
+  async getSelectedOptions(mode: "option"): Promise<IOption[]>;
   async getSelectedOptions(mode: "value" | "label"): Promise<string[]>;
-  async getSelectedOptions(
-    mode: PwcChoicesInterfaces.RetreiveMode
-  ): Promise<string[] | PwcChoicesInterfaces.IOption[]>;
+  async getSelectedOptions(mode: RetreiveMode): Promise<string[] | IOption[]>;
 
   @Method()
   async getSelectedOptions(
-    mode: PwcChoicesInterfaces.RetreiveMode = "option"
-  ): Promise<string[] | PwcChoicesInterfaces.IOption[]> {
+    mode: RetreiveMode = "option"
+  ): Promise<string[] | IOption[]> {
     switch (mode) {
       case "option":
         return this.selectedOptions;
@@ -121,18 +119,12 @@ export class PwcChoices {
         return this.selectedOptions.map(o => o.label);
 
       default:
-        throwTypeLiteralNotSupported(
-          "mode",
-          mode,
-          PwcChoicesInterfaces.AllRetreiveModeLiterals
-        );
+        throwTypeLiteralNotSupported("mode", mode, AllRetreiveModeLiterals);
     }
   }
 
   @Listen("optionDiscarded")
-  optionDiscardedHandler(
-    event: CustomEvent<PwcChoicesInterfaces.IOptionDiscardedEventPayload>
-  ) {
+  optionDiscardedHandler(event: CustomEvent<IOptionDiscardedEventPayload>) {
     const payload = event.detail;
     const newSelectedItems = [...this.selectedOptions];
     newSelectedItems.splice(payload.index, 1);
@@ -147,7 +139,7 @@ export class PwcChoices {
 
   @Listen("dropdownOptionClicked")
   dropdownOptionClickedHandler(
-    event: CustomEvent<PwcChoicesInterfaces.IDropdownOptionClickedEventPayload>
+    event: CustomEvent<IDropdownOptionClickedEventPayload>
   ) {
     switch (this.type) {
       case "multi":

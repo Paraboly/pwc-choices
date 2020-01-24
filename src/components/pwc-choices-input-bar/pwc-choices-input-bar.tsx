@@ -1,6 +1,9 @@
 import { Component, Prop, h, Listen, Event, EventEmitter } from "@stencil/core";
-import { PwcChoicesInterfaces } from "../../interfaces/PwcChoicesInterfaces";
 import _ from "lodash";
+import { IOption } from "../pwc-choices/IOption";
+import { IOptionDiscardedEventPayload } from "./IOptionDiscardedEventPayload";
+import { IInputBarClickedEventPayload } from "./IInputBarClickedEventPayload";
+import { IOptionBubbleCloseClickedEventPayload } from "../pwc-choices-option-bubble/IOptionBubbleCloseClickedEventPayload";
 
 @Component({
   tag: "pwc-choices-input-bar",
@@ -9,24 +12,18 @@ import _ from "lodash";
 })
 export class PwcChoicesInputBar {
   @Prop() type: "single" | "multi" = "multi";
-  @Prop() options: PwcChoicesInterfaces.IOption[];
+  @Prop() options: IOption[];
   @Prop() showCloseButtons: boolean;
   @Prop() placeholder: string;
   @Prop() autoHidePlaceholder: boolean;
 
-  @Event() optionDiscarded: EventEmitter<
-    PwcChoicesInterfaces.IOptionDiscardedEventPayload
-  >;
+  @Event() optionDiscarded: EventEmitter<IOptionDiscardedEventPayload>;
 
-  @Event() inputBarClicked: EventEmitter<
-    PwcChoicesInterfaces.IInputBarClickedEventPayload
-  >;
+  @Event() inputBarClicked: EventEmitter<IInputBarClickedEventPayload>;
 
   @Listen("closeClicked")
   optionBubbleCloseClickedHandler(
-    event: CustomEvent<
-      PwcChoicesInterfaces.IOptionBubbleCloseClickedEventPayload
-    >
+    event: CustomEvent<IOptionBubbleCloseClickedEventPayload>
   ) {
     this.optionDiscarded.emit({
       originalEvent: event,

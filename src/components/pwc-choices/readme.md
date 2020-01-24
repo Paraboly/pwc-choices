@@ -28,7 +28,7 @@
 
 ## Methods
 
-### `getSelectedOptions(mode?: "value" | "label" | "option") => Promise<PwcChoicesInterfaces.IOption[] | string[]>`
+### `getSelectedOptions(mode?: "value" | "label" | "option") => Promise<IOption[] | string[]>`
 
 
 

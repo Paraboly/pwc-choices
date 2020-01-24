@@ -8,8 +8,29 @@
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
-  PwcChoicesInterfaces,
-} from './interfaces/PwcChoicesInterfaces';
+  Type,
+} from './components/pwc-choices/Type';
+import {
+  IOption,
+} from './components/pwc-choices/IOption';
+import {
+  DistinctMode,
+} from './components/pwc-choices/DistinctMode';
+import {
+  RetreiveMode,
+} from './components/pwc-choices/RetreiveMode';
+import {
+  IDropdownOptionClickedEventPayload,
+} from './components/pwc-choices-dropdown/IDropdownOptionClickedEventPayload';
+import {
+  IOptionDiscardedEventPayload,
+} from './components/pwc-choices-input-bar/IOptionDiscardedEventPayload';
+import {
+  IInputBarClickedEventPayload,
+} from './components/pwc-choices-input-bar/IInputBarClickedEventPayload';
+import {
+  IOptionBubbleCloseClickedEventPayload,
+} from './components/pwc-choices-option-bubble/IOptionBubbleCloseClickedEventPayload';
 
 export namespace Components {
   interface PwcChoices {
@@ -20,21 +41,21 @@ export namespace Components {
     /**
     * This is the mode of filtering we use to make given option objects distinct.
     */
-    'distinctMode': PwcChoicesInterfaces.DistinctMode;
+    'distinctMode': DistinctMode;
     'dropdownIsOpen': boolean;
-    'getSelectedOptions': (mode?: "value" | "label" | "option") => Promise<PwcChoicesInterfaces.IOption[] | string[]>;
+    'getSelectedOptions': (mode?: "value" | "label" | "option") => Promise<IOption[] | string[]>;
     'name': string;
     /**
     * This will be displayed in the dropdown when there are no options left to choose.
     */
     'noOptionsString': string;
-    'options': PwcChoicesInterfaces.IOption[] | string;
+    'options': IOption[] | string;
     'placeholder': string;
     /**
     * If true, selected option bubbles will have close buttons.
     */
     'showCloseButtons': boolean;
-    'type': PwcChoicesInterfaces.Type;
+    'type': Type;
     /**
     * If true, the option will be removed from available options after selection.
     */
@@ -42,18 +63,18 @@ export namespace Components {
   }
   interface PwcChoicesDropdown {
     'noOptionsString': string;
-    'options': PwcChoicesInterfaces.IOption[];
+    'options': IOption[];
   }
   interface PwcChoicesInputBar {
     'autoHidePlaceholder': boolean;
-    'options': PwcChoicesInterfaces.IOption[];
+    'options': IOption[];
     'placeholder': string;
     'showCloseButtons': boolean;
     'type': "single" | "multi";
   }
   interface PwcChoicesOptionBubble {
     'indexInSelectedList': number;
-    'option': PwcChoicesInterfaces.IOption;
+    'option': IOption;
     'showCloseButton': boolean;
   }
 }
@@ -101,21 +122,21 @@ declare namespace LocalJSX {
     /**
     * This is the mode of filtering we use to make given option objects distinct.
     */
-    'distinctMode'?: PwcChoicesInterfaces.DistinctMode;
+    'distinctMode'?: DistinctMode;
     'dropdownIsOpen'?: boolean;
     'name'?: string;
     /**
     * This will be displayed in the dropdown when there are no options left to choose.
     */
     'noOptionsString'?: string;
-    'onSelectedOptionsChanged'?: (event: CustomEvent<PwcChoicesInterfaces.IOption[]>) => void;
-    'options'?: PwcChoicesInterfaces.IOption[] | string;
+    'onSelectedOptionsChanged'?: (event: CustomEvent<IOption[]>) => void;
+    'options'?: IOption[] | string;
     'placeholder'?: string;
     /**
     * If true, selected option bubbles will have close buttons.
     */
     'showCloseButtons'?: boolean;
-    'type'?: PwcChoicesInterfaces.Type;
+    'type'?: Type;
     /**
     * If true, the option will be removed from available options after selection.
     */
@@ -123,22 +144,22 @@ declare namespace LocalJSX {
   }
   interface PwcChoicesDropdown {
     'noOptionsString'?: string;
-    'onDropdownOptionClicked'?: (event: CustomEvent<PwcChoicesInterfaces.IDropdownOptionClickedEventPayload>) => void;
-    'options'?: PwcChoicesInterfaces.IOption[];
+    'onDropdownOptionClicked'?: (event: CustomEvent<IDropdownOptionClickedEventPayload>) => void;
+    'options'?: IOption[];
   }
   interface PwcChoicesInputBar {
     'autoHidePlaceholder'?: boolean;
-    'onInputBarClicked'?: (event: CustomEvent<PwcChoicesInterfaces.IInputBarClickedEventPayload>) => void;
-    'onOptionDiscarded'?: (event: CustomEvent<PwcChoicesInterfaces.IOptionDiscardedEventPayload>) => void;
-    'options'?: PwcChoicesInterfaces.IOption[];
+    'onInputBarClicked'?: (event: CustomEvent<IInputBarClickedEventPayload>) => void;
+    'onOptionDiscarded'?: (event: CustomEvent<IOptionDiscardedEventPayload>) => void;
+    'options'?: IOption[];
     'placeholder'?: string;
     'showCloseButtons'?: boolean;
     'type'?: "single" | "multi";
   }
   interface PwcChoicesOptionBubble {
     'indexInSelectedList'?: number;
-    'onCloseClicked'?: (event: CustomEvent<PwcChoicesInterfaces.IOptionBubbleCloseClickedEventPayload>) => void;
-    'option'?: PwcChoicesInterfaces.IOption;
+    'onCloseClicked'?: (event: CustomEvent<IOptionBubbleCloseClickedEventPayload>) => void;
+    'option'?: IOption;
     'showCloseButton'?: boolean;
   }
 

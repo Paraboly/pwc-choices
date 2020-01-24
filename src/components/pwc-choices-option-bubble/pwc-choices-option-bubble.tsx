@@ -6,7 +6,8 @@ import {
   Event,
   Element
 } from "@stencil/core";
-import { PwcChoicesInterfaces } from "../../interfaces/PwcChoicesInterfaces";
+import { IOption } from "../pwc-choices/IOption";
+import { IOptionBubbleCloseClickedEventPayload } from "./IOptionBubbleCloseClickedEventPayload";
 
 @Component({
   tag: "pwc-choices-option-bubble",
@@ -17,12 +18,10 @@ export class PwcChoicesOptionBubble {
   @Element() rootElement: HTMLPwcChoicesOptionBubbleElement;
 
   @Prop() showCloseButton: boolean;
-  @Prop() option: PwcChoicesInterfaces.IOption;
+  @Prop() option: IOption;
   @Prop() indexInSelectedList: number;
 
-  @Event() closeClicked: EventEmitter<
-    PwcChoicesInterfaces.IOptionBubbleCloseClickedEventPayload
-  >;
+  @Event() closeClicked: EventEmitter<IOptionBubbleCloseClickedEventPayload>;
 
   onCloseClicked(event: MouseEvent): void {
     event.preventDefault();

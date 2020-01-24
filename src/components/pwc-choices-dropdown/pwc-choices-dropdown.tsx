@@ -8,9 +8,10 @@ import {
   State,
   Watch
 } from "@stencil/core";
-import { PwcChoicesInterfaces } from "../../interfaces/PwcChoicesInterfaces";
 import _ from "lodash";
 import fuzzy, { FilterResult } from "fuzzy";
+import { IOption } from "../pwc-choices/IOption";
+import { IDropdownOptionClickedEventPayload } from "./IDropdownOptionClickedEventPayload";
 
 @Component({
   tag: "pwc-choices-dropdown",
@@ -20,19 +21,19 @@ import fuzzy, { FilterResult } from "fuzzy";
 export class PwcChoicesDropdown {
   @Element() root: HTMLElement;
 
-  @Prop() options: PwcChoicesInterfaces.IOption[];
+  @Prop() options: IOption[];
   @Watch("options")
-  optionsWatchHandler(newValue: PwcChoicesInterfaces.IOption[]) {
+  optionsWatchHandler(newValue: IOption[]) {
     this.filteredOptions = this.doFilter(this.getWholeSearchInput(), newValue);
   }
 
   @Prop() noOptionsString: string;
 
   @Event() dropdownOptionClicked: EventEmitter<
-    PwcChoicesInterfaces.IDropdownOptionClickedEventPayload
+    IDropdownOptionClickedEventPayload
   >;
 
-  @State() filteredOptions: FilterResult<PwcChoicesInterfaces.IOption>[];
+  @State() filteredOptions: FilterResult<IOption>[];
 
   componentWillLoad() {
     this.filteredOptions = this.convertOptionsToFilterResultsAsIs(this.options);
@@ -60,10 +61,7 @@ export class PwcChoicesDropdown {
     );
   }
 
-  doFilter(
-    phrase: string,
-    rawOptions: PwcChoicesInterfaces.IOption[]
-  ): FilterResult<PwcChoicesInterfaces.IOption>[] {
+  doFilter(phrase: string, rawOptions: IOption[]): FilterResult<IOption>[] {
     if (phrase.length === 0) {
       return this.convertOptionsToFilterResultsAsIs(rawOptions);
     }
@@ -88,9 +86,7 @@ export class PwcChoicesDropdown {
     return searchBar.value;
   }
 
-  constructDropdownOption(
-    option: FilterResult<PwcChoicesInterfaces.IOption>
-  ): any {
+  constructDropdownOption(option: FilterResult<IOption>): any {
     return (
       <li onClick={e => this.onDropdownOptionClick(option, e)}>
         <span innerHTML={option.string}></span>
@@ -99,7 +95,7 @@ export class PwcChoicesDropdown {
   }
 
   onDropdownOptionClick(
-    optionFilterResult: FilterResult<PwcChoicesInterfaces.IOption>,
+    optionFilterResult: FilterResult<IOption>,
     clickEvent: MouseEvent
   ): void {
     const originalOption = optionFilterResult.original;
@@ -122,9 +118,7 @@ export class PwcChoicesDropdown {
     );
   }
 
-  convertOptionsToFilterResultsAsIs(
-    rawOptions: PwcChoicesInterfaces.IOption[]
-  ) {
+  convertOptionsToFilterResultsAsIs(rawOptions: IOption[]) {
     return rawOptions.map(o => {
       return {
         string: o.label,
