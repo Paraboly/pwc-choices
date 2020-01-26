@@ -28,13 +28,33 @@
 
 ## Methods
 
-### `getSelectedOptions(mode?: "value" | "label" | "option") => Promise<IOption[] | string[]>`
+### `getSelectedOptionsAsLabels() => Promise<string[]>`
 
 
 
 #### Returns
 
-Type: `Promise<IOption[] | string[]>`
+Type: `Promise<string[]>`
+
+
+
+### `getSelectedOptionsAsObjects() => Promise<IOption[]>`
+
+
+
+#### Returns
+
+Type: `Promise<IOption[]>`
+
+
+
+### `getSelectedOptionsAsValues() => Promise<string[]>`
+
+
+
+#### Returns
+
+Type: `Promise<string[]>`
 
 
 

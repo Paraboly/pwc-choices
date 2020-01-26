@@ -17,9 +17,6 @@ import {
   DistinctMode,
 } from './components/pwc-choices/DistinctMode';
 import {
-  RetreiveMode,
-} from './components/pwc-choices/RetreiveMode';
-import {
   IDropdownOptionClickedEventPayload,
 } from './components/pwc-choices-dropdown/IDropdownOptionClickedEventPayload';
 import {
@@ -43,7 +40,9 @@ export namespace Components {
     */
     'distinctMode': DistinctMode;
     'dropdownIsOpen': boolean;
-    'getSelectedOptions': (mode?: "value" | "label" | "option") => Promise<IOption[] | string[]>;
+    'getSelectedOptionsAsLabels': () => Promise<string[]>;
+    'getSelectedOptionsAsObjects': () => Promise<IOption[]>;
+    'getSelectedOptionsAsValues': () => Promise<string[]>;
     'name': string;
     /**
     * This will be displayed in the dropdown when there are no options left to choose.

@@ -19,8 +19,6 @@ import { AllTypeLiterals } from "./AllTypeLiterals";
 import { IOption } from "./IOption";
 import { DistinctMode } from "./DistinctMode";
 import { AllDistinctModeLiterals } from "./AllDistinctModeLiterals";
-import { RetreiveMode } from "./RetreiveMode";
-import { AllRetreiveModeLiterals } from "./AllRetreiveModeLiterals";
 import { IOptionDiscardedEventPayload } from "../pwc-choices-input-bar/IOptionDiscardedEventPayload";
 import { IDropdownOptionClickedEventPayload } from "../pwc-choices-dropdown/IDropdownOptionClickedEventPayload";
 
@@ -100,27 +98,19 @@ export class PwcChoices {
     this.selectedOptions = newValue;
   }
 
-  async getSelectedOptions(mode: "option"): Promise<IOption[]>;
-  async getSelectedOptions(mode: "value" | "label"): Promise<string[]>;
-  async getSelectedOptions(mode: RetreiveMode): Promise<string[] | IOption[]>;
+  @Method()
+  async getSelectedOptionsAsValues(): Promise<string[]> {
+    return this.selectedOptions.map(o => o.value);
+  }
 
   @Method()
-  async getSelectedOptions(
-    mode: RetreiveMode = "option"
-  ): Promise<string[] | IOption[]> {
-    switch (mode) {
-      case "option":
-        return this.selectedOptions;
+  async getSelectedOptionsAsLabels(): Promise<string[]> {
+    return this.selectedOptions.map(o => o.label);
+  }
 
-      case "value":
-        return this.selectedOptions.map(o => o.value);
-
-      case "label":
-        return this.selectedOptions.map(o => o.label);
-
-      default:
-        throwTypeLiteralNotSupported("mode", mode, AllRetreiveModeLiterals);
-    }
+  @Method()
+  async getSelectedOptionsAsObjects(): Promise<IOption[]> {
+    return this.selectedOptions;
   }
 
   @Listen("optionDiscarded")
