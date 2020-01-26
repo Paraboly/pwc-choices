@@ -12,13 +12,13 @@ pwc-choices-input-bar {
   background-color: white;
 }
 
-.input-bar-main {
+.pwc-choices___input-bar-main {
   display: flex;
   flex-wrap: wrap;
   flex-grow: 1;
 }
 
-.input-bar-dropdown-icon {
+.pwc-choices___input-bar-dropdown-icon {
   flex-grow: 0;
   display: flex;
   flex-wrap: wrap;
@@ -26,12 +26,12 @@ pwc-choices-input-bar {
   margin: 0 10px 0 10px;
 }
 
-.singleSelectInputBarItem {
+.pwc-choices___single-select-input-bar-item {
   display: flex;
   align-items: center;
   margin: 10px;
 }
 
-.singleSelectInputBarPlaceholder {
+.pwc-choices___single-select-input-bar-placeholder {
   color: grey;
 }

@@ -55,7 +55,7 @@ export class PwcChoicesInputBar {
     return (
       shouldDisplay && (
         <pwc-choices-option-bubble
-          id="placeholderBubble"
+          id="pwc-choices___placeholder-bubble"
           option={{ value: "placeholder", label: this.placeholder }}
           showCloseButton={false}
           indexInSelectedList={-1}
@@ -68,9 +68,11 @@ export class PwcChoicesInputBar {
     switch (this.type) {
       case "single":
         return this.options && this.options.length > 0 ? (
-          <div class="singleSelectInputBarItem">{this.options[0].label}</div>
+          <div class="pwc-choices___single-select-input-bar-item">
+            {this.options[0].label}
+          </div>
         ) : (
-          <div class="singleSelectInputBarItem singleSelectInputBarPlaceholder">
+          <div class="pwc-choices___single-select-input-bar-item pwc-choices___single-select-input-bar-placeholder">
             {this.placeholder}
           </div>
         );
@@ -81,8 +83,10 @@ export class PwcChoicesInputBar {
 
   render() {
     return [
-      <div class="input-bar-main">{this.constructMainRender()}</div>,
-      <div class="input-bar-dropdown-icon">
+      <div class="pwc-choices___input-bar-main">
+        {this.constructMainRender()}
+      </div>,
+      <div class="pwc-choices___input-bar-dropdown-icon">
         <svg width="28" height="28" viewBox="0 0 18 18">
           <path d="M5 8l4 4 4-4z" />
         </svg>

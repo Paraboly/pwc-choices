@@ -101,7 +101,7 @@ export class PwcChoicesDropdown {
     return [
       <input
         type="text"
-        class="search"
+        class="pwc-choices___search"
         placeholder="Search by typing..."
         ref={elm => (this.searchRef = elm)}
         onInput={this.onSearchInput.bind(this)}
@@ -109,7 +109,10 @@ export class PwcChoicesDropdown {
       <ul>
         {this.filteredOptions &&
           (this.filteredOptions.length === 0 ? (
-            <li id="noOptionsListItem"> {this.noOptionsString}</li>
+            <li id="pwc-choices___no-options-list-item">
+              {" "}
+              {this.noOptionsString}
+            </li>
           ) : (
             this.filteredOptions.map(option =>
               this.constructDropdownOption(option)
