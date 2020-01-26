@@ -36,24 +36,48 @@ export namespace Components {
     */
     'autoHidePlaceholder': boolean;
     /**
-    * This is the mode of filtering we use to make given option objects distinct.
+    * This is the mode of filtering we use to make given option objects distinct. "none" disables the distinct filtering behaviour.
     */
     'distinctMode': DistinctMode;
+    /**
+    * This determines wheter the dropdown is open or not.
+    */
     'dropdownIsOpen': boolean;
+    /**
+    * Returns the labels of currently selected options.
+    */
     'getSelectedOptionsAsLabels': () => Promise<string[]>;
+    /**
+    * Returns the selected options as objects (as passed in to this component).
+    */
     'getSelectedOptionsAsObjects': () => Promise<IOption[]>;
+    /**
+    * Returns the values of currently selected options.
+    */
     'getSelectedOptionsAsValues': () => Promise<string[]>;
+    /**
+    * HTML name attribute. This is implemented for compatibility with HTML forms, it has no internal usage.
+    */
     'name': string;
     /**
     * This will be displayed in the dropdown when there are no options left to choose.
     */
     'noOptionsString': string;
+    /**
+    * The options available to this component. An option must have a label and a value property.
+    */
     'options': IOption[] | string;
+    /**
+    * This will be displayed in the input bar before any selected options.
+    */
     'placeholder': string;
     /**
     * If true, selected option bubbles will have close buttons.
     */
     'showCloseButtons': boolean;
+    /**
+    * The selection behaviour. "multi" allows selection of multiple options. "single" allows selection of only a single option (just like the native HTML select element).
+    */
     'type': Type;
     /**
     * If true, the option will be removed from available options after selection.
@@ -119,22 +143,40 @@ declare namespace LocalJSX {
     */
     'autoHidePlaceholder'?: boolean;
     /**
-    * This is the mode of filtering we use to make given option objects distinct.
+    * This is the mode of filtering we use to make given option objects distinct. "none" disables the distinct filtering behaviour.
     */
     'distinctMode'?: DistinctMode;
+    /**
+    * This determines wheter the dropdown is open or not.
+    */
     'dropdownIsOpen'?: boolean;
+    /**
+    * HTML name attribute. This is implemented for compatibility with HTML forms, it has no internal usage.
+    */
     'name'?: string;
     /**
     * This will be displayed in the dropdown when there are no options left to choose.
     */
     'noOptionsString'?: string;
+    /**
+    * This is raised when the selected options change.
+    */
     'onSelectedOptionsChanged'?: (event: CustomEvent<IOption[]>) => void;
+    /**
+    * The options available to this component. An option must have a label and a value property.
+    */
     'options'?: IOption[] | string;
+    /**
+    * This will be displayed in the input bar before any selected options.
+    */
     'placeholder'?: string;
     /**
     * If true, selected option bubbles will have close buttons.
     */
     'showCloseButtons'?: boolean;
+    /**
+    * The selection behaviour. "multi" allows selection of multiple options. "single" allows selection of only a single option (just like the native HTML select element).
+    */
     'type'?: Type;
     /**
     * If true, the option will be removed from available options after selection.

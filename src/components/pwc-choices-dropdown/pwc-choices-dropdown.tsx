@@ -19,7 +19,7 @@ import { IDropdownOptionClickedEventPayload } from "./IDropdownOptionClickedEven
   shadow: false
 })
 export class PwcChoicesDropdown {
-  @Element() root: HTMLElement;
+  @Element() root: HTMLPwcChoicesDropdownElement;
 
   @Prop() options: IOption[];
   @Watch("options")

@@ -28,20 +28,31 @@ import { IDropdownOptionClickedEventPayload } from "../pwc-choices-dropdown/IDro
   shadow: false
 })
 export class PwcChoices {
-  @Element() root: HTMLElement;
+  form: HTMLFormElement;
 
+  @Element() root: HTMLPwcChoicesElement;
+
+  /**
+   * HTML name attribute. This is implemented for compatibility with HTML forms, it has no internal usage.
+   */
   @Prop() name: string;
 
+  /**
+   * The selection behaviour.
+   * "multi" allows selection of multiple options.
+   * "single" allows selection of only a single option (just like the native HTML select element).
+   */
   @Prop() type: Type = "multi";
-  form: HTMLFormElement;
   @Watch("type")
-  typeWatchHandler(newValue) {
+  typeWatchHandler(newValue: Type) {
     if (!AllTypeLiterals.includes(newValue)) {
       throwTypeLiteralNotSupported("type", newValue, AllTypeLiterals);
     }
   }
 
-  private resolvedOptions: IOption[];
+  /**
+   * The options available to this component. An option must have a label and a value property.
+   */
   @Prop() options: IOption[] | string;
   @Watch("options")
   optionsWatchHandler(newValue: IOption[] | string) {
@@ -50,14 +61,22 @@ export class PwcChoices {
       this.distinctMode
     );
   }
+  private resolvedOptions: IOption[];
 
+  /**
+   * This will be displayed in the input bar before any selected options.
+   */
   @Prop() placeholder: string;
-  @Prop() dropdownIsOpen: boolean = false;
 
   /**
    * If true, the placeholder will be hidden if there are selected options.
    */
   @Prop() autoHidePlaceholder: boolean = true;
+
+  /**
+   * This determines wheter the dropdown is open or not.
+   */
+  @Prop({ mutable: true, reflect: true }) dropdownIsOpen: boolean = false;
 
   /**
    * If true, selected option bubbles will have close buttons.
@@ -76,10 +95,11 @@ export class PwcChoices {
 
   /**
    * This is the mode of filtering we use to make given option objects distinct.
+   * "none" disables the distinct filtering behaviour.
    */
   @Prop() distinctMode: DistinctMode = "none";
   @Watch("distinctMode")
-  distinctModeWatchHandler(newValue) {
+  distinctModeWatchHandler(newValue: DistinctMode) {
     if (!AllDistinctModeLiterals.includes(newValue)) {
       throwTypeLiteralNotSupported(
         "distinctMode",
@@ -89,25 +109,36 @@ export class PwcChoices {
     }
   }
 
+  /**
+   * This is raised when the selected options change.
+   */
   @Event() selectedOptionsChanged: EventEmitter<IOption[]>;
 
   @State() selectedOptions: IOption[] = [];
   @Watch("selectedOptions")
   selectedOptionsWatchHandler(newValue: IOption[]) {
     this.selectedOptionsChanged.emit(newValue);
-    this.selectedOptions = newValue;
   }
 
+  /**
+   * Returns the values of currently selected options.
+   */
   @Method()
   async getSelectedOptionsAsValues(): Promise<string[]> {
     return this.selectedOptions.map(o => o.value);
   }
 
+  /**
+   * Returns the labels of currently selected options.
+   */
   @Method()
   async getSelectedOptionsAsLabels(): Promise<string[]> {
     return this.selectedOptions.map(o => o.label);
   }
 
+  /**
+   * Returns the selected options as objects (as passed in to this component).
+   */
   @Method()
   async getSelectedOptionsAsObjects(): Promise<IOption[]> {
     return this.selectedOptions;
