@@ -32,42 +32,15 @@ export class PwcChoicesInputBar {
     });
   }
 
-  constructInputBar() {
-    let inputBarMainRender;
-
-    switch (this.type) {
-      case "single":
-        inputBarMainRender =
-          this.options && this.options.length > 0 ? (
-            <div class="singleSelectInputBarItem">{this.options[0].label}</div>
-          ) : (
-            <div class="singleSelectInputBarItem singleSelectInputBarPlaceholder">
-              {this.placeholder}
-            </div>
-          );
-        break;
-      case "multi":
-        inputBarMainRender = [
-          this.constructSelectedOptions(),
-          this.constructPlaceholder()
-        ];
-        break;
-    }
-
-    return [
-      <div class="input-bar-main">{inputBarMainRender}</div>,
-      <div class="input-bar-dropdown-icon">
-        <svg width="28" height="28" viewBox="0 0 18 18">
-          <path d="M5 8l4 4 4-4z" />
-        </svg>
-      </div>
-    ];
+  @Listen("click")
+  onInputBarClick(e: MouseEvent): void {
+    this.inputBarClicked.emit({ originalEvent: e });
   }
 
   constructSelectedOptions() {
-    return this.options.map((selectedOption, index) => (
+    return this.options.map((option, index) => (
       <pwc-choices-option-bubble
-        option={selectedOption}
+        option={option}
         showCloseButton={this.showCloseButtons}
         indexInSelectedList={index}
       ></pwc-choices-option-bubble>
@@ -91,14 +64,29 @@ export class PwcChoicesInputBar {
     );
   }
 
-  @Listen("click")
-  onInputBarClick(e: MouseEvent): void {
-    e.preventDefault();
-    e.stopPropagation();
-    this.inputBarClicked.emit({ originalEvent: e });
+  constructMainRender() {
+    switch (this.type) {
+      case "single":
+        return this.options && this.options.length > 0 ? (
+          <div class="singleSelectInputBarItem">{this.options[0].label}</div>
+        ) : (
+          <div class="singleSelectInputBarItem singleSelectInputBarPlaceholder">
+            {this.placeholder}
+          </div>
+        );
+      case "multi":
+        return [this.constructSelectedOptions(), this.constructPlaceholder()];
+    }
   }
 
   render() {
-    return this.constructInputBar();
+    return [
+      <div class="input-bar-main">{this.constructMainRender()}</div>,
+      <div class="input-bar-dropdown-icon">
+        <svg width="28" height="28" viewBox="0 0 18 18">
+          <path d="M5 8l4 4 4-4z" />
+        </svg>
+      </div>
+    ];
   }
 }

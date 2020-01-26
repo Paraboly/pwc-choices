@@ -68,7 +68,7 @@ export namespace Components {
     */
     'options': IOption[] | string;
     /**
-    * This will be displayed in the input bar before any selected options.
+    * This will be displayed in the input bar after the selected options.
     */
     'placeholder': string;
     /**
@@ -167,7 +167,7 @@ declare namespace LocalJSX {
     */
     'options'?: IOption[] | string;
     /**
-    * This will be displayed in the input bar before any selected options.
+    * This will be displayed in the input bar after the selected options.
     */
     'placeholder'?: string;
     /**

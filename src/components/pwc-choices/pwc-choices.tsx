@@ -64,7 +64,7 @@ export class PwcChoices {
   private resolvedOptions: IOption[];
 
   /**
-   * This will be displayed in the input bar before any selected options.
+   * This will be displayed in the input bar after the selected options.
    */
   @Prop() placeholder: string;
 
