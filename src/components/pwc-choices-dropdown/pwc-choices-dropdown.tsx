@@ -19,12 +19,14 @@ import { IDropdownOptionClickedEventPayload } from "./IDropdownOptionClickedEven
   shadow: false
 })
 export class PwcChoicesDropdown {
+  searchRef: HTMLInputElement;
+
   @Element() root: HTMLPwcChoicesDropdownElement;
 
   @Prop() options: IOption[];
   @Watch("options")
   optionsWatchHandler(newValue: IOption[]) {
-    this.filteredOptions = this.doFilter(this.getWholeSearchInput(), newValue);
+    this.filteredOptions = this.doFilter(this.searchRef.value, newValue);
   }
 
   @Prop() noOptionsString: string;
@@ -39,26 +41,6 @@ export class PwcChoicesDropdown {
     this.filteredOptions = this.convertOptionsToFilterResultsAsIs(this.options);
   }
 
-  constructDropdown() {
-    return [
-      <input
-        type="text"
-        class="search"
-        placeholder="Search by typing..."
-        onInput={e => this.onSearchInput(e)}
-      ></input>,
-      <ul>
-        {this.filteredOptions && this.filteredOptions.length === 0 ? (
-          <li id="noOptionsListItem"> {this.noOptionsString}</li>
-        ) : (
-          this.filteredOptions.map(option =>
-            this.constructDropdownOption(option)
-          )
-        )}
-      </ul>
-    ];
-  }
-
   doFilter(phrase: string, rawOptions: IOption[]): FilterResult<IOption>[] {
     if (phrase.length === 0) {
       return this.convertOptionsToFilterResultsAsIs(rawOptions);
@@ -71,25 +53,8 @@ export class PwcChoicesDropdown {
     });
   }
 
-  onSearchInput(e: Event): void {
-    e.stopPropagation();
-    this.filteredOptions = this.doFilter(
-      this.getWholeSearchInput(),
-      this.options
-    );
-  }
-
-  getWholeSearchInput(): string {
-    const searchBar = this.root.querySelector(".search") as HTMLInputElement;
-    return searchBar.value;
-  }
-
-  constructDropdownOption(option: FilterResult<IOption>): any {
-    return (
-      <li onClick={e => this.onDropdownOptionClick(option, e)}>
-        <span innerHTML={option.string}></span>
-      </li>
-    );
+  onSearchInput(): void {
+    this.filteredOptions = this.doFilter(this.searchRef.value, this.options);
   }
 
   onDropdownOptionClick(
@@ -97,9 +62,6 @@ export class PwcChoicesDropdown {
     clickEvent: MouseEvent
   ): void {
     const originalOption = optionFilterResult.original;
-
-    clickEvent.preventDefault();
-    clickEvent.stopPropagation();
     this.dropdownOptionClicked.emit({
       originalEvent: clickEvent,
       option: originalOption
@@ -117,17 +79,43 @@ export class PwcChoicesDropdown {
   }
 
   convertOptionsToFilterResultsAsIs(rawOptions: IOption[]) {
-    return rawOptions.map(o => {
+    return rawOptions.map((o, i) => {
       return {
         string: o.label,
         score: 0,
-        index: 0,
+        index: i,
         original: o
       };
     });
   }
 
+  constructDropdownOption(option: FilterResult<IOption>) {
+    return (
+      <li onClick={this.onDropdownOptionClick.bind(this, option)}>
+        <span innerHTML={option.string}></span>
+      </li>
+    );
+  }
+
   render() {
-    return this.constructDropdown();
+    return [
+      <input
+        type="text"
+        class="search"
+        placeholder="Search by typing..."
+        ref={elm => (this.searchRef = elm)}
+        onInput={this.onSearchInput.bind(this)}
+      ></input>,
+      <ul>
+        {this.filteredOptions &&
+          (this.filteredOptions.length === 0 ? (
+            <li id="noOptionsListItem"> {this.noOptionsString}</li>
+          ) : (
+            this.filteredOptions.map(option =>
+              this.constructDropdownOption(option)
+            )
+          ))}
+      </ul>
+    ];
   }
 }
