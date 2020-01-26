@@ -7,7 +7,7 @@ import { IOptionBubbleCloseClickedEventPayload } from "../pwc-choices-option-bub
 
 @Component({
   tag: "pwc-choices-input-bar",
-  styleUrl: "../styles.scss",
+  styleUrl: "pwc-choices-input-bar.scss",
   shadow: false
 })
 export class PwcChoicesInputBar {
@@ -54,16 +54,14 @@ export class PwcChoicesInputBar {
         break;
     }
 
-    return (
-      <div class="input-bar" onClick={e => this.onInputBarClick(e)}>
-        <div class="input-bar-main">{inputBarMainRender}</div>
-        <div class="input-bar-dropdown-icon">
-          <svg width="28" height="28" viewBox="0 0 18 18">
-            <path d="M5 8l4 4 4-4z" />
-          </svg>
-        </div>
+    return [
+      <div class="input-bar-main">{inputBarMainRender}</div>,
+      <div class="input-bar-dropdown-icon">
+        <svg width="28" height="28" viewBox="0 0 18 18">
+          <path d="M5 8l4 4 4-4z" />
+        </svg>
       </div>
-    );
+    ];
   }
 
   constructSelectedOptions() {
@@ -93,6 +91,7 @@ export class PwcChoicesInputBar {
     );
   }
 
+  @Listen("click")
   onInputBarClick(e: MouseEvent): void {
     e.preventDefault();
     e.stopPropagation();

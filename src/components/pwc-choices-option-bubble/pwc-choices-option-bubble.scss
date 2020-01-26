@@ -1,0 +1,27 @@
+pwc-choices-option-bubble {
+  font-size: medium;
+  font-family: Calibri, sans-serif;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px 10px 5px 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin: 5px;
+  min-height: 22px;
+}
+
+.bubble-label {
+}
+
+.bubble-closeButton {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  //   user-select: none;
+}
+
+#placeholderBubble {
+  color: grey;
+}

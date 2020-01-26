@@ -26,7 +26,7 @@ import { IDropdownOptionClickedEventPayload } from "../pwc-choices-dropdown/IDro
 
 @Component({
   tag: "pwc-choices",
-  styleUrl: "../styles.scss",
+  styleUrl: "pwc-choices.scss",
   shadow: false
 })
 export class PwcChoices {
@@ -215,11 +215,9 @@ export class PwcChoices {
   }
 
   render() {
-    return (
-      <div class="container">
-        {this.constructInputBar()}
-        {this.dropdownIsOpen && this.constructDropdown()}
-      </div>
-    );
+    return [
+      this.constructInputBar(),
+      this.dropdownIsOpen && this.constructDropdown()
+    ];
   }
 }

@@ -1,0 +1,37 @@
+pwc-choices-input-bar {
+  margin: 0;
+  font-size: medium;
+  font-family: Calibri, sans-serif;
+  border: 1px solid black;
+  min-height: 44px;
+  padding: 5px;
+  display: flex;
+  flex-wrap: nowrap;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.input-bar-main {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
+.input-bar-dropdown-icon {
+  flex-grow: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  margin: 0 10px 0 10px;
+}
+
+.singleSelectInputBarItem {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.singleSelectInputBarPlaceholder {
+  color: grey;
+}

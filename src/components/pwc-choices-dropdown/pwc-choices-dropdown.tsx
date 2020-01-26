@@ -15,7 +15,7 @@ import { IDropdownOptionClickedEventPayload } from "./IDropdownOptionClickedEven
 
 @Component({
   tag: "pwc-choices-dropdown",
-  styleUrl: "../styles.scss",
+  styleUrl: "pwc-choices-dropdown.scss",
   shadow: false
 })
 export class PwcChoicesDropdown {
@@ -40,25 +40,23 @@ export class PwcChoicesDropdown {
   }
 
   constructDropdown() {
-    return (
-      <div class="dropdown">
-        <input
-          type="text"
-          class="search"
-          placeholder="Search by typing..."
-          onInput={e => this.onSearchInput(e)}
-        ></input>
-        <ul>
-          {this.filteredOptions && this.filteredOptions.length === 0 ? (
-            <li id="noOptionsListItem"> {this.noOptionsString}</li>
-          ) : (
-            this.filteredOptions.map(option =>
-              this.constructDropdownOption(option)
-            )
-          )}
-        </ul>
-      </div>
-    );
+    return [
+      <input
+        type="text"
+        class="search"
+        placeholder="Search by typing..."
+        onInput={e => this.onSearchInput(e)}
+      ></input>,
+      <ul>
+        {this.filteredOptions && this.filteredOptions.length === 0 ? (
+          <li id="noOptionsListItem"> {this.noOptionsString}</li>
+        ) : (
+          this.filteredOptions.map(option =>
+            this.constructDropdownOption(option)
+          )
+        )}
+      </ul>
+    ];
   }
 
   doFilter(phrase: string, rawOptions: IOption[]): FilterResult<IOption>[] {
