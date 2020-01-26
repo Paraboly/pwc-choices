@@ -53,7 +53,8 @@
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags",
     "clean": "rm -Rf .stencil/ && rm -Rf dist/ && rm -Rf loader/ && rm -Rf node_modules/ && rm -Rf www/ && rm -f ./package-lock.json && npm cache clean -f",
-    "clean-and-install": "npm run clean && npm i"
+    "clean-and-install": "npm run clean && npm i",
+    "finalize": "npm run lint && npm run build && npm run format"
   },
   "devDependencies": {
     "@stencil/core": "^1.8.5",
