@@ -114,10 +114,14 @@ export class PwcChoices {
    */
   @Event() selectedOptionsChanged: EventEmitter<IOption[]>;
 
+  private changeWasDueToFormReset: boolean = false;
   @State() selectedOptions: IOption[] = [];
   @Watch("selectedOptions")
   selectedOptionsWatchHandler(newValue: IOption[]) {
-    this.selectedOptionsChanged.emit(newValue);
+    if (!this.changeWasDueToFormReset) {
+      this.selectedOptionsChanged.emit(newValue);
+    }
+    this.changeWasDueToFormReset = false;
   }
 
   /**
@@ -207,6 +211,7 @@ export class PwcChoices {
   }
 
   handleFormReset() {
+    this.changeWasDueToFormReset = true;
     this.selectedOptions = [];
   }
 
