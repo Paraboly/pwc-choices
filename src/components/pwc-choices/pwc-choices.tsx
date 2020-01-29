@@ -203,7 +203,7 @@ export class PwcChoices {
     // handle initial selections
     const initialSelections = _.filter(
       this.resolvedOptions,
-      o => o.initiallySelected && o.initiallySelected === true
+      o => o.initialSelected && o.initialSelected === true
     );
 
     if (this.type === "single" && initialSelections.length > 1) {
