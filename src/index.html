@@ -52,11 +52,13 @@
           choices.options = [
             {
               value: "foo",
-              label: "Foo"
+              label: "Foo",
+              initiallySelected: true
             },
             {
               value: "foo",
-              label: "Foo2"
+              label: "Foo2",
+
             },
             {
               value: "bar",
@@ -88,7 +90,7 @@
             }
           ];
 
-          choices.type = "multi";
+          choices.type = "single";
 
           choices.distinctMode = "none";
           choices.placeholder = "Placeholder text";

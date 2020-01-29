@@ -199,6 +199,20 @@ export class PwcChoices {
     this.optionsWatchHandler(this.options);
     this.typeWatchHandler(this.type);
     this.distinctModeWatchHandler(this.distinctMode);
+
+    // handle initial selections
+    const initialSelections = _.filter(
+      this.resolvedOptions,
+      o => o.initiallySelected && o.initiallySelected === true
+    );
+
+    if (this.type === "single" && initialSelections.length > 1) {
+      throw new Error(
+        "You have multiple initial selected options, but the type is `single`!"
+      );
+    }
+
+    this.selectedOptions = initialSelections;
   }
 
   componentDidLoad() {
