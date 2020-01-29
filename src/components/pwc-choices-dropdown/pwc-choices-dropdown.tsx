@@ -31,6 +31,8 @@ export class PwcChoicesDropdown {
 
   @Prop() noOptionsString: string;
 
+  @Prop() searchBarPlaceholder: string;
+
   @Event() dropdownOptionClicked: EventEmitter<
     IDropdownOptionClickedEventPayload
   >;
@@ -102,7 +104,7 @@ export class PwcChoicesDropdown {
       <input
         type="text"
         class="pwc-choices___search"
-        placeholder="Search by typing..."
+        placeholder={this.searchBarPlaceholder || "Search by typing..."}
         ref={elm => (this.searchRef = elm)}
         onInput={this.onSearchInput.bind(this)}
       ></input>,

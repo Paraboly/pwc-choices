@@ -5,10 +5,11 @@
 
 ## Properties
 
-| Property          | Attribute           | Description | Type        | Default     |
-| ----------------- | ------------------- | ----------- | ----------- | ----------- |
-| `noOptionsString` | `no-options-string` |             | `string`    | `undefined` |
-| `options`         | --                  |             | `IOption[]` | `undefined` |
+| Property               | Attribute                | Description | Type        | Default     |
+| ---------------------- | ------------------------ | ----------- | ----------- | ----------- |
+| `noOptionsString`      | `no-options-string`      |             | `string`    | `undefined` |
+| `options`              | --                       |             | `IOption[]` | `undefined` |
+| `searchBarPlaceholder` | `search-bar-placeholder` |             | `string`    | `undefined` |
 
 
 ## Events

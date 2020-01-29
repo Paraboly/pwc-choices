@@ -64,6 +64,11 @@ export class PwcChoices {
   private resolvedOptions: IOption[];
 
   /**
+   * This will appear in the search bar when there is no input.
+   */
+  @Prop() searchBarPlaceholder: string;
+
+  /**
    * This will be displayed in the input bar after the selected options.
    */
   @Prop() placeholder: string;
@@ -236,6 +241,7 @@ export class PwcChoices {
       <pwc-choices-dropdown
         noOptionsString={this.noOptionsString}
         options={dropdownOptions}
+        searchBarPlaceholder={this.searchBarPlaceholder}
       ></pwc-choices-dropdown>
     );
   }

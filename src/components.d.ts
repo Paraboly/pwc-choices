@@ -72,6 +72,10 @@ export namespace Components {
     */
     'placeholder': string;
     /**
+    * This will appear in the search bar when there is no input.
+    */
+    'searchBarPlaceholder': string;
+    /**
     * If true, selected option bubbles will have close buttons.
     */
     'showCloseButtons': boolean;
@@ -87,6 +91,7 @@ export namespace Components {
   interface PwcChoicesDropdown {
     'noOptionsString': string;
     'options': IOption[];
+    'searchBarPlaceholder': string;
   }
   interface PwcChoicesInputBar {
     'autoHidePlaceholder': boolean;
@@ -171,6 +176,10 @@ declare namespace LocalJSX {
     */
     'placeholder'?: string;
     /**
+    * This will appear in the search bar when there is no input.
+    */
+    'searchBarPlaceholder'?: string;
+    /**
     * If true, selected option bubbles will have close buttons.
     */
     'showCloseButtons'?: boolean;
@@ -187,6 +196,7 @@ declare namespace LocalJSX {
     'noOptionsString'?: string;
     'onDropdownOptionClicked'?: (event: CustomEvent<IDropdownOptionClickedEventPayload>) => void;
     'options'?: IOption[];
+    'searchBarPlaceholder'?: string;
   }
   interface PwcChoicesInputBar {
     'autoHidePlaceholder'?: boolean;
