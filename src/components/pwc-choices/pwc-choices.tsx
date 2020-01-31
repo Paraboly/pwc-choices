@@ -119,14 +119,14 @@ export class PwcChoices {
    */
   @Event() selectedOptionsChanged: EventEmitter<IOption[]>;
 
-  private changeWasDueToFormReset: boolean = false;
+  private doNotEmitChangeEvent: boolean = false;
   @State() selectedOptions: IOption[] = [];
   @Watch("selectedOptions")
   selectedOptionsWatchHandler(newValue: IOption[]) {
-    if (!this.changeWasDueToFormReset) {
+    if (!this.doNotEmitChangeEvent) {
       this.selectedOptionsChanged.emit(newValue);
     }
-    this.changeWasDueToFormReset = false;
+    this.doNotEmitChangeEvent = false;
   }
 
   /**
@@ -200,6 +200,7 @@ export class PwcChoices {
     this.typeWatchHandler(this.type);
     this.distinctModeWatchHandler(this.distinctMode);
 
+    this.doNotEmitChangeEvent = true;
     this.selectInitialSelectedOptions();
   }
 
@@ -231,7 +232,7 @@ export class PwcChoices {
   }
 
   handleFormReset() {
-    this.changeWasDueToFormReset = true;
+    this.doNotEmitChangeEvent = true;
     this.selectInitialSelectedOptions();
   }
 
