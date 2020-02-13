@@ -12,6 +12,8 @@ import _ from "lodash";
 import fuzzy, { FilterResult } from "fuzzy";
 import { IOption } from "../pwc-choices/IOption";
 import { IDropdownOptionClickedEventPayload } from "./IDropdownOptionClickedEventPayload";
+import { IconOptions } from '../../../dist/types/components/pwc-choices/IOption';
+import { IIconOptions } from '../pwc-choices/IconOptions';
 
 @Component({
   tag: "pwc-choices-dropdown",
@@ -91,10 +93,25 @@ export class PwcChoicesDropdown {
     });
   }
 
+  constructIcon(iconOptions: IIconOptions): {displayIcon: boolean, iconIsOnLeft: boolean, iconElm: HTMLImageElement} {
+    if(iconOptions) {
+      const iconIsOnLeft = (iconOptions.placement || "left") === "left";
+      const iconElm = <img {...iconOptions}></img>
+      return {displayIcon: true, iconIsOnLeft, iconElm}
+    }
+    else {
+      return {displayIcon: false, iconIsOnLeft: null, iconElm: null};
+    }
+  }
+
   constructDropdownOption(option: FilterResult<IOption>) {
+    const {displayIcon, iconIsOnLeft, iconElm} = this.constructIcon(option.original.icon);
+
     return (
       <li onClick={this.onDropdownOptionClick.bind(this, option)}>
+        {displayIcon && iconIsOnLeft && iconElm}
         <span innerHTML={option.string}></span>
+        {displayIcon && !iconIsOnLeft && iconElm}
       </li>
     );
   }
