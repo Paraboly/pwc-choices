@@ -8,6 +8,7 @@ import {
 } from "@stencil/core";
 import { IOption } from "../pwc-choices/IOption";
 import { IOptionBubbleCloseClickedEventPayload } from "./IOptionBubbleCloseClickedEventPayload";
+import { IIconOptions } from "../pwc-choices/IconOptions";
 
 @Component({
   tag: "pwc-choices-option-bubble",
@@ -34,8 +35,22 @@ export class PwcChoicesOptionBubble {
     });
   }
 
+  constructIcon(
+    iconOptions: IIconOptions
+  ): { displayIcon: boolean; iconElm: HTMLImageElement } {
+    if (iconOptions) {
+      const iconElm = <img {...iconOptions}></img>;
+      return { displayIcon: true, iconElm };
+    } else {
+      return { displayIcon: false, iconElm: null };
+    }
+  }
+
   render() {
+    const { displayIcon, iconElm } = this.constructIcon(this.option.icon);
+
     return [
+      displayIcon && iconElm,
       <span class="pwc-choices___bubble-label">{this.option.label}</span>,
       this.showCloseButton && (
         <span

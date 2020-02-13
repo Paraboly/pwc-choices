@@ -35,3 +35,14 @@ pwc-choices-input-bar {
 .pwc-choices___single-select-input-bar-placeholder {
   color: grey;
 }
+
+.pwc-choices___single-select-input-bar-item > img {
+  display: block;
+  flex-grow: 0;
+  margin-right: 10px;
+}
+
+.pwc-choices___single-select-input-bar-item > span {
+  display: block;
+  flex-grow: 1;
+}

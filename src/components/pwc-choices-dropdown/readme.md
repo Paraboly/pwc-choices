@@ -12,22 +12,20 @@
 | `searchBarPlaceholder` | `search-bar-placeholder` |             | `string`    | `undefined` |
 
 
-## Events
-
-| Event                   | Description | Type                                              |
-| ----------------------- | ----------- | ------------------------------------------------- |
-| `dropdownOptionClicked` |             | `CustomEvent<IDropdownOptionClickedEventPayload>` |
-
-
 ## Dependencies
 
 ### Used by
 
  - [pwc-choices](../pwc-choices)
 
+### Depends on
+
+- [pwc-choices-dropdown-item](../pwc-choices-dropdown-item)
+
 ### Graph
 ```mermaid
 graph TD;
+  pwc-choices-dropdown --> pwc-choices-dropdown-item
   pwc-choices --> pwc-choices-dropdown
   style pwc-choices-dropdown fill:#f9f,stroke:#333,stroke-width:4px
 ```

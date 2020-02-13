@@ -25,3 +25,9 @@ pwc-choices-option-bubble {
 #pwc-choices___placeholder-bubble {
   color: grey;
 }
+
+pwc-choices-option-bubble > img {
+  display: block;
+  flex-grow: 0;
+  margin-right: 10px;
+}

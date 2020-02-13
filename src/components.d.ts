@@ -17,8 +17,11 @@ import {
   DistinctMode,
 } from './components/pwc-choices/DistinctMode';
 import {
-  IDropdownOptionClickedEventPayload,
-} from './components/pwc-choices-dropdown/IDropdownOptionClickedEventPayload';
+  FilterResult,
+} from 'fuzzy';
+import {
+  IDropdownItemClickedEventPayload,
+} from './components/pwc-choices-dropdown-item/IDropdownItemClickedEventPayload';
 import {
   IOptionDiscardedEventPayload,
 } from './components/pwc-choices-input-bar/IOptionDiscardedEventPayload';
@@ -35,6 +38,10 @@ export namespace Components {
     * If true, the placeholder will be hidden if there are selected options.
     */
     'autoHidePlaceholder': boolean;
+    /**
+    * If true, option icons will be displayed on the input bar as well.
+    */
+    'displayIconsOnInputBar': boolean;
     /**
     * This is the mode of filtering we use to make given option objects distinct. "none" disables the distinct filtering behaviour.
     */
@@ -93,6 +100,10 @@ export namespace Components {
     'options': IOption[];
     'searchBarPlaceholder': string;
   }
+  interface PwcChoicesDropdownItem {
+    'isNoOption': boolean;
+    'option': FilterResult<IOption>;
+  }
   interface PwcChoicesInputBar {
     'autoHidePlaceholder': boolean;
     'options': IOption[];
@@ -122,6 +133,12 @@ declare global {
     new (): HTMLPwcChoicesDropdownElement;
   };
 
+  interface HTMLPwcChoicesDropdownItemElement extends Components.PwcChoicesDropdownItem, HTMLStencilElement {}
+  var HTMLPwcChoicesDropdownItemElement: {
+    prototype: HTMLPwcChoicesDropdownItemElement;
+    new (): HTMLPwcChoicesDropdownItemElement;
+  };
+
   interface HTMLPwcChoicesInputBarElement extends Components.PwcChoicesInputBar, HTMLStencilElement {}
   var HTMLPwcChoicesInputBarElement: {
     prototype: HTMLPwcChoicesInputBarElement;
@@ -136,6 +153,7 @@ declare global {
   interface HTMLElementTagNameMap {
     'pwc-choices': HTMLPwcChoicesElement;
     'pwc-choices-dropdown': HTMLPwcChoicesDropdownElement;
+    'pwc-choices-dropdown-item': HTMLPwcChoicesDropdownItemElement;
     'pwc-choices-input-bar': HTMLPwcChoicesInputBarElement;
     'pwc-choices-option-bubble': HTMLPwcChoicesOptionBubbleElement;
   }
@@ -147,6 +165,10 @@ declare namespace LocalJSX {
     * If true, the placeholder will be hidden if there are selected options.
     */
     'autoHidePlaceholder'?: boolean;
+    /**
+    * If true, option icons will be displayed on the input bar as well.
+    */
+    'displayIconsOnInputBar'?: boolean;
     /**
     * This is the mode of filtering we use to make given option objects distinct. "none" disables the distinct filtering behaviour.
     */
@@ -194,9 +216,13 @@ declare namespace LocalJSX {
   }
   interface PwcChoicesDropdown {
     'noOptionsString'?: string;
-    'onDropdownOptionClicked'?: (event: CustomEvent<IDropdownOptionClickedEventPayload>) => void;
     'options'?: IOption[];
     'searchBarPlaceholder'?: string;
+  }
+  interface PwcChoicesDropdownItem {
+    'isNoOption'?: boolean;
+    'onDropdownItemClicked'?: (event: CustomEvent<IDropdownItemClickedEventPayload>) => void;
+    'option'?: FilterResult<IOption>;
   }
   interface PwcChoicesInputBar {
     'autoHidePlaceholder'?: boolean;
@@ -217,6 +243,7 @@ declare namespace LocalJSX {
   interface IntrinsicElements {
     'pwc-choices': PwcChoices;
     'pwc-choices-dropdown': PwcChoicesDropdown;
+    'pwc-choices-dropdown-item': PwcChoicesDropdownItem;
     'pwc-choices-input-bar': PwcChoicesInputBar;
     'pwc-choices-option-bubble': PwcChoicesOptionBubble;
   }
@@ -230,6 +257,7 @@ declare module "@stencil/core" {
     interface IntrinsicElements {
       'pwc-choices': LocalJSX.PwcChoices & JSXBase.HTMLAttributes<HTMLPwcChoicesElement>;
       'pwc-choices-dropdown': LocalJSX.PwcChoicesDropdown & JSXBase.HTMLAttributes<HTMLPwcChoicesDropdownElement>;
+      'pwc-choices-dropdown-item': LocalJSX.PwcChoicesDropdownItem & JSXBase.HTMLAttributes<HTMLPwcChoicesDropdownItemElement>;
       'pwc-choices-input-bar': LocalJSX.PwcChoicesInputBar & JSXBase.HTMLAttributes<HTMLPwcChoicesInputBarElement>;
       'pwc-choices-option-bubble': LocalJSX.PwcChoicesOptionBubble & JSXBase.HTMLAttributes<HTMLPwcChoicesOptionBubbleElement>;
     }

@@ -2,18 +2,15 @@ import {
   Component,
   Prop,
   h,
-  Event,
-  EventEmitter,
   Element,
   State,
-  Watch
+  Watch,
+  Listen
 } from "@stencil/core";
 import _ from "lodash";
 import fuzzy, { FilterResult } from "fuzzy";
 import { IOption } from "../pwc-choices/IOption";
-import { IDropdownOptionClickedEventPayload } from "./IDropdownOptionClickedEventPayload";
-import { IconOptions } from '../../../dist/types/components/pwc-choices/IOption';
-import { IIconOptions } from '../pwc-choices/IconOptions';
+import { IDropdownItemClickedEventPayload } from "../pwc-choices-dropdown-item/IDropdownItemClickedEventPayload";
 
 @Component({
   tag: "pwc-choices-dropdown",
@@ -32,12 +29,7 @@ export class PwcChoicesDropdown {
   }
 
   @Prop() noOptionsString: string;
-
   @Prop() searchBarPlaceholder: string;
-
-  @Event() dropdownOptionClicked: EventEmitter<
-    IDropdownOptionClickedEventPayload
-  >;
 
   @State() filteredOptions: FilterResult<IOption>[];
 
@@ -61,15 +53,12 @@ export class PwcChoicesDropdown {
     this.filteredOptions = this.doFilter(this.searchRef.value, this.options);
   }
 
-  onDropdownOptionClick(
-    optionFilterResult: FilterResult<IOption>,
-    clickEvent: MouseEvent
-  ): void {
+  @Listen("dropdownItemClicked")
+  dropdownItemClickedEventHandler(
+    event: CustomEvent<IDropdownItemClickedEventPayload>
+  ) {
+    const optionFilterResult = event.detail.option;
     const originalOption = optionFilterResult.original;
-    this.dropdownOptionClicked.emit({
-      originalEvent: clickEvent,
-      option: originalOption
-    });
 
     /* We need to remove them here if we want to keep the
      * dropdown open after a selection. A bit unplesant,
@@ -93,30 +82,14 @@ export class PwcChoicesDropdown {
     });
   }
 
-  constructIcon(iconOptions: IIconOptions): {displayIcon: boolean, iconIsOnLeft: boolean, iconElm: HTMLImageElement} {
-    if(iconOptions) {
-      const iconIsOnLeft = (iconOptions.placement || "left") === "left";
-      const iconElm = <img {...iconOptions}></img>
-      return {displayIcon: true, iconIsOnLeft, iconElm}
-    }
-    else {
-      return {displayIcon: false, iconIsOnLeft: null, iconElm: null};
-    }
-  }
-
-  constructDropdownOption(option: FilterResult<IOption>) {
-    const {displayIcon, iconIsOnLeft, iconElm} = this.constructIcon(option.original.icon);
-
-    return (
-      <li onClick={this.onDropdownOptionClick.bind(this, option)}>
-        {displayIcon && iconIsOnLeft && iconElm}
-        <span innerHTML={option.string}></span>
-        {displayIcon && !iconIsOnLeft && iconElm}
-      </li>
-    );
-  }
-
   render() {
+    const noItemOption: FilterResult<IOption> = {
+      string: this.noOptionsString,
+      score: 0,
+      index: 0,
+      original: null
+    };
+
     return [
       <input
         type="text"
@@ -125,19 +98,22 @@ export class PwcChoicesDropdown {
         ref={elm => (this.searchRef = elm)}
         onInput={this.onSearchInput.bind(this)}
       ></input>,
-      <ul>
+      <div id="pwc-choices___dropdown-item-container">
         {this.filteredOptions &&
           (this.filteredOptions.length === 0 ? (
-            <li id="pwc-choices___no-options-list-item">
-              {" "}
-              {this.noOptionsString}
-            </li>
+            <pwc-choices-dropdown-item
+              option={noItemOption}
+              isNoOption={true}
+            ></pwc-choices-dropdown-item>
           ) : (
-            this.filteredOptions.map(option =>
-              this.constructDropdownOption(option)
-            )
+            this.filteredOptions.map(option => (
+              <pwc-choices-dropdown-item
+                option={option}
+                isNoOption={false}
+              ></pwc-choices-dropdown-item>
+            ))
           ))}
-      </ul>
+      </div>
     ];
   }
 }

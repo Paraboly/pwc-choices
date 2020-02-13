@@ -1,0 +1,44 @@
+pwc-choices-dropdown-item {
+  transition: background-color ease 0.2s;
+  margin: 0;
+  cursor: pointer;
+  //   user-select: none;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+pwc-choices-dropdown-item:hover {
+  background-color: #eee;
+}
+
+pwc-choices-dropdown-item + pwc-choices-dropdown-item {
+  border-top: 1px solid black;
+}
+
+pwc-choices-dropdown-item[is-no-option] {
+  cursor: default;
+  color: grey;
+}
+
+pwc-choices-dropdown-item > img {
+  display: block;
+  flex-grow: 0;
+}
+
+pwc-choices-dropdown-item > img[placement="left"] {
+  order: 0;
+  margin-right: 10px;
+}
+
+pwc-choices-dropdown-item > img[placement="right"] {
+  order: 2;
+  margin-left: 10px;
+}
+
+pwc-choices-dropdown-item > span {
+  order: 1;
+  display: block;
+  flex-grow: 1;
+}

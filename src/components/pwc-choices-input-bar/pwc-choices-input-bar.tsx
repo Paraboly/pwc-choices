@@ -4,6 +4,7 @@ import { IOption } from "../pwc-choices/IOption";
 import { IOptionDiscardedEventPayload } from "./IOptionDiscardedEventPayload";
 import { IInputBarClickedEventPayload } from "./IInputBarClickedEventPayload";
 import { IOptionBubbleCloseClickedEventPayload } from "../pwc-choices-option-bubble/IOptionBubbleCloseClickedEventPayload";
+import { IIconOptions } from "../pwc-choices/IconOptions";
 
 @Component({
   tag: "pwc-choices-input-bar",
@@ -64,16 +65,31 @@ export class PwcChoicesInputBar {
     );
   }
 
+  constructIcon(
+    iconOptions: IIconOptions
+  ): { displayIcon: boolean; iconElm: HTMLImageElement } {
+    if (iconOptions) {
+      const iconElm = <img {...iconOptions}></img>;
+      return { displayIcon: true, iconElm };
+    } else {
+      return { displayIcon: false, iconElm: null };
+    }
+  }
+
   constructMainRender() {
     switch (this.type) {
       case "single":
+        const { displayIcon, iconElm } = this.constructIcon(
+          this.options[0].icon
+        );
         return this.options && this.options.length > 0 ? (
           <div class="pwc-choices___single-select-input-bar-item">
-            {this.options[0].label}
+            {displayIcon && iconElm}
+            <span>{this.options[0].label}</span>
           </div>
         ) : (
           <div class="pwc-choices___single-select-input-bar-item pwc-choices___single-select-input-bar-placeholder">
-            {this.placeholder}
+            <span>{this.placeholder}</span>
           </div>
         );
       case "multi":

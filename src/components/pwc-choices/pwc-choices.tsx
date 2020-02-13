@@ -20,7 +20,7 @@ import { IOption } from "./IOption";
 import { DistinctMode } from "./DistinctMode";
 import { AllDistinctModeLiterals } from "./AllDistinctModeLiterals";
 import { IOptionDiscardedEventPayload } from "../pwc-choices-input-bar/IOptionDiscardedEventPayload";
-import { IDropdownOptionClickedEventPayload } from "../pwc-choices-dropdown/IDropdownOptionClickedEventPayload";
+import { IDropdownItemClickedEventPayload } from "../pwc-choices-dropdown-item/IDropdownItemClickedEventPayload";
 
 @Component({
   tag: "pwc-choices",
@@ -115,6 +115,11 @@ export class PwcChoices {
   }
 
   /**
+   * If true, option icons will be displayed on the input bar as well.
+   */
+  @Prop() displayIconsOnInputBar: boolean;
+
+  /**
    * This is raised when the selected options change.
    */
   @Event() selectedOptionsChanged: EventEmitter<IOption[]>;
@@ -167,16 +172,19 @@ export class PwcChoices {
     this.dropdownIsOpen = !this.dropdownIsOpen;
   }
 
-  @Listen("dropdownOptionClicked")
-  dropdownOptionClickedHandler(
-    event: CustomEvent<IDropdownOptionClickedEventPayload>
+  @Listen("dropdownItemClicked")
+  dropdownItemClickedHandler(
+    event: CustomEvent<IDropdownItemClickedEventPayload>
   ) {
     switch (this.type) {
       case "multi":
-        this.selectedOptions = [...this.selectedOptions, event.detail.option];
+        this.selectedOptions = [
+          ...this.selectedOptions,
+          event.detail.option.original
+        ];
         break;
       case "single":
-        this.selectedOptions = [event.detail.option];
+        this.selectedOptions = [event.detail.option.original];
         this.dropdownIsOpen = false;
         break;
     }

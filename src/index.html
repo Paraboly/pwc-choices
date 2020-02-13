@@ -131,7 +131,7 @@
             }
           ];
 
-          choices.type = "single";
+          choices.type = "multi";
 
           choices.distinctMode = "none";
           choices.placeholder = "Placeholder text";
@@ -140,6 +140,7 @@
           choices.noOptionsString = "Seçecek bir şey kalmadı :(";
           choices.uniqueSelection = true;
           choices.searchBarPlaceholder = "Aramak için yazınız...";
+          choices.displayIconsOnInputBar = true;
 
           choices.addEventListener("selectedOptionsChanged", e => {
             console.log(e);
@@ -156,7 +157,7 @@
         document.querySelector("#printResult").addEventListener("click", e => {
           resultDiv.innerHTML = "";
           choicesAll.forEach(choices =>
-            choices.getSelectedOptions("value").then(selectedOptions => {
+            choices.getSelectedOptionsAsValues().then(selectedOptions => {
               resultDiv.innerHTML +=
                 "Selected Options (" +
                 choices.name +
