@@ -51,6 +51,10 @@ export namespace Components {
     */
     'dropdownIsOpen': boolean;
     /**
+    * This determines what happens to dropdown items after they are selected.  * `remove`: remove the selected item from the dropdown. * `toggle`: dropdown items become toggles, that is, they remain in the dropdown and remove themself from the input bar when clicked again. * `accumulate`: a click on a dropdown item is always a select command, and the item always stays in the dropdown.  Both `remove` and `toggle` ensures the uniqueness of the selections, while `accumulate` allows for multiple selections of the same option.
+    */
+    'dropdownSelectionBehaviour': "remove" | "toggle" | "accumulate";
+    /**
     * Returns the labels of currently selected options.
     */
     'getSelectedOptionsAsLabels': () => Promise<string[]>;
@@ -90,19 +94,20 @@ export namespace Components {
     * The selection behaviour. "multi" allows selection of multiple options. "single" allows selection of only a single option (just like the native HTML select element).
     */
     'type': Type;
-    /**
-    * If true, the option will be removed from available options after selection.
-    */
-    'uniqueSelections': boolean;
   }
   interface PwcChoicesDropdown {
     'noOptionsString': string;
     'options': IOption[];
     'searchBarPlaceholder': string;
+    'selectedOptions': IOption[];
+    'selectionBehaviour': "remove" | "toggle" | "accumulate";
   }
   interface PwcChoicesDropdownItem {
+    'active': boolean;
     'isNoOption': boolean;
     'option': FilterResult<IOption>;
+    'selectCount': number;
+    'selectionBehaviour': "remove" | "toggle" | "accumulate";
   }
   interface PwcChoicesInputBar {
     'autoHidePlaceholder': boolean;
@@ -178,6 +183,10 @@ declare namespace LocalJSX {
     */
     'dropdownIsOpen'?: boolean;
     /**
+    * This determines what happens to dropdown items after they are selected.  * `remove`: remove the selected item from the dropdown. * `toggle`: dropdown items become toggles, that is, they remain in the dropdown and remove themself from the input bar when clicked again. * `accumulate`: a click on a dropdown item is always a select command, and the item always stays in the dropdown.  Both `remove` and `toggle` ensures the uniqueness of the selections, while `accumulate` allows for multiple selections of the same option.
+    */
+    'dropdownSelectionBehaviour'?: "remove" | "toggle" | "accumulate";
+    /**
     * HTML name attribute. This is implemented for compatibility with HTML forms, it has no internal usage.
     */
     'name'?: string;
@@ -209,20 +218,21 @@ declare namespace LocalJSX {
     * The selection behaviour. "multi" allows selection of multiple options. "single" allows selection of only a single option (just like the native HTML select element).
     */
     'type'?: Type;
-    /**
-    * If true, the option will be removed from available options after selection.
-    */
-    'uniqueSelections'?: boolean;
   }
   interface PwcChoicesDropdown {
     'noOptionsString'?: string;
     'options'?: IOption[];
     'searchBarPlaceholder'?: string;
+    'selectedOptions'?: IOption[];
+    'selectionBehaviour'?: "remove" | "toggle" | "accumulate";
   }
   interface PwcChoicesDropdownItem {
+    'active'?: boolean;
     'isNoOption'?: boolean;
     'onDropdownItemClicked'?: (event: CustomEvent<IDropdownItemClickedEventPayload>) => void;
     'option'?: FilterResult<IOption>;
+    'selectCount'?: number;
+    'selectionBehaviour'?: "remove" | "toggle" | "accumulate";
   }
   interface PwcChoicesInputBar {
     'autoHidePlaceholder'?: boolean;
