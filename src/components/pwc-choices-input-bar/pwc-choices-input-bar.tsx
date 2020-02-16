@@ -1,10 +1,21 @@
-import { Component, Prop, h, Listen, Event, EventEmitter } from "@stencil/core";
+import {
+  Component,
+  Prop,
+  h,
+  Listen,
+  Event,
+  EventEmitter,
+  Element,
+  State,
+  Watch
+} from "@stencil/core";
 import _ from "lodash";
 import { IOption } from "../pwc-choices/IOption";
 import { IOptionDiscardedEventPayload } from "./IOptionDiscardedEventPayload";
 import { IInputBarClickedEventPayload } from "./IInputBarClickedEventPayload";
 import { IOptionBubbleCloseClickedEventPayload } from "../pwc-choices-option-bubble/IOptionBubbleCloseClickedEventPayload";
 import { IIconOptions } from "../pwc-choices/IconOptions";
+import { checkOverflow } from "../../utils/checkOverflow";
 
 @Component({
   tag: "pwc-choices-input-bar",
@@ -12,14 +23,28 @@ import { IIconOptions } from "../pwc-choices/IconOptions";
   shadow: false
 })
 export class PwcChoicesInputBar {
+  @Element() root: HTMLElement;
+
   @Prop() type: "single" | "multi" = "multi";
   @Prop() options: IOption[];
+  @Watch("options")
+  optionsWatchHandler(newVal: IOption[], oldVal: IOption[]) {
+    // The content can only fit again if the operation was the deletion of an option.
+    const wasDeletion = newVal.length < oldVal.length;
+    if (wasDeletion) {
+      // reset to check the overflow again in the upcoming render cycle.
+      this.isOverflowing = false;
+    }
+  }
+
   @Prop() showCloseButtons: boolean;
   @Prop() placeholder: string;
   @Prop() autoHidePlaceholder: boolean;
+  @Prop() displayMode: "countOnly" | "fixed" | "dynamic" | "grow";
+
+  @State() isOverflowing: boolean = false;
 
   @Event() optionDiscarded: EventEmitter<IOptionDiscardedEventPayload>;
-
   @Event() inputBarClicked: EventEmitter<IInputBarClickedEventPayload>;
 
   @Listen("closeClicked")
@@ -93,11 +118,15 @@ export class PwcChoicesInputBar {
           </div>
         );
       case "multi":
-        return [this.constructSelectedOptions(), this.constructPlaceholder()];
+        return this.constructMultiSelecMainRender();
     }
   }
 
-  render() {
+  constructMultiSelecMainRender() {
+    return [this.constructSelectedOptions(), this.constructPlaceholder()];
+  }
+
+  constructBubbles() {
     return [
       <div class="pwc-choices___input-bar-main">
         {this.constructMainRender()}
@@ -108,5 +137,32 @@ export class PwcChoicesInputBar {
         </svg>
       </div>
     ];
+  }
+
+  counstructCount() {
+    return [
+      <div class="pwc-choices___input-bar-main">
+        {"Selected " + this.options.length + " options."}
+      </div>,
+      <div class="pwc-choices___input-bar-dropdown-icon">
+        <svg width="28" height="28" viewBox="0 0 18 18">
+          <path d="M5 8l4 4 4-4z" />
+        </svg>
+      </div>
+    ];
+  }
+
+  render() {
+    const shouldCollapse = this.displayMode !== "grow" && this.isOverflowing;
+    if (this.displayMode === "countOnly" || shouldCollapse) {
+      return this.counstructCount();
+    } else {
+      return this.constructBubbles();
+    }
+  }
+
+  componentDidRender() {
+    // if we decided that it was overflowing before, then it is still overflowing.
+    this.isOverflowing = this.isOverflowing || checkOverflow(this.root);
   }
 }

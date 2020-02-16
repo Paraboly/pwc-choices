@@ -127,6 +127,19 @@ export class PwcChoices {
   @Prop() displayIconsOnInputBar: boolean;
 
   /**
+   * (multi select mode only) Maximum number of option bubbles to display in the input bar.
+   *
+   * * `countOnly`: display only the selected option count.
+   * * `dynamic`: display the selected options if they fit. when they overflow, switch to selected option count only.
+   * * `grow`: input bar grows with the content.
+   *
+   * If you are using `dynamic`, make sure:
+   * * you give this component a fixed width and a fixed height
+   * * you give the input-bar-main `flex-wrap: nowrap`
+   */
+  @Prop() inputBarDisplayMode: "countOnly" | "dynamic" | "grow" = `grow`;
+
+  /**
    * This is raised when the selected options change.
    */
   @Event() selectedOptionsChanged: EventEmitter<IOption[]>;
@@ -270,6 +283,7 @@ export class PwcChoices {
         placeholder={this.placeholder}
         autoHidePlaceholder={this.autoHidePlaceholder}
         type={this.type}
+        displayMode={this.inputBarDisplayMode}
       ></pwc-choices-input-bar>
     );
   }

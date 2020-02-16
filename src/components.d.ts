@@ -67,6 +67,10 @@ export namespace Components {
     */
     'getSelectedOptionsAsValues': () => Promise<string[]>;
     /**
+    * (multi select mode only) Maximum number of option bubbles to display in the input bar.  * `countOnly`: display only the selected option count. * `dynamic`: display the selected options if they fit. when they overflow, switch to selected option count only. * `grow`: input bar grows with the content.  If you are using `dynamic`, make sure: * you give this component a fixed width and a fixed height * you give the input-bar-main `flex-wrap: nowrap`
+    */
+    'inputBarDisplayMode': "countOnly" | "dynamic" | "grow";
+    /**
     * HTML name attribute. This is implemented for compatibility with HTML forms, it has no internal usage.
     */
     'name': string;
@@ -111,6 +115,7 @@ export namespace Components {
   }
   interface PwcChoicesInputBar {
     'autoHidePlaceholder': boolean;
+    'displayMode': "countOnly" | "fixed" | "dynamic" | "grow";
     'options': IOption[];
     'placeholder': string;
     'showCloseButtons': boolean;
@@ -187,6 +192,10 @@ declare namespace LocalJSX {
     */
     'dropdownSelectionBehaviour'?: "remove" | "toggle" | "accumulate";
     /**
+    * (multi select mode only) Maximum number of option bubbles to display in the input bar.  * `countOnly`: display only the selected option count. * `dynamic`: display the selected options if they fit. when they overflow, switch to selected option count only. * `grow`: input bar grows with the content.  If you are using `dynamic`, make sure: * you give this component a fixed width and a fixed height * you give the input-bar-main `flex-wrap: nowrap`
+    */
+    'inputBarDisplayMode'?: "countOnly" | "dynamic" | "grow";
+    /**
     * HTML name attribute. This is implemented for compatibility with HTML forms, it has no internal usage.
     */
     'name'?: string;
@@ -236,6 +245,7 @@ declare namespace LocalJSX {
   }
   interface PwcChoicesInputBar {
     'autoHidePlaceholder'?: boolean;
+    'displayMode'?: "countOnly" | "fixed" | "dynamic" | "grow";
     'onInputBarClicked'?: (event: CustomEvent<IInputBarClickedEventPayload>) => void;
     'onOptionDiscarded'?: (event: CustomEvent<IOptionDiscardedEventPayload>) => void;
     'options'?: IOption[];

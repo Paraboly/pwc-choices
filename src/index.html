@@ -26,13 +26,13 @@
       
       <input type="reset"></input>
     </form>
-
+<!-- 
     <br />
 
     <label>
       Second
       <pwc-choices name="second"></pwc-choices>
-    </label>
+    </label> -->
 
     <br />
     <hr />
@@ -141,7 +141,11 @@
           choices.uniqueSelection = true;
           choices.searchBarPlaceholder = "Aramak için yazınız...";
           choices.displayIconsOnInputBar = true;
-          choices.dropdownSelectionBehaviour = "accumulate";
+          choices.dropdownSelectionBehaviour = "toggle";
+          choices.inputBarDisplayMode = "fixed";
+
+          choices.style.width = "250px";
+          choices.style.height = "100px";
 
           choices.addEventListener("selectedOptionsChanged", e => {
             console.log(e);
