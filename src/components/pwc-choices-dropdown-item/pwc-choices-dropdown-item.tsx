@@ -50,8 +50,19 @@ export class PwcChoicesDropdownItem {
     iconOptions: IIconOptions
   ): { displayIcon: boolean; iconElm: HTMLImageElement } {
     if (iconOptions) {
-      const iconElm = <img {...iconOptions}></img>;
-      return { displayIcon: true, iconElm };
+      iconOptions = _.cloneDeep(iconOptions);
+
+      const iconStyle = {
+        width: iconOptions.width,
+        height: iconOptions.height
+      };
+      delete iconOptions.width;
+      delete iconOptions.height;
+
+      return {
+        displayIcon: true,
+        iconElm: <img {...iconOptions} style={iconStyle}></img>
+      };
     } else {
       return { displayIcon: false, iconElm: null };
     }

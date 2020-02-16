@@ -4,13 +4,14 @@
  * Will temporarily modify the "overflow" style to detect this
  * if necessary.
  */
-export function checkOverflow(el) {
+export function checkOverflow(el, width?, height?) {
   const curOverflow = el.style.overflow;
 
   if (!curOverflow || curOverflow === "visible") el.style.overflow = "hidden";
 
   const isOverflowing =
-    el.clientWidth < el.scrollWidth || el.clientHeight < el.scrollHeight;
+    (width && el.clientWidth < el.scrollWidth) ||
+    (height && el.clientHeight < el.scrollHeight);
 
   el.style.overflow = curOverflow;
 

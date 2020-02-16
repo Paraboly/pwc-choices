@@ -3,24 +3,32 @@ pwc-choices-input-bar {
   font-size: medium;
   font-family: Calibri, sans-serif;
   border: 1px solid black;
-  min-height: 44px;
   padding: 5px;
   display: flex;
   flex-wrap: nowrap;
   border-radius: 5px;
   overflow: hidden;
   background-color: white;
+
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 pwc-choices-input-bar[calculating] > .pwc-choices___input-bar-main {
   visibility: hidden;
 }
 
+.pwc-choices___option-count {
+  display: block;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+}
+
 .pwc-choices___input-bar-main {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
   flex-grow: 1;
 }
 

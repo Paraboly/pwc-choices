@@ -6,7 +6,6 @@ import {
   Event,
   EventEmitter,
   Element,
-  State,
   Watch
 } from "@stencil/core";
 import _ from "lodash";
@@ -16,7 +15,6 @@ import { IInputBarClickedEventPayload } from "./IInputBarClickedEventPayload";
 import { IOptionBubbleCloseClickedEventPayload } from "../pwc-choices-option-bubble/IOptionBubbleCloseClickedEventPayload";
 import { IIconOptions } from "../pwc-choices/IconOptions";
 import { checkOverflow } from "../../utils/checkOverflow";
-import { HTMLStencilElement } from "../../../dist/types/stencil.core";
 
 @Component({
   tag: "pwc-choices-input-bar",
@@ -27,7 +25,7 @@ export class PwcChoicesInputBar {
   private isOverflowing: boolean = false;
   private isCalculating = true;
 
-  @Element() root: HTMLStencilElement;
+  @Element() root: HTMLPwcChoicesInputBarElement;
 
   @Prop() type: "single" | "multi" = "multi";
   @Prop() options: IOption[];
@@ -41,7 +39,7 @@ export class PwcChoicesInputBar {
   @Prop() showCloseButtons: boolean;
   @Prop() placeholder: string;
   @Prop() autoHidePlaceholder: boolean;
-  @Prop() displayMode: "countOnly" | "fixed" | "dynamic" | "grow";
+  @Prop() displayMode: "countOnly" | "dynamic" | "bubblesOnly";
 
   @Event() optionDiscarded: EventEmitter<IOptionDiscardedEventPayload>;
   @Event() inputBarClicked: EventEmitter<IInputBarClickedEventPayload>;
@@ -141,7 +139,9 @@ export class PwcChoicesInputBar {
   counstructCount() {
     return [
       <div class="pwc-choices___input-bar-main">
-        {"Selected " + this.options.length + " options."}
+        <span class="pwc-choices___option-count">
+          {"Selected " + this.options.length + " options."}
+        </span>
       </div>,
       <div class="pwc-choices___input-bar-dropdown-icon">
         <svg width="28" height="28" viewBox="0 0 18 18">
@@ -166,7 +166,7 @@ export class PwcChoicesInputBar {
     let toReturn: any;
     const shouldCollapse = this.isCalculating
       ? false
-      : this.displayMode !== "grow" && this.isOverflowing;
+      : this.displayMode !== "bubblesOnly" && this.isOverflowing;
 
     if (this.displayMode === "countOnly" || shouldCollapse) {
       toReturn = this.counstructCount();
@@ -179,7 +179,7 @@ export class PwcChoicesInputBar {
   componentDidRender() {
     if (this.displayMode === "dynamic") {
       if (this.isCalculating) {
-        this.isOverflowing = checkOverflow(this.root);
+        this.isOverflowing = checkOverflow(this.root, true, false);
         this.isCalculating = false;
         this.root.forceUpdate();
       } else {

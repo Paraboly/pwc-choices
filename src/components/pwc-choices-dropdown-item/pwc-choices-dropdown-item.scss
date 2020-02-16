@@ -25,6 +25,11 @@ pwc-choices-dropdown-item[is-no-option] {
 pwc-choices-dropdown-item > img {
   display: block;
   flex-grow: 0;
+  flex-shrink: 0;
+  // justify-content: center;
+  // align-content: center;
+  // background-size: contain;
+  // background-repeat: no-repeat;
 }
 
 pwc-choices-dropdown-item > img[placement="left"] {
