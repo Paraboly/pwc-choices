@@ -78,7 +78,7 @@ export class PwcChoicesInputBar {
     return (
       shouldDisplay && (
         <pwc-choices-option-bubble
-          id="pwc-choices___placeholder-bubble"
+          class="pwc-choices___placeholder-bubble"
           option={{ value: "placeholder", label: this.placeholder }}
           showCloseButton={false}
           indexInSelectedList={-1}
@@ -139,9 +139,15 @@ export class PwcChoicesInputBar {
   counstructCount() {
     return [
       <div class="pwc-choices___input-bar-main">
-        <span class="pwc-choices___option-count">
-          {"Selected " + this.options.length + " options."}
-        </span>
+        <pwc-choices-option-bubble
+          class="pwc-choices___count-bubble"
+          option={{
+            value: "placeholder",
+            label: "Selected " + this.options.length + " options."
+          }}
+          showCloseButton={false}
+          indexInSelectedList={-1}
+        ></pwc-choices-option-bubble>
       </div>,
       <div class="pwc-choices___input-bar-dropdown-icon">
         <svg width="28" height="28" viewBox="0 0 18 18">
@@ -179,7 +185,7 @@ export class PwcChoicesInputBar {
   componentDidRender() {
     if (this.displayMode === "dynamic") {
       if (this.isCalculating) {
-        this.isOverflowing = checkOverflow(this.root, true, false);
+        this.isOverflowing = checkOverflow(this.root, true, true);
         this.isCalculating = false;
         this.root.forceUpdate();
       } else {

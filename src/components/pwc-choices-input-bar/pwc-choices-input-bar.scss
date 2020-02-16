@@ -21,15 +21,17 @@ pwc-choices-input-bar[calculating] > .pwc-choices___input-bar-main {
 
 .pwc-choices___option-count {
   display: block;
-  width: fit-content;
-  height: fit-content;
   margin: auto;
 }
 
 .pwc-choices___input-bar-main {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   flex-grow: 1;
+  align-items: flex-start;
+  justify-items: flex-start;
+  align-content: flex-start;
+  justify-content: flex-start;
 }
 
 .pwc-choices___input-bar-dropdown-icon {

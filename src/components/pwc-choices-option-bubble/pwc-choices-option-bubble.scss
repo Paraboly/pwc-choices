@@ -9,12 +9,18 @@ pwc-choices-option-bubble {
   flex-wrap: nowrap;
   margin: 5px;
   min-height: 22px;
+  height: fit-content;
+  width: fit-content;
 }
 
 .pwc-choices___bubble-label {
   order: 1;
   display: block;
   flex-grow: 1;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .pwc-choices___bubble-close-button {
@@ -26,8 +32,18 @@ pwc-choices-option-bubble {
   //   user-select: none;
 }
 
-#pwc-choices___placeholder-bubble {
+.pwc-choices___placeholder-bubble {
   color: grey;
+}
+
+.pwc-choices___placeholder-bubble > .pwc-choices___bubble-label {
+  max-width: unset;
+}
+
+.pwc-choices___count-bubble > .pwc-choices___bubble-label {
+  max-width: unset;
+  align-self: center;
+  justify-self: center;
 }
 
 pwc-choices-option-bubble > img {
