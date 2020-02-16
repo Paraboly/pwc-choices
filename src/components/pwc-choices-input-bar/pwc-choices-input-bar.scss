@@ -19,6 +19,8 @@ pwc-choices-input-bar[calculating] > .pwc-choices___input-bar-main {
 .pwc-choices___input-bar-main {
   display: flex;
   flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
   flex-grow: 1;
 }
 

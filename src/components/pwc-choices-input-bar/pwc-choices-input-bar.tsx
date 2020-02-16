@@ -16,6 +16,7 @@ import { IInputBarClickedEventPayload } from "./IInputBarClickedEventPayload";
 import { IOptionBubbleCloseClickedEventPayload } from "../pwc-choices-option-bubble/IOptionBubbleCloseClickedEventPayload";
 import { IIconOptions } from "../pwc-choices/IconOptions";
 import { checkOverflow } from "../../utils/checkOverflow";
+import { HTMLStencilElement } from "../../../dist/types/stencil.core";
 
 @Component({
   tag: "pwc-choices-input-bar",
@@ -23,17 +24,17 @@ import { checkOverflow } from "../../utils/checkOverflow";
   shadow: false
 })
 export class PwcChoicesInputBar {
-  @Element() root: HTMLElement;
+  private isOverflowing: boolean = false;
+  private isCalculating = true;
+
+  @Element() root: HTMLStencilElement;
 
   @Prop() type: "single" | "multi" = "multi";
   @Prop() options: IOption[];
   @Watch("options")
-  optionsWatchHandler(newVal: IOption[], oldVal: IOption[]) {
-    // The content can only fit again if the operation was the deletion of an option.
-    const wasDeletion = newVal.length < oldVal.length;
-    if (wasDeletion) {
-      // reset to check the overflow again in the upcoming render cycle.
-      this.isOverflowing = false;
+  optionsWatchHandler() {
+    if (this.displayMode === "dynamic") {
+      this.isCalculating = true;
     }
   }
 
@@ -41,8 +42,6 @@ export class PwcChoicesInputBar {
   @Prop() placeholder: string;
   @Prop() autoHidePlaceholder: boolean;
   @Prop() displayMode: "countOnly" | "fixed" | "dynamic" | "grow";
-
-  @State() isOverflowing: boolean = false;
 
   @Event() optionDiscarded: EventEmitter<IOptionDiscardedEventPayload>;
   @Event() inputBarClicked: EventEmitter<IInputBarClickedEventPayload>;
@@ -152,17 +151,43 @@ export class PwcChoicesInputBar {
     ];
   }
 
-  render() {
-    const shouldCollapse = this.displayMode !== "grow" && this.isOverflowing;
-    if (this.displayMode === "countOnly" || shouldCollapse) {
-      return this.counstructCount();
-    } else {
-      return this.constructBubbles();
+  componentWillRender() {
+    if (this.displayMode === "dynamic") {
+      if (this.isCalculating) {
+        if (!this.root.hasAttribute("calculating")) {
+          this.root.setAttribute("calculating", "");
+          this.root.forceUpdate();
+        }
+      }
     }
   }
 
+  render() {
+    let toReturn: any;
+    const shouldCollapse = this.isCalculating
+      ? false
+      : this.displayMode !== "grow" && this.isOverflowing;
+
+    if (this.displayMode === "countOnly" || shouldCollapse) {
+      toReturn = this.counstructCount();
+    } else {
+      toReturn = this.constructBubbles();
+    }
+    return toReturn;
+  }
+
   componentDidRender() {
-    // if we decided that it was overflowing before, then it is still overflowing.
-    this.isOverflowing = this.isOverflowing || checkOverflow(this.root);
+    if (this.displayMode === "dynamic") {
+      if (this.isCalculating) {
+        this.isOverflowing = checkOverflow(this.root);
+        this.isCalculating = false;
+        this.root.forceUpdate();
+      } else {
+        if (this.root.hasAttribute("calculating")) {
+          this.root.removeAttribute("calculating");
+          this.root.forceUpdate();
+        }
+      }
+    }
   }
 }

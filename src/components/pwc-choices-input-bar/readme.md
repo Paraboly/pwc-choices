@@ -5,13 +5,14 @@
 
 ## Properties
 
-| Property              | Attribute               | Description | Type                  | Default     |
-| --------------------- | ----------------------- | ----------- | --------------------- | ----------- |
-| `autoHidePlaceholder` | `auto-hide-placeholder` |             | `boolean`             | `undefined` |
-| `options`             | --                      |             | `IOption[]`           | `undefined` |
-| `placeholder`         | `placeholder`           |             | `string`              | `undefined` |
-| `showCloseButtons`    | `show-close-buttons`    |             | `boolean`             | `undefined` |
-| `type`                | `type`                  |             | `"multi" \| "single"` | `"multi"`   |
+| Property              | Attribute               | Description | Type                                            | Default     |
+| --------------------- | ----------------------- | ----------- | ----------------------------------------------- | ----------- |
+| `autoHidePlaceholder` | `auto-hide-placeholder` |             | `boolean`                                       | `undefined` |
+| `displayMode`         | `display-mode`          |             | `"countOnly" \| "dynamic" \| "fixed" \| "grow"` | `undefined` |
+| `options`             | --                      |             | `IOption[]`                                     | `undefined` |
+| `placeholder`         | `placeholder`           |             | `string`                                        | `undefined` |
+| `showCloseButtons`    | `show-close-buttons`    |             | `boolean`                                       | `undefined` |
+| `type`                | `type`                  |             | `"multi" \| "single"`                           | `"multi"`   |
 
 
 ## Events
