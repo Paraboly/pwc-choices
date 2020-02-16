@@ -12,9 +12,13 @@ pwc-choices-option-bubble {
 }
 
 .pwc-choices___bubble-label {
+  order: 1;
+  display: block;
+  flex-grow: 1;
 }
 
 .pwc-choices___bubble-close-button {
+  order: 3;
   margin-left: 10px;
   display: flex;
   align-items: center;
@@ -30,5 +34,14 @@ pwc-choices-option-bubble > img {
   display: block;
   flex-grow: 0;
   flex-shrink: 0;
+}
+
+pwc-choices-option-bubble > img[placement="left"] {
+  order: 0;
   margin-right: 10px;
+}
+
+pwc-choices-option-bubble > img[placement="right"] {
+  order: 2;
+  margin-left: 10px;
 }
