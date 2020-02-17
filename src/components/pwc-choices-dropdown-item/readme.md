@@ -5,10 +5,14 @@
 
 ## Properties
 
-| Property     | Attribute      | Description | Type                    | Default     |
-| ------------ | -------------- | ----------- | ----------------------- | ----------- |
-| `isNoOption` | `is-no-option` |             | `boolean`               | `undefined` |
-| `option`     | --             |             | `FilterResult<IOption>` | `undefined` |
+| Property             | Attribute             | Description | Type                                   | Default     |
+| -------------------- | --------------------- | ----------- | -------------------------------------- | ----------- |
+| `active`             | `active`              |             | `boolean`                              | `undefined` |
+| `isNoOption`         | `is-no-option`        |             | `boolean`                              | `undefined` |
+| `option`             | --                    |             | `FilterResult<IOption>`                | `undefined` |
+| `selectCount`        | `select-count`        |             | `number`                               | `undefined` |
+| `selectionBehaviour` | `selection-behaviour` |             | `"accumulate" \| "remove" \| "toggle"` | `undefined` |
+| `toggleText`         | `toggle-text`         |             | `string`                               | `undefined` |
 
 
 ## Events

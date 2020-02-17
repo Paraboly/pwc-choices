@@ -1,4 +1,13 @@
-import { Component, Prop, h, EventEmitter, Event, Listen } from "@stencil/core";
+import {
+  Component,
+  Prop,
+  h,
+  EventEmitter,
+  Event,
+  Listen,
+  Element,
+  Watch
+} from "@stencil/core";
 import _ from "lodash";
 import { FilterResult } from "fuzzy";
 import { IOption } from "../pwc-choices/IOption";
@@ -11,8 +20,20 @@ import { IDropdownItemClickedEventPayload } from "./IDropdownItemClickedEventPay
   shadow: false
 })
 export class PwcChoicesDropdownItem {
+  @Element() root: HTMLPwcChoicesDropdownItemElement;
+
   @Prop() option: FilterResult<IOption>;
+  @Prop() selectionBehaviour: "remove" | "toggle" | "accumulate";
   @Prop({ reflect: true }) isNoOption: boolean;
+  @Prop() toggleText: string;
+
+  @Prop() selectCount: number;
+  @Watch("selectCount")
+  selectCountWatchHandler(value) {
+    this.active = value > 0;
+  }
+
+  @Prop({ reflect: true, mutable: true }) active: boolean;
 
   @Event() dropdownItemClicked: EventEmitter<IDropdownItemClickedEventPayload>;
 
@@ -30,22 +51,48 @@ export class PwcChoicesDropdownItem {
     iconOptions: IIconOptions
   ): { displayIcon: boolean; iconElm: HTMLImageElement } {
     if (iconOptions) {
-      const iconElm = <img {...iconOptions}></img>;
-      return { displayIcon: true, iconElm };
+      iconOptions = _.cloneDeep(iconOptions);
+
+      const iconStyle = {
+        width: iconOptions.width,
+        height: iconOptions.height
+      };
+      delete iconOptions.width;
+      delete iconOptions.height;
+
+      return {
+        displayIcon: true,
+        iconElm: <img {...iconOptions} style={iconStyle}></img>
+      };
     } else {
       return { displayIcon: false, iconElm: null };
     }
   }
 
-  constructDropdownOption(option: FilterResult<IOption>) {
+  constructDropdownOption() {
     const { displayIcon, iconElm } = this.isNoOption
       ? { displayIcon: false, iconElm: null }
-      : this.constructIcon(option.original.icon);
+      : this.constructIcon(this.option.original.icon);
 
-    return [displayIcon && iconElm, <span innerHTML={option.string}></span>];
+    const indicatorContent =
+      (this.selectionBehaviour === "accumulate" && this.selectCount) ||
+      (this.selectionBehaviour === "toggle" && this.toggleText) ||
+      "";
+
+    return [
+      this.selectionBehaviour !== "remove" && (
+        <i>{this.selectCount > 0 && indicatorContent}</i>
+      ),
+      displayIcon && iconElm,
+      <span innerHTML={this.option.string}></span>
+    ];
+  }
+
+  componentWillLoad() {
+    this.selectCountWatchHandler(this.selectCount);
   }
 
   render() {
-    return this.constructDropdownOption(this.option);
+    return this.constructDropdownOption();
   }
 }

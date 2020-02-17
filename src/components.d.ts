@@ -39,6 +39,10 @@ export namespace Components {
     */
     'autoHidePlaceholder': boolean;
     /**
+    * Use this function to provide the text for the count display. It is invoked with the current selected option count.
+    */
+    'countTextProvider': (count: number) => string;
+    /**
     * If true, option icons will be displayed on the input bar as well.
     */
     'displayIconsOnInputBar': boolean;
@@ -51,6 +55,14 @@ export namespace Components {
     */
     'dropdownIsOpen': boolean;
     /**
+    * This determines what happens to dropdown items after they are selected.  * `remove`: remove the selected item from the dropdown. * `toggle`: dropdown items become toggles, that is, they remain in the dropdown and remove themself from the input bar when clicked again. * `accumulate`: a click on a dropdown item is always a select command, and the item always stays in the dropdown.  Both `remove` and `toggle` ensures the uniqueness of the selections, while `accumulate` allows for multiple selections of the same option.
+    */
+    'dropdownSelectionBehaviour': "remove" | "toggle" | "accumulate";
+    /**
+    * This is the text in the indicator of the options when they are in toggle mode.
+    */
+    'dropdownToggleText': string;
+    /**
     * Returns the labels of currently selected options.
     */
     'getSelectedOptionsAsLabels': () => Promise<string[]>;
@@ -62,6 +74,12 @@ export namespace Components {
     * Returns the values of currently selected options.
     */
     'getSelectedOptionsAsValues': () => Promise<string[]>;
+    /**
+    * (multi select mode only) Maximum number of option bubbles to display in the input bar.  * `countOnly`: display only the selected option count. * `dynamic`: display the option bubbles if they fit. when they overflow, switch to selected option count. * `bubblesOnly`: display only the option bubbles.
+    */
+    'inputBarDisplayMode': | "countOnly"
+    | "dynamic"
+    | "bubblesOnly";
     /**
     * HTML name attribute. This is implemented for compatibility with HTML forms, it has no internal usage.
     */
@@ -90,28 +108,35 @@ export namespace Components {
     * The selection behaviour. "multi" allows selection of multiple options. "single" allows selection of only a single option (just like the native HTML select element).
     */
     'type': Type;
-    /**
-    * If true, the option will be removed from available options after selection.
-    */
-    'uniqueSelections': boolean;
   }
   interface PwcChoicesDropdown {
     'noOptionsString': string;
     'options': IOption[];
     'searchBarPlaceholder': string;
+    'selectedOptions': IOption[];
+    'selectionBehaviour': "remove" | "toggle" | "accumulate";
+    'toggleText': string;
   }
   interface PwcChoicesDropdownItem {
+    'active': boolean;
     'isNoOption': boolean;
     'option': FilterResult<IOption>;
+    'selectCount': number;
+    'selectionBehaviour': "remove" | "toggle" | "accumulate";
+    'toggleText': string;
   }
   interface PwcChoicesInputBar {
     'autoHidePlaceholder': boolean;
+    'countTextProvider': (count: number) => string;
+    'displayIcons': boolean;
+    'displayMode': "countOnly" | "dynamic" | "bubblesOnly";
     'options': IOption[];
     'placeholder': string;
     'showCloseButtons': boolean;
     'type': "single" | "multi";
   }
   interface PwcChoicesOptionBubble {
+    'displayIcon': boolean;
     'indexInSelectedList': number;
     'option': IOption;
     'showCloseButton': boolean;
@@ -166,6 +191,10 @@ declare namespace LocalJSX {
     */
     'autoHidePlaceholder'?: boolean;
     /**
+    * Use this function to provide the text for the count display. It is invoked with the current selected option count.
+    */
+    'countTextProvider'?: (count: number) => string;
+    /**
     * If true, option icons will be displayed on the input bar as well.
     */
     'displayIconsOnInputBar'?: boolean;
@@ -177,6 +206,20 @@ declare namespace LocalJSX {
     * This determines wheter the dropdown is open or not.
     */
     'dropdownIsOpen'?: boolean;
+    /**
+    * This determines what happens to dropdown items after they are selected.  * `remove`: remove the selected item from the dropdown. * `toggle`: dropdown items become toggles, that is, they remain in the dropdown and remove themself from the input bar when clicked again. * `accumulate`: a click on a dropdown item is always a select command, and the item always stays in the dropdown.  Both `remove` and `toggle` ensures the uniqueness of the selections, while `accumulate` allows for multiple selections of the same option.
+    */
+    'dropdownSelectionBehaviour'?: "remove" | "toggle" | "accumulate";
+    /**
+    * This is the text in the indicator of the options when they are in toggle mode.
+    */
+    'dropdownToggleText'?: string;
+    /**
+    * (multi select mode only) Maximum number of option bubbles to display in the input bar.  * `countOnly`: display only the selected option count. * `dynamic`: display the option bubbles if they fit. when they overflow, switch to selected option count. * `bubblesOnly`: display only the option bubbles.
+    */
+    'inputBarDisplayMode'?: | "countOnly"
+    | "dynamic"
+    | "bubblesOnly";
     /**
     * HTML name attribute. This is implemented for compatibility with HTML forms, it has no internal usage.
     */
@@ -209,23 +252,29 @@ declare namespace LocalJSX {
     * The selection behaviour. "multi" allows selection of multiple options. "single" allows selection of only a single option (just like the native HTML select element).
     */
     'type'?: Type;
-    /**
-    * If true, the option will be removed from available options after selection.
-    */
-    'uniqueSelections'?: boolean;
   }
   interface PwcChoicesDropdown {
     'noOptionsString'?: string;
     'options'?: IOption[];
     'searchBarPlaceholder'?: string;
+    'selectedOptions'?: IOption[];
+    'selectionBehaviour'?: "remove" | "toggle" | "accumulate";
+    'toggleText'?: string;
   }
   interface PwcChoicesDropdownItem {
+    'active'?: boolean;
     'isNoOption'?: boolean;
     'onDropdownItemClicked'?: (event: CustomEvent<IDropdownItemClickedEventPayload>) => void;
     'option'?: FilterResult<IOption>;
+    'selectCount'?: number;
+    'selectionBehaviour'?: "remove" | "toggle" | "accumulate";
+    'toggleText'?: string;
   }
   interface PwcChoicesInputBar {
     'autoHidePlaceholder'?: boolean;
+    'countTextProvider'?: (count: number) => string;
+    'displayIcons'?: boolean;
+    'displayMode'?: "countOnly" | "dynamic" | "bubblesOnly";
     'onInputBarClicked'?: (event: CustomEvent<IInputBarClickedEventPayload>) => void;
     'onOptionDiscarded'?: (event: CustomEvent<IOptionDiscardedEventPayload>) => void;
     'options'?: IOption[];
@@ -234,6 +283,7 @@ declare namespace LocalJSX {
     'type'?: "single" | "multi";
   }
   interface PwcChoicesOptionBubble {
+    'displayIcon'?: boolean;
     'indexInSelectedList'?: number;
     'onCloseClicked'?: (event: CustomEvent<IOptionBubbleCloseClickedEventPayload>) => void;
     'option'?: IOption;

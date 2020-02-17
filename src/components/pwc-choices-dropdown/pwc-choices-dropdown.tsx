@@ -1,16 +1,7 @@
-import {
-  Component,
-  Prop,
-  h,
-  Element,
-  State,
-  Watch,
-  Listen
-} from "@stencil/core";
+import { Component, Prop, h, Element, State, Watch } from "@stencil/core";
 import _ from "lodash";
 import fuzzy, { FilterResult } from "fuzzy";
 import { IOption } from "../pwc-choices/IOption";
-import { IDropdownItemClickedEventPayload } from "../pwc-choices-dropdown-item/IDropdownItemClickedEventPayload";
 
 @Component({
   tag: "pwc-choices-dropdown",
@@ -30,6 +21,9 @@ export class PwcChoicesDropdown {
 
   @Prop() noOptionsString: string;
   @Prop() searchBarPlaceholder: string;
+  @Prop() selectionBehaviour: "remove" | "toggle" | "accumulate";
+  @Prop() selectedOptions: IOption[];
+  @Prop() toggleText: string;
 
   @State() filteredOptions: FilterResult<IOption>[];
 
@@ -51,24 +45,6 @@ export class PwcChoicesDropdown {
 
   onSearchInput(): void {
     this.filteredOptions = this.doFilter(this.searchRef.value, this.options);
-  }
-
-  @Listen("dropdownItemClicked")
-  dropdownItemClickedEventHandler(
-    event: CustomEvent<IDropdownItemClickedEventPayload>
-  ) {
-    const optionFilterResult = event.detail.option;
-    const originalOption = optionFilterResult.original;
-
-    /* We need to remove them here if we want to keep the
-     * dropdown open after a selection. A bit unplesant,
-     * but we have to.
-     */
-    this.options.splice(this.options.indexOf(originalOption), 1);
-    this.filteredOptions.splice(
-      this.filteredOptions.indexOf(optionFilterResult),
-      1
-    );
   }
 
   convertOptionsToFilterResultsAsIs(rawOptions: IOption[]) {
@@ -104,12 +80,18 @@ export class PwcChoicesDropdown {
             <pwc-choices-dropdown-item
               option={noItemOption}
               isNoOption={true}
+              toggleText={this.toggleText}
             ></pwc-choices-dropdown-item>
           ) : (
             this.filteredOptions.map(option => (
               <pwc-choices-dropdown-item
                 option={option}
                 isNoOption={false}
+                selectCount={_.sumBy(this.selectedOptions, so =>
+                  so === option.original ? 1 : 0
+                )}
+                selectionBehaviour={this.selectionBehaviour}
+                toggleText={this.toggleText}
               ></pwc-choices-dropdown-item>
             ))
           ))}

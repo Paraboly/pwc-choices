@@ -1,6 +1,7 @@
-import { JSXBase } from "@stencil/core/internal";
-
-export interface IIconOptions
-  extends JSXBase.ImgHTMLAttributes<HTMLImageElement> {
+export interface IIconOptions {
+  src: string;
+  width: string;
+  height: string;
   placement: "left" | "right";
+  alt?: string;
 }

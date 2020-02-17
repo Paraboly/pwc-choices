@@ -89,9 +89,16 @@ export class PwcChoices {
   @Prop() showCloseButtons: boolean = true;
 
   /**
-   * If true, the option will be removed from available options after selection.
+   * This determines what happens to dropdown items after they are selected.
+   *
+   * * `remove`: remove the selected item from the dropdown.
+   * * `toggle`: dropdown items become toggles, that is, they remain in the dropdown and remove themself from the input bar when clicked again.
+   * * `accumulate`: a click on a dropdown item is always a select command, and the item always stays in the dropdown.
+   *
+   * Both `remove` and `toggle` ensures the uniqueness of the selections, while `accumulate` allows for multiple selections of the same option.
    */
-  @Prop() uniqueSelections: boolean = true;
+  @Prop() dropdownSelectionBehaviour: "remove" | "toggle" | "accumulate" =
+    "remove";
 
   /**
    * This will be displayed in the dropdown when there are no options left to choose.
@@ -118,6 +125,28 @@ export class PwcChoices {
    * If true, option icons will be displayed on the input bar as well.
    */
   @Prop() displayIconsOnInputBar: boolean;
+
+  /**
+   * (multi select mode only) Maximum number of option bubbles to display in the input bar.
+   *
+   * * `countOnly`: display only the selected option count.
+   * * `dynamic`: display the option bubbles if they fit. when they overflow, switch to selected option count.
+   * * `bubblesOnly`: display only the option bubbles.
+   */
+  @Prop() inputBarDisplayMode:
+    | "countOnly"
+    | "dynamic"
+    | "bubblesOnly" = `bubblesOnly`;
+
+  /**
+   * Use this function to provide the text for the count display. It is invoked with the current selected option count.
+   */
+  @Prop() countTextProvider: (count: number) => string;
+
+  /**
+   * This is the text in the indicator of the options when they are in toggle mode.
+   */
+  @Prop() dropdownToggleText: string = "+";
 
   /**
    * This is raised when the selected options change.
@@ -176,15 +205,26 @@ export class PwcChoices {
   dropdownItemClickedHandler(
     event: CustomEvent<IDropdownItemClickedEventPayload>
   ) {
+    const option = event.detail.option.original;
+
     switch (this.type) {
       case "multi":
-        this.selectedOptions = [
-          ...this.selectedOptions,
-          event.detail.option.original
-        ];
+        switch (this.dropdownSelectionBehaviour) {
+          case "accumulate":
+          case "remove":
+            this.selectedOptions = [...this.selectedOptions, option];
+            break;
+          case "toggle":
+            if (this.selectedOptions.some(o => o === option)) {
+              this.selectedOptions = _.without(this.selectedOptions, option);
+            } else {
+              this.selectedOptions = [...this.selectedOptions, option];
+            }
+            break;
+        }
         break;
       case "single":
-        this.selectedOptions = [event.detail.option.original];
+        this.selectedOptions = [option];
         this.dropdownIsOpen = false;
         break;
     }
@@ -252,20 +292,27 @@ export class PwcChoices {
         placeholder={this.placeholder}
         autoHidePlaceholder={this.autoHidePlaceholder}
         type={this.type}
+        displayMode={this.inputBarDisplayMode}
+        displayIcons={this.displayIconsOnInputBar}
+        countTextProvider={this.countTextProvider}
       ></pwc-choices-input-bar>
     );
   }
 
   constructDropdown() {
-    const dropdownOptions = this.uniqueSelections
-      ? _.difference(this.resolvedOptions, this.selectedOptions)
-      : this.resolvedOptions;
+    const dropdownOptions =
+      this.dropdownSelectionBehaviour === "remove"
+        ? _.difference(this.resolvedOptions, this.selectedOptions)
+        : this.resolvedOptions;
 
     return (
       <pwc-choices-dropdown
         noOptionsString={this.noOptionsString}
         options={dropdownOptions}
         searchBarPlaceholder={this.searchBarPlaceholder}
+        selectionBehaviour={this.dropdownSelectionBehaviour}
+        selectedOptions={this.selectedOptions}
+        toggleText={this.dropdownToggleText}
       ></pwc-choices-dropdown>
     );
   }

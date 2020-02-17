@@ -9,12 +9,22 @@ pwc-choices-option-bubble {
   flex-wrap: nowrap;
   margin: 5px;
   min-height: 22px;
+  height: fit-content;
+  width: fit-content;
 }
 
 .pwc-choices___bubble-label {
+  order: 1;
+  display: block;
+  flex-grow: 1;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .pwc-choices___bubble-close-button {
+  order: 3;
   margin-left: 10px;
   display: flex;
   align-items: center;
@@ -22,12 +32,32 @@ pwc-choices-option-bubble {
   //   user-select: none;
 }
 
-#pwc-choices___placeholder-bubble {
+.pwc-choices___placeholder-bubble {
   color: grey;
+}
+
+.pwc-choices___placeholder-bubble > .pwc-choices___bubble-label {
+  max-width: unset;
+}
+
+.pwc-choices___count-bubble > .pwc-choices___bubble-label {
+  max-width: unset;
+  align-self: center;
+  justify-self: center;
 }
 
 pwc-choices-option-bubble > img {
   display: block;
   flex-grow: 0;
+  flex-shrink: 0;
+}
+
+pwc-choices-option-bubble > img[placement="left"] {
+  order: 0;
   margin-right: 10px;
+}
+
+pwc-choices-option-bubble > img[placement="right"] {
+  order: 2;
+  margin-left: 10px;
 }

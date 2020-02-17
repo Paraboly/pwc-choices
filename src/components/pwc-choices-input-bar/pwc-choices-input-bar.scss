@@ -3,19 +3,53 @@ pwc-choices-input-bar {
   font-size: medium;
   font-family: Calibri, sans-serif;
   border: 1px solid black;
-  min-height: 44px;
   padding: 5px;
   display: flex;
   flex-wrap: nowrap;
   border-radius: 5px;
   overflow: hidden;
   background-color: white;
+
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+pwc-choices-input-bar[calculating] > .pwc-choices___input-bar-main {
+  visibility: hidden;
+  overflow: visible;
+}
+
+.pwc-choices___option-count {
+  display: block;
+  margin: auto;
+}
+
+.pwc-choices___flex-align-main-start {
+  justify-content: flex-start;
+  justify-items: flex-start;
+}
+
+.pwc-choices___flex-align-main-center {
+  justify-content: center;
+  justify-items: center;
+}
+
+.pwc-choices___flex-align-cross-start {
+  align-content: flex-start;
+  align-items: flex-start;
+}
+
+.pwc-choices___flex-align-cross-center {
+  align-content: center;
+  align-items: center;
 }
 
 .pwc-choices___input-bar-main {
   display: flex;
   flex-wrap: wrap;
   flex-grow: 1;
+  overflow-y: auto;
 }
 
 .pwc-choices___input-bar-dropdown-icon {
@@ -28,8 +62,10 @@ pwc-choices-input-bar {
 
 .pwc-choices___single-select-input-bar-item {
   display: flex;
-  align-items: center;
-  margin: 10px;
+  padding: 10px;
+  max-width: 100%;
+  max-height: 100%;
+  box-sizing: border-box;
 }
 
 .pwc-choices___single-select-input-bar-placeholder {
@@ -45,4 +81,5 @@ pwc-choices-input-bar {
 .pwc-choices___single-select-input-bar-item > span {
   display: block;
   flex-grow: 1;
+  overflow-y: auto;
 }

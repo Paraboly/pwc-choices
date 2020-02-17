@@ -1,10 +1,20 @@
-import { Component, Prop, h, Listen, Event, EventEmitter } from "@stencil/core";
+import {
+  Component,
+  Prop,
+  h,
+  Listen,
+  Event,
+  EventEmitter,
+  Element,
+  Watch
+} from "@stencil/core";
 import _ from "lodash";
 import { IOption } from "../pwc-choices/IOption";
 import { IOptionDiscardedEventPayload } from "./IOptionDiscardedEventPayload";
 import { IInputBarClickedEventPayload } from "./IInputBarClickedEventPayload";
 import { IOptionBubbleCloseClickedEventPayload } from "../pwc-choices-option-bubble/IOptionBubbleCloseClickedEventPayload";
 import { IIconOptions } from "../pwc-choices/IconOptions";
+import { checkOverflow } from "../../utils/checkOverflow";
 
 @Component({
   tag: "pwc-choices-input-bar",
@@ -12,14 +22,28 @@ import { IIconOptions } from "../pwc-choices/IconOptions";
   shadow: false
 })
 export class PwcChoicesInputBar {
+  private isOverflowing: boolean = false;
+  private isCalculating = true;
+
+  @Element() root: HTMLPwcChoicesInputBarElement;
+
   @Prop() type: "single" | "multi" = "multi";
   @Prop() options: IOption[];
+  @Watch("options")
+  optionsWatchHandler() {
+    if (this.type === "multi" && this.displayMode === "dynamic") {
+      this.isCalculating = true;
+    }
+  }
+
   @Prop() showCloseButtons: boolean;
   @Prop() placeholder: string;
   @Prop() autoHidePlaceholder: boolean;
+  @Prop() displayMode: "countOnly" | "dynamic" | "bubblesOnly";
+  @Prop() displayIcons: boolean;
+  @Prop() countTextProvider: (count: number) => string;
 
   @Event() optionDiscarded: EventEmitter<IOptionDiscardedEventPayload>;
-
   @Event() inputBarClicked: EventEmitter<IInputBarClickedEventPayload>;
 
   @Listen("closeClicked")
@@ -44,6 +68,7 @@ export class PwcChoicesInputBar {
         option={option}
         showCloseButton={this.showCloseButtons}
         indexInSelectedList={index}
+        displayIcon={this.displayIcons}
       ></pwc-choices-option-bubble>
     ));
   }
@@ -56,7 +81,7 @@ export class PwcChoicesInputBar {
     return (
       shouldDisplay && (
         <pwc-choices-option-bubble
-          id="pwc-choices___placeholder-bubble"
+          class="pwc-choices___placeholder-bubble"
           option={{ value: "placeholder", label: this.placeholder }}
           showCloseButton={false}
           indexInSelectedList={-1}
@@ -70,7 +95,7 @@ export class PwcChoicesInputBar {
   ): { displayIcon: boolean; iconElm: HTMLImageElement } {
     if (iconOptions) {
       const iconElm = <img {...iconOptions}></img>;
-      return { displayIcon: true, iconElm };
+      return { displayIcon: this.displayIcons, iconElm };
     } else {
       return { displayIcon: false, iconElm: null };
     }
@@ -93,13 +118,33 @@ export class PwcChoicesInputBar {
           </div>
         );
       case "multi":
-        return [this.constructSelectedOptions(), this.constructPlaceholder()];
+        return this.constructMultiSelecMainRender();
     }
   }
 
-  render() {
+  constructMultiSelecMainRender() {
+    return [this.constructSelectedOptions(), this.constructPlaceholder()];
+  }
+
+  decideFlexAlignClass() {
+    if (this.type === "single") {
+      return " pwc-choices___flex-align-main-start pwc-choices___flex-align-cross-center";
+    }
+
+    if (this.type === "multi") {
+      if (this.isOverflowing) {
+        return " pwc-choices___flex-align-main-center pwc-choices___flex-align-cross-center";
+      } else {
+        return " pwc-choices___flex-align-main-start pwc-choices___flex-align-cross-start";
+      }
+    }
+  }
+
+  constructBubbles() {
+    const flexAlignClass = this.decideFlexAlignClass();
+
     return [
-      <div class="pwc-choices___input-bar-main">
+      <div class={"pwc-choices___input-bar-main " + flexAlignClass}>
         {this.constructMainRender()}
       </div>,
       <div class="pwc-choices___input-bar-dropdown-icon">
@@ -108,5 +153,67 @@ export class PwcChoicesInputBar {
         </svg>
       </div>
     ];
+  }
+
+  constructCount() {
+    const flexAlignClass = this.decideFlexAlignClass();
+
+    return [
+      <div class={"pwc-choices___input-bar-main" + flexAlignClass}>
+        <span>
+          {this.countTextProvider
+            ? this.countTextProvider(this.options.length)
+            : `Selected ${this.options.length} options.`}
+        </span>
+      </div>,
+      <div class="pwc-choices___input-bar-dropdown-icon">
+        <svg width="28" height="28" viewBox="0 0 18 18">
+          <path d="M5 8l4 4 4-4z" />
+        </svg>
+      </div>
+    ];
+  }
+
+  componentWillRender() {
+    if (this.type === "multi" && this.displayMode === "dynamic") {
+      if (this.isCalculating) {
+        if (!this.root.hasAttribute("calculating")) {
+          this.root.setAttribute("calculating", "");
+          this.root.forceUpdate();
+        }
+      }
+    }
+  }
+
+  render() {
+    let toReturn: any;
+    const shouldCollapse = this.isCalculating
+      ? false
+      : this.displayMode !== "bubblesOnly" && this.isOverflowing;
+
+    if (
+      this.type === "multi" &&
+      (this.displayMode === "countOnly" || shouldCollapse)
+    ) {
+      toReturn = this.constructCount();
+    } else {
+      toReturn = this.constructBubbles();
+    }
+    return toReturn;
+  }
+
+  componentDidRender() {
+    if (this.type === "multi" && this.displayMode === "dynamic") {
+      if (this.isCalculating) {
+        this.isOverflowing = checkOverflow(this.root, true, true);
+        this.isCalculating = false;
+        this.root.forceUpdate();
+      } else {
+        if (this.root.hasAttribute("calculating")) {
+          this.root.removeAttribute("calculating");
+          this.root.forceUpdate();
+        }
+      }
+    }
   }
 }

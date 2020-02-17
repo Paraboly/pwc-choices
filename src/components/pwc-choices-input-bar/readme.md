@@ -5,13 +5,16 @@
 
 ## Properties
 
-| Property              | Attribute               | Description | Type                  | Default     |
-| --------------------- | ----------------------- | ----------- | --------------------- | ----------- |
-| `autoHidePlaceholder` | `auto-hide-placeholder` |             | `boolean`             | `undefined` |
-| `options`             | --                      |             | `IOption[]`           | `undefined` |
-| `placeholder`         | `placeholder`           |             | `string`              | `undefined` |
-| `showCloseButtons`    | `show-close-buttons`    |             | `boolean`             | `undefined` |
-| `type`                | `type`                  |             | `"multi" \| "single"` | `"multi"`   |
+| Property              | Attribute               | Description | Type                                        | Default     |
+| --------------------- | ----------------------- | ----------- | ------------------------------------------- | ----------- |
+| `autoHidePlaceholder` | `auto-hide-placeholder` |             | `boolean`                                   | `undefined` |
+| `countTextProvider`   | --                      |             | `(count: number) => string`                 | `undefined` |
+| `displayIcons`        | `display-icons`         |             | `boolean`                                   | `undefined` |
+| `displayMode`         | `display-mode`          |             | `"bubblesOnly" \| "countOnly" \| "dynamic"` | `undefined` |
+| `options`             | --                      |             | `IOption[]`                                 | `undefined` |
+| `placeholder`         | `placeholder`           |             | `string`                                    | `undefined` |
+| `showCloseButtons`    | `show-close-buttons`    |             | `boolean`                                   | `undefined` |
+| `type`                | `type`                  |             | `"multi" \| "single"`                       | `"multi"`   |
 
 
 ## Events
