@@ -56,10 +56,11 @@ export class PwcChoices {
   @Prop() options: IOption[] | string;
   @Watch("options")
   optionsWatchHandler(newValue: IOption[] | string) {
-    this.resolvedOptions = distinctFilter(
-      resolveJson(newValue),
-      this.distinctMode
-    );
+    const newOptions = distinctFilter(resolveJson(newValue), this.distinctMode);
+    const goneOptions = _.difference(this.resolvedOptions, newOptions);
+    _.remove(this.selectedOptions, o => goneOptions.includes(o));
+    this.resolvedOptions = newOptions;
+    this.selectedOptions = [...this.selectedOptions];
   }
   private resolvedOptions: IOption[];
 
