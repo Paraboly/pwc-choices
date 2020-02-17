@@ -57,7 +57,11 @@ export class PwcChoices {
   @Watch("options")
   optionsWatchHandler(newValue: IOption[] | string) {
     const newOptions = distinctFilter(resolveJson(newValue), this.distinctMode);
-    const goneOptions = _.difference(this.resolvedOptions, newOptions);
+    const goneOptions = _.differenceBy(
+      this.resolvedOptions,
+      newOptions,
+      o => o.value
+    );
 
     if (
       this.selectedOptions &&
@@ -228,8 +232,9 @@ export class PwcChoices {
             this.selectedOptions = [...this.selectedOptions, option];
             break;
           case "toggle":
-            if (this.selectedOptions.some(o => o === option)) {
-              this.selectedOptions = _.without(this.selectedOptions, option);
+            if (this.selectedOptions.some(o => o.value === option.value)) {
+              _.remove(this.selectedOptions, o => o.value === option.value);
+              this.selectedOptions = [...this.selectedOptions];
             } else {
               this.selectedOptions = [...this.selectedOptions, option];
             }
@@ -316,7 +321,11 @@ export class PwcChoices {
   constructDropdown() {
     const dropdownOptions =
       this.dropdownSelectionBehaviour === "remove"
-        ? _.difference(this.resolvedOptions, this.selectedOptions)
+        ? _.differenceBy(
+            this.resolvedOptions,
+            this.selectedOptions,
+            o => o.value
+          )
         : this.resolvedOptions;
 
     return (

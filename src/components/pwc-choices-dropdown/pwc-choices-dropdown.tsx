@@ -88,7 +88,7 @@ export class PwcChoicesDropdown {
                 option={option}
                 isNoOption={false}
                 selectCount={_.sumBy(this.selectedOptions, so =>
-                  so === option.original ? 1 : 0
+                  so.value === option.original.value ? 1 : 0
                 )}
                 selectionBehaviour={this.selectionBehaviour}
                 toggleText={this.toggleText}
