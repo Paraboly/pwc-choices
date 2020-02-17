@@ -13,8 +13,8 @@ import { IOption } from "../pwc-choices/IOption";
 import { IOptionDiscardedEventPayload } from "./IOptionDiscardedEventPayload";
 import { IInputBarClickedEventPayload } from "./IInputBarClickedEventPayload";
 import { IOptionBubbleCloseClickedEventPayload } from "../pwc-choices-option-bubble/IOptionBubbleCloseClickedEventPayload";
-import { IIconOptions } from "../pwc-choices/IconOptions";
 import { checkOverflow } from "../../utils/checkOverflow";
+import { constructIcon } from "../../utils/constructIcon";
 
 @Component({
   tag: "pwc-choices-input-bar",
@@ -94,22 +94,12 @@ export class PwcChoicesInputBar {
     );
   }
 
-  constructIcon(
-    iconOptions: IIconOptions
-  ): { displayIcon: boolean; iconElm: HTMLImageElement } {
-    if (iconOptions) {
-      const iconElm = <img {...iconOptions}></img>;
-      return { displayIcon: this.displayIcons, iconElm };
-    } else {
-      return { displayIcon: false, iconElm: null };
-    }
-  }
-
   constructMainRender() {
     switch (this.type) {
       case "single":
         if (this.options && this.options.length > 0) {
-          const { displayIcon, iconElm } = this.constructIcon(
+          const { displayIcon, iconElm } = constructIcon(
+            this.displayIcons,
             this.options[0].icon
           );
           return (

@@ -66,6 +66,11 @@ pwc-choices-input-bar[calculating] > .pwc-choices___input-bar-main {
   max-width: 100%;
   max-height: 100%;
   box-sizing: border-box;
+
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
 }
 
 .pwc-choices___single-select-input-bar-placeholder {
@@ -79,7 +84,18 @@ pwc-choices-input-bar[calculating] > .pwc-choices___input-bar-main {
 }
 
 .pwc-choices___single-select-input-bar-item > span {
+  order: 1;
   display: block;
   flex-grow: 1;
   overflow-y: auto;
+}
+
+.pwc-choices___single-select-input-bar-item > img[placement="left"] {
+  order: 0;
+  margin-right: 10px;
+}
+
+.pwc-choices___single-select-input-bar-item > img[placement="right"] {
+  order: 2;
+  margin-left: 10px;
 }

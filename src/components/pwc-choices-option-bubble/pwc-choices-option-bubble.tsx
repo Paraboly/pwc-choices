@@ -8,8 +8,8 @@ import {
 } from "@stencil/core";
 import { IOption } from "../pwc-choices/IOption";
 import { IOptionBubbleCloseClickedEventPayload } from "./IOptionBubbleCloseClickedEventPayload";
-import { IIconOptions } from "../pwc-choices/IconOptions";
 import _ from "lodash";
+import { constructIcon } from "../../utils/constructIcon";
 
 @Component({
   tag: "pwc-choices-option-bubble",
@@ -37,30 +37,11 @@ export class PwcChoicesOptionBubble {
     });
   }
 
-  constructIcon(
-    iconOptions: IIconOptions
-  ): { displayIcon: boolean; iconElm: HTMLImageElement } {
-    if (iconOptions) {
-      iconOptions = _.cloneDeep(iconOptions);
-
-      const iconStyle = {
-        width: iconOptions.width,
-        height: iconOptions.height
-      };
-      delete iconOptions.width;
-      delete iconOptions.height;
-
-      return {
-        displayIcon: this.displayIcon,
-        iconElm: <img {...iconOptions} style={iconStyle}></img>
-      };
-    } else {
-      return { displayIcon: false, iconElm: null };
-    }
-  }
-
   render() {
-    const { displayIcon, iconElm } = this.constructIcon(this.option.icon);
+    const { displayIcon, iconElm } = constructIcon(
+      this.displayIcon,
+      this.option.icon
+    );
 
     return [
       displayIcon && iconElm,
