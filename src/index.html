@@ -65,6 +65,11 @@
       };
 
       window.addEventListener("DOMContentLoaded", e => {
+
+        document.addEventListener("selectedOptionsChanged", e => {
+          console.log("Selected options changed: ", e);
+        });
+
         const choicesAll = document.querySelectorAll("pwc-choices");
         choicesAll.forEach(choices => {
 

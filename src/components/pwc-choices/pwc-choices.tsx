@@ -58,9 +58,19 @@ export class PwcChoices {
   optionsWatchHandler(newValue: IOption[] | string) {
     const newOptions = distinctFilter(resolveJson(newValue), this.distinctMode);
     const goneOptions = _.difference(this.resolvedOptions, newOptions);
-    _.remove(this.selectedOptions, o => goneOptions.includes(o));
+
+    if (
+      this.selectedOptions.some(o =>
+        goneOptions.some(go => go.value === o.value)
+      )
+    ) {
+      _.remove(this.selectedOptions, o =>
+        goneOptions.some(go => go.value === o.value)
+      );
+      this.selectedOptions = [...this.selectedOptions];
+    }
+
     this.resolvedOptions = newOptions;
-    this.selectedOptions = [...this.selectedOptions];
   }
   private resolvedOptions: IOption[];
 
