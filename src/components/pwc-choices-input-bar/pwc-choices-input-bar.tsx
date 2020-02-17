@@ -76,13 +76,17 @@ export class PwcChoicesInputBar {
   constructPlaceholder() {
     const selectedItemCount = this.options.length;
     const shouldDisplay =
-      this.placeholder && !(this.autoHidePlaceholder && selectedItemCount > 0);
+      this.placeholder !== "" &&
+      !(this.autoHidePlaceholder && selectedItemCount > 0);
 
     return (
       shouldDisplay && (
         <pwc-choices-option-bubble
           class="pwc-choices___placeholder-bubble"
-          option={{ value: "placeholder", label: this.placeholder }}
+          option={{
+            value: "placeholder",
+            label: this.placeholder || "No options are selected."
+          }}
           showCloseButton={false}
           indexInSelectedList={-1}
         ></pwc-choices-option-bubble>
