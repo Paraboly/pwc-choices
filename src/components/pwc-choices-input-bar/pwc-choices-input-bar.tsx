@@ -108,19 +108,23 @@ export class PwcChoicesInputBar {
   constructMainRender() {
     switch (this.type) {
       case "single":
-        const { displayIcon, iconElm } = this.constructIcon(
-          this.options[0].icon
-        );
-        return this.options && this.options.length > 0 ? (
-          <div class="pwc-choices___single-select-input-bar-item">
-            {displayIcon && iconElm}
-            <span>{this.options[0].label}</span>
-          </div>
-        ) : (
-          <div class="pwc-choices___single-select-input-bar-item pwc-choices___single-select-input-bar-placeholder">
-            <span>{this.placeholder}</span>
-          </div>
-        );
+        if (this.options && this.options.length > 0) {
+          const { displayIcon, iconElm } = this.constructIcon(
+            this.options[0].icon
+          );
+          return (
+            <div class="pwc-choices___single-select-input-bar-item">
+              {displayIcon && iconElm}
+              <span>{this.options[0].label}</span>
+            </div>
+          );
+        } else {
+          return (
+            <div class="pwc-choices___single-select-input-bar-item pwc-choices___single-select-input-bar-placeholder">
+              <span>{this.placeholder}</span>
+            </div>
+          );
+        }
       case "multi":
         return this.constructMultiSelecMainRender();
     }

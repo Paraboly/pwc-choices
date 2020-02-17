@@ -60,6 +60,8 @@ export class PwcChoices {
     const goneOptions = _.difference(this.resolvedOptions, newOptions);
 
     if (
+      this.selectedOptions &&
+      this.selectedOptions.length > 0 &&
       this.selectedOptions.some(o =>
         goneOptions.some(go => go.value === o.value)
       )
@@ -70,7 +72,7 @@ export class PwcChoices {
       this.selectedOptions = [...this.selectedOptions];
     }
 
-    this.resolvedOptions = newOptions;
+    this.resolvedOptions = newOptions || [];
   }
   private resolvedOptions: IOption[];
 
@@ -255,6 +257,7 @@ export class PwcChoices {
   }
 
   componentWillLoad() {
+    this.selectedOptions = this.selectedOptions || [];
     this.optionsWatchHandler(this.options);
     this.typeWatchHandler(this.type);
     this.distinctModeWatchHandler(this.distinctMode);

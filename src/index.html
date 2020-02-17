@@ -72,7 +72,6 @@
 
         const choicesAll = document.querySelectorAll("pwc-choices");
         choicesAll.forEach(choices => {
-
           choices.options = [
             {
               value: "foo",
@@ -119,7 +118,7 @@
             }
           ];
 
-          choices.type = "multi";
+          choices.type = "single";
 
           choices.distinctMode = "none";
           choices.placeholder = "behold... THE PLACEHOLDER";
@@ -128,7 +127,7 @@
           choices.noOptionsString = "Seçecek bir şey kalmadı :(";
           choices.uniqueSelection = true;
           choices.searchBarPlaceholder = "Aramak için yazınız...";
-          choices.displayIconsOnInputBar = false;
+          choices.displayIconsOnInputBar = true;
           choices.countTextProvider = (count) => `${count} adet seçenek seçildi.`;
           choices.dropdownToggleText = "\u2713";
           
