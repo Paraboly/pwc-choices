@@ -12,6 +12,7 @@
 | `option`             | --                    |             | `FilterResult<IOption>`                | `undefined` |
 | `selectCount`        | `select-count`        |             | `number`                               | `undefined` |
 | `selectionBehaviour` | `selection-behaviour` |             | `"accumulate" \| "remove" \| "toggle"` | `undefined` |
+| `toggleText`         | `toggle-text`         |             | `string`                               | `undefined` |
 
 
 ## Events

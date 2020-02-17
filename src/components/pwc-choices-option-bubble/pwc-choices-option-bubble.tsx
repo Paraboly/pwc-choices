@@ -22,6 +22,7 @@ export class PwcChoicesOptionBubble {
   @Prop() showCloseButton: boolean;
   @Prop() option: IOption;
   @Prop() indexInSelectedList: number;
+  @Prop() displayIcon: boolean;
 
   @Event() closeClicked: EventEmitter<IOptionBubbleCloseClickedEventPayload>;
 
@@ -50,7 +51,7 @@ export class PwcChoicesOptionBubble {
       delete iconOptions.height;
 
       return {
-        displayIcon: true,
+        displayIcon: this.displayIcon,
         iconElm: <img {...iconOptions} style={iconStyle}></img>
       };
     } else {

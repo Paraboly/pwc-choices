@@ -8,6 +8,8 @@
 | Property              | Attribute               | Description | Type                                        | Default     |
 | --------------------- | ----------------------- | ----------- | ------------------------------------------- | ----------- |
 | `autoHidePlaceholder` | `auto-hide-placeholder` |             | `boolean`                                   | `undefined` |
+| `countTextProvider`   | --                      |             | `(count: number) => string`                 | `undefined` |
+| `displayIcons`        | `display-icons`         |             | `boolean`                                   | `undefined` |
 | `displayMode`         | `display-mode`          |             | `"bubblesOnly" \| "countOnly" \| "dynamic"` | `undefined` |
 | `options`             | --                      |             | `IOption[]`                                 | `undefined` |
 | `placeholder`         | `placeholder`           |             | `string`                                    | `undefined` |

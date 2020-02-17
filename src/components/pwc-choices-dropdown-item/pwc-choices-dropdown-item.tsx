@@ -25,6 +25,7 @@ export class PwcChoicesDropdownItem {
   @Prop() option: FilterResult<IOption>;
   @Prop() selectionBehaviour: "remove" | "toggle" | "accumulate";
   @Prop({ reflect: true }) isNoOption: boolean;
+  @Prop() toggleText: string;
 
   @Prop() selectCount: number;
   @Watch("selectCount")
@@ -75,7 +76,7 @@ export class PwcChoicesDropdownItem {
 
     const indicatorContent =
       (this.selectionBehaviour === "accumulate" && this.selectCount) ||
-      (this.selectionBehaviour === "toggle" && "+") ||
+      (this.selectionBehaviour === "toggle" && this.toggleText) ||
       "";
 
     return [

@@ -31,7 +31,7 @@ export class PwcChoicesInputBar {
   @Prop() options: IOption[];
   @Watch("options")
   optionsWatchHandler() {
-    if (this.displayMode === "dynamic") {
+    if (this.type === "multi" && this.displayMode === "dynamic") {
       this.isCalculating = true;
     }
   }
@@ -40,6 +40,8 @@ export class PwcChoicesInputBar {
   @Prop() placeholder: string;
   @Prop() autoHidePlaceholder: boolean;
   @Prop() displayMode: "countOnly" | "dynamic" | "bubblesOnly";
+  @Prop() displayIcons: boolean;
+  @Prop() countTextProvider: (count: number) => string;
 
   @Event() optionDiscarded: EventEmitter<IOptionDiscardedEventPayload>;
   @Event() inputBarClicked: EventEmitter<IInputBarClickedEventPayload>;
@@ -66,6 +68,7 @@ export class PwcChoicesInputBar {
         option={option}
         showCloseButton={this.showCloseButtons}
         indexInSelectedList={index}
+        displayIcon={this.displayIcons}
       ></pwc-choices-option-bubble>
     ));
   }
@@ -92,7 +95,7 @@ export class PwcChoicesInputBar {
   ): { displayIcon: boolean; iconElm: HTMLImageElement } {
     if (iconOptions) {
       const iconElm = <img {...iconOptions}></img>;
-      return { displayIcon: true, iconElm };
+      return { displayIcon: this.displayIcons, iconElm };
     } else {
       return { displayIcon: false, iconElm: null };
     }
@@ -123,9 +126,25 @@ export class PwcChoicesInputBar {
     return [this.constructSelectedOptions(), this.constructPlaceholder()];
   }
 
+  decideFlexAlignClass() {
+    if (this.type === "single") {
+      return " pwc-choices___flex-align-main-start pwc-choices___flex-align-cross-center";
+    }
+
+    if (this.type === "multi") {
+      if (this.isOverflowing) {
+        return " pwc-choices___flex-align-main-center pwc-choices___flex-align-cross-center";
+      } else {
+        return " pwc-choices___flex-align-main-start pwc-choices___flex-align-cross-start";
+      }
+    }
+  }
+
   constructBubbles() {
+    const flexAlignClass = this.decideFlexAlignClass();
+
     return [
-      <div class="pwc-choices___input-bar-main">
+      <div class={"pwc-choices___input-bar-main " + flexAlignClass}>
         {this.constructMainRender()}
       </div>,
       <div class="pwc-choices___input-bar-dropdown-icon">
@@ -136,18 +155,16 @@ export class PwcChoicesInputBar {
     ];
   }
 
-  counstructCount() {
+  constructCount() {
+    const flexAlignClass = this.decideFlexAlignClass();
+
     return [
-      <div class="pwc-choices___input-bar-main">
-        <pwc-choices-option-bubble
-          class="pwc-choices___count-bubble"
-          option={{
-            value: "placeholder",
-            label: "Selected " + this.options.length + " options."
-          }}
-          showCloseButton={false}
-          indexInSelectedList={-1}
-        ></pwc-choices-option-bubble>
+      <div class={"pwc-choices___input-bar-main" + flexAlignClass}>
+        <span>
+          {this.countTextProvider
+            ? this.countTextProvider(this.options.length)
+            : `Selected ${this.options.length} options.`}
+        </span>
       </div>,
       <div class="pwc-choices___input-bar-dropdown-icon">
         <svg width="28" height="28" viewBox="0 0 18 18">
@@ -158,7 +175,7 @@ export class PwcChoicesInputBar {
   }
 
   componentWillRender() {
-    if (this.displayMode === "dynamic") {
+    if (this.type === "multi" && this.displayMode === "dynamic") {
       if (this.isCalculating) {
         if (!this.root.hasAttribute("calculating")) {
           this.root.setAttribute("calculating", "");
@@ -174,8 +191,11 @@ export class PwcChoicesInputBar {
       ? false
       : this.displayMode !== "bubblesOnly" && this.isOverflowing;
 
-    if (this.displayMode === "countOnly" || shouldCollapse) {
-      toReturn = this.counstructCount();
+    if (
+      this.type === "multi" &&
+      (this.displayMode === "countOnly" || shouldCollapse)
+    ) {
+      toReturn = this.constructCount();
     } else {
       toReturn = this.constructBubbles();
     }
@@ -183,7 +203,7 @@ export class PwcChoicesInputBar {
   }
 
   componentDidRender() {
-    if (this.displayMode === "dynamic") {
+    if (this.type === "multi" && this.displayMode === "dynamic") {
       if (this.isCalculating) {
         this.isOverflowing = checkOverflow(this.root, true, true);
         this.isCalculating = false;

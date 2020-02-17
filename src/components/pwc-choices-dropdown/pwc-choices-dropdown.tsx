@@ -23,6 +23,7 @@ export class PwcChoicesDropdown {
   @Prop() searchBarPlaceholder: string;
   @Prop() selectionBehaviour: "remove" | "toggle" | "accumulate";
   @Prop() selectedOptions: IOption[];
+  @Prop() toggleText: string;
 
   @State() filteredOptions: FilterResult<IOption>[];
 
@@ -79,6 +80,7 @@ export class PwcChoicesDropdown {
             <pwc-choices-dropdown-item
               option={noItemOption}
               isNoOption={true}
+              toggleText={this.toggleText}
             ></pwc-choices-dropdown-item>
           ) : (
             this.filteredOptions.map(option => (
@@ -89,6 +91,7 @@ export class PwcChoicesDropdown {
                   so === option.original ? 1 : 0
                 )}
                 selectionBehaviour={this.selectionBehaviour}
+                toggleText={this.toggleText}
               ></pwc-choices-dropdown-item>
             ))
           ))}

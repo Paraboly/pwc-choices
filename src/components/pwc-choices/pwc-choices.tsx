@@ -139,6 +139,16 @@ export class PwcChoices {
     | "bubblesOnly" = `bubblesOnly`;
 
   /**
+   * Use this function to provide the text for the count display. It is invoked with the current selected option count.
+   */
+  @Prop() countTextProvider: (count: number) => string;
+
+  /**
+   * This is the text in the indicator of the options when they are in toggle mode.
+   */
+  @Prop() dropdownToggleText: string = "+";
+
+  /**
    * This is raised when the selected options change.
    */
   @Event() selectedOptionsChanged: EventEmitter<IOption[]>;
@@ -283,6 +293,8 @@ export class PwcChoices {
         autoHidePlaceholder={this.autoHidePlaceholder}
         type={this.type}
         displayMode={this.inputBarDisplayMode}
+        displayIcons={this.displayIconsOnInputBar}
+        countTextProvider={this.countTextProvider}
       ></pwc-choices-input-bar>
     );
   }
@@ -300,6 +312,7 @@ export class PwcChoices {
         searchBarPlaceholder={this.searchBarPlaceholder}
         selectionBehaviour={this.dropdownSelectionBehaviour}
         selectedOptions={this.selectedOptions}
+        toggleText={this.dropdownToggleText}
       ></pwc-choices-dropdown>
     );
   }

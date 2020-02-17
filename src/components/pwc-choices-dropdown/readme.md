@@ -12,6 +12,7 @@
 | `searchBarPlaceholder` | `search-bar-placeholder` |             | `string`                               | `undefined` |
 | `selectedOptions`      | --                       |             | `IOption[]`                            | `undefined` |
 | `selectionBehaviour`   | `selection-behaviour`    |             | `"accumulate" \| "remove" \| "toggle"` | `undefined` |
+| `toggleText`           | `toggle-text`            |             | `string`                               | `undefined` |
 
 
 ## Dependencies

@@ -116,17 +116,20 @@
 
           choices.distinctMode = "none";
           choices.placeholder = "Placeholder text";
-          choices.autoHidePlaceholder = true;
+          choices.autoHidePlaceholder = false;
           choices.showCloseButtons = true;
           choices.noOptionsString = "Seçecek bir şey kalmadı :(";
           choices.uniqueSelection = true;
           choices.searchBarPlaceholder = "Aramak için yazınız...";
           choices.displayIconsOnInputBar = false;
+          choices.countTextProvider = (count) => `${count} adet seçenek seçildi.`;
+          choices.dropdownToggleText = "\u2713";
+          
           choices.dropdownSelectionBehaviour = "toggle";
-          choices.inputBarDisplayMode = "dynamic";
+          choices.inputBarDisplayMode = "bubblesOnly";
 
           choices.style.width = "300px";
-          choices.style.height = "60px";
+          choices.style.height = "100px";
 
           choices.addEventListener("selectedOptionsChanged", e => {
             console.log(e);

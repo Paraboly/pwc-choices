@@ -7,6 +7,7 @@
 
 | Property              | Attribute                | Description | Type      | Default     |
 | --------------------- | ------------------------ | ----------- | --------- | ----------- |
+| `displayIcon`         | `display-icon`           |             | `boolean` | `undefined` |
 | `indexInSelectedList` | `index-in-selected-list` |             | `number`  | `undefined` |
 | `option`              | --                       |             | `IOption` | `undefined` |
 | `showCloseButton`     | `show-close-button`      |             | `boolean` | `undefined` |
