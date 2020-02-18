@@ -59,7 +59,14 @@ export class PwcChoicesInputBar {
 
   @Listen("click")
   onInputBarClick(e: MouseEvent): void {
-    this.inputBarClicked.emit({ originalEvent: e });
+    const eventTarget = event.target as HTMLElement;
+    const closestBubbleCloseButton = eventTarget.closest(
+      ".pwc-choices___bubble-close-button"
+    );
+    const shouldEmitAClickOnSelf = !closestBubbleCloseButton;
+    if (shouldEmitAClickOnSelf) {
+      this.inputBarClicked.emit({ originalEvent: e });
+    }
   }
 
   constructSelectedOptions() {

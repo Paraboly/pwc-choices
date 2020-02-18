@@ -24,40 +24,38 @@
         background-color: aqua;
 
         width: 350px;
-        height: 350px;
+        height: 500px;
         margin: auto;
 
         border: 1px solid black;
+        padding: 10px;
       }
     </style>
   </head>
   <body>
-    <br />
-
     <form id="firstForm">
       <label>
         First
         <pwc-choices name="first"></pwc-choices>
       </label>
-      
+
+      <br />
+
+      <label>
+        Second
+        <pwc-choices name="second"></pwc-choices>
+      </label>
+
+      <br />
+
       <input type="reset"></input>
     </form>
 
-    <input type="button" id="reset-items" value="Reset Items"></input>
-
-    <br />
-
-    <label>
-      Second
-      <pwc-choices name="second"></pwc-choices>
-    </label>
-
-    <br />
     <hr />
-    <br />
 
-    <button id="printResult">Print Result</button>
+    <input type="button" id="reset-items" value="Reset Items"></input>
     <button id="swap-data-set">Swap Options Set</button>
+    <button id="printResult">Print Result</button>
 
     <br />
     <br />

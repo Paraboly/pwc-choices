@@ -27,8 +27,6 @@ export class PwcChoicesOptionBubble {
   @Event() closeClicked: EventEmitter<IOptionBubbleCloseClickedEventPayload>;
 
   onCloseClicked(event: MouseEvent): void {
-    // stop propagation so the input bar doesn't pick it up as a click on itself and close the dropdown.
-    event.stopPropagation();
     this.closeClicked.emit({
       originalEvent: event,
       option: this.option,

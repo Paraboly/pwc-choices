@@ -257,14 +257,18 @@ export class PwcChoices {
   @Listen("click", {
     target: "window"
   })
-  windowClickHandler() {
-    this.dropdownIsOpen = false;
+  windowClickHandler(event: MouseEvent) {
+    const eventTarget = event.target as HTMLElement;
+    const closestChoicesIsMe = eventTarget.closest("pwc-choices") === this.root;
+    if (!closestChoicesIsMe) {
+      this.dropdownIsOpen = false;
+    }
   }
 
   @Listen("click")
-  selfClickHandler(event: MouseEvent) {
+  selfClickHandler() {
     // stop propagation so windowClickHandler doesn't capture it.
-    event.stopPropagation();
+    // event.stopPropagation();
   }
 
   componentWillLoad() {
