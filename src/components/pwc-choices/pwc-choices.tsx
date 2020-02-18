@@ -21,6 +21,7 @@ import { DistinctMode } from "./DistinctMode";
 import { AllDistinctModeLiterals } from "./AllDistinctModeLiterals";
 import { IOptionDiscardedEventPayload } from "../pwc-choices-input-bar/IOptionDiscardedEventPayload";
 import { IDropdownItemClickedEventPayload } from "../pwc-choices-dropdown-item/IDropdownItemClickedEventPayload";
+import { createPopper, Instance, Options } from "@popperjs/core";
 
 @Component({
   tag: "pwc-choices",
@@ -163,7 +164,12 @@ export class PwcChoices {
   /**
    * This is the text in the indicator of the options when they are in toggle mode.
    */
-  @Prop() dropdownToggleText: string = "+";
+  @Prop() dropdownToggleText: string = "\u2713";
+
+  /**
+   * The options to pass to the prop.js constructor, which handles the dropdown placement.
+   */
+  @Prop() popperjsOptionsForDropdown?: Partial<Options>;
 
   /**
    * This is raised when the selected options change.
@@ -340,10 +346,53 @@ export class PwcChoices {
     );
   }
 
+  private popperInstance: Instance;
+
   render() {
     return [
       this.constructInputBar(),
       this.dropdownIsOpen && this.constructDropdown()
     ];
+  }
+
+  componentDidRender() {
+    if (this.popperInstance) {
+      this.popperInstance.destroy();
+    }
+
+    const dropdown = this.root.querySelector("pwc-choices-dropdown");
+    const inputBar = this.root.querySelector("pwc-choices-input-bar");
+
+    if (dropdown && inputBar) {
+      const opts = this.popperjsOptionsForDropdown || {
+        placement: "bottom",
+        modifiers: [
+          {
+            name: "offset",
+            options: {
+              offset: [0, 6]
+            }
+          },
+          {
+            name: "preventOverflow",
+            options: {
+              mainAxis: true,
+              altAxis: false
+            }
+          },
+          {
+            name: "arrow"
+          },
+          {
+            name: "flip",
+            options: {
+              fallbackPlacements: ["top", "right", "left"]
+            }
+          }
+        ]
+      };
+
+      this.popperInstance = createPopper(inputBar, dropdown, opts);
+    }
   }
 }

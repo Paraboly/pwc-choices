@@ -3,15 +3,12 @@ pwc-choices-dropdown {
   padding: 0;
   font-size: medium;
   font-family: Calibri, sans-serif;
-  border: 1px solid black;
   position: absolute;
   box-sizing: border-box;
   width: 100%;
-  border-radius: 5px;
-  background-color: white;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  //overflow: hidden;
   z-index: 1000000;
 }
 
@@ -19,7 +16,10 @@ pwc-choices-dropdown {
   font-size: medium;
   padding: 10px;
   border: 0;
-  border-bottom: 1px solid black;
+  border: 0 solid black;
+  border-width: 1px 1px 1px 1px;
+  background-color: white;
+  border-radius: 5px 5px 0 0;
 }
 
 .pwc-choices___dropdown-item-container {
@@ -28,6 +28,10 @@ pwc-choices-dropdown {
   display: flex;
   flex-direction: column;
   max-height: 250px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
+  background-color: white;
+  border-radius: 0 0 5px 5px;
+  border: 0 solid black;
+  border-width: 0 1px 1px 1px;
 }

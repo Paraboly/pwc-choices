@@ -10,8 +10,24 @@
     <script type="module" src="/build/pwc-choices.esm.js"></script>
     <script nomodule src="/build/pwc-choices.js"></script>
     <style>
+      html {
+        width: 1000px;
+        height: 1000px;
+        display: flex;
+        justify-content: center;
+        justify-items: center;
+        align-content: center;
+        align-items: center;
+      }
+
       body {
         background-color: aqua;
+
+        width: 350px;
+        height: 350px;
+        margin: auto;
+
+        border: 1px solid black;
       }
     </style>
   </head>
@@ -28,13 +44,13 @@
     </form>
 
     <input type="button" id="reset-items" value="Reset Items"></input>
-<!-- 
+
     <br />
 
     <label>
       Second
       <pwc-choices name="second"></pwc-choices>
-    </label> -->
+    </label>
 
     <br />
     <hr />

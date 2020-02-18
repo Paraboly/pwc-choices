@@ -74,7 +74,7 @@ export class PwcChoicesDropdown {
         ref={elm => (this.searchRef = elm)}
         onInput={this.onSearchInput.bind(this)}
       ></input>,
-      <div id="pwc-choices___dropdown-item-container">
+      <div class="pwc-choices___dropdown-item-container">
         {this.filteredOptions &&
           (this.filteredOptions.length === 0 ? (
             <pwc-choices-dropdown-item

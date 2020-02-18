@@ -17,6 +17,9 @@ import {
   DistinctMode,
 } from './components/pwc-choices/DistinctMode';
 import {
+  Options,
+} from '@popperjs/core';
+import {
   FilterResult,
 } from 'fuzzy';
 import {
@@ -96,6 +99,10 @@ export namespace Components {
     * This will be displayed in the input bar after the selected options.
     */
     'placeholder': string;
+    /**
+    * The options to pass to the prop.js constructor, which handles the dropdown placement.
+    */
+    'popperjsOptionsForDropdown'?: Partial<Options>;
     /**
     * This will appear in the search bar when there is no input.
     */
@@ -240,6 +247,10 @@ declare namespace LocalJSX {
     * This will be displayed in the input bar after the selected options.
     */
     'placeholder'?: string;
+    /**
+    * The options to pass to the prop.js constructor, which handles the dropdown placement.
+    */
+    'popperjsOptionsForDropdown'?: Partial<Options>;
     /**
     * This will appear in the search bar when there is no input.
     */
