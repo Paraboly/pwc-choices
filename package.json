@@ -1,6 +1,6 @@
 {
   "name": "@paraboly/pwc-choices",
-  "version": "6.2.3",
+  "version": "6.3.0",
   "description": "Dropdown input with multi-select and search support.",
   "keywords": [
     "select",
