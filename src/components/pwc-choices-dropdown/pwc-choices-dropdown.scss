@@ -8,8 +8,8 @@ pwc-choices-dropdown {
   width: 100%;
   display: flex;
   flex-direction: column;
-  //overflow: hidden;
   z-index: 1000000;
+  max-height: 95vh;
 }
 
 .pwc-choices___search {
@@ -27,9 +27,9 @@ pwc-choices-dropdown {
   margin: 0;
   display: flex;
   flex-direction: column;
-  max-height: 250px;
+  height: 100%;
+  box-sizing: border-box;
   overflow-y: auto;
-  overflow-x: hidden;
   background-color: white;
   border-radius: 0 0 5px 5px;
   border: 0 solid black;
