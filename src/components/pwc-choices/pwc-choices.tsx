@@ -187,6 +187,39 @@ export class PwcChoices {
   }
 
   /**
+   * Select an option by value.
+   * @param value The value of the option to select.
+   * @param force If false, runs the command through internal selection logic which adheres to config. Otherwise, bypasses all the internal logic and forcefully appends the option to the selected options list.
+   */
+  @Method()
+  async select(value: string, force: boolean = false) {
+    const option = _.find(this.resolvedOptions, { value });
+
+    if (force) {
+      switch (this.type) {
+        case "single":
+          this.selectedOptions = [option];
+          break;
+        case "multi":
+          this.selectedOptions = [...this.selectedOptions, option];
+          break;
+      }
+    } else {
+      this.selectOption(option);
+    }
+  }
+
+  /**
+   * Deselect an option by value.
+   * @param value The value of the option to deselect.
+   */
+  @Method()
+  async deselect(value: string) {
+    _.remove(this.selectedOptions, { value });
+    this.selectedOptions = [...this.selectedOptions];
+  }
+
+  /**
    * Returns the values of currently selected options.
    */
   @Method()
@@ -230,6 +263,10 @@ export class PwcChoices {
   ) {
     const option = event.detail.option.original;
 
+    this.selectOption(option);
+  }
+
+  private selectOption(option: IOption) {
     switch (this.type) {
       case "multi":
         switch (this.dropdownSelectionBehaviour) {

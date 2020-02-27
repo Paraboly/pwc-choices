@@ -34,6 +34,16 @@
 
 ## Methods
 
+### `deselect(value: string) => Promise<void>`
+
+Deselect an option by value.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `getSelectedOptionsAsLabels() => Promise<string[]>`
 
 Returns the labels of currently selected options.
@@ -61,6 +71,16 @@ Returns the values of currently selected options.
 #### Returns
 
 Type: `Promise<string[]>`
+
+
+
+### `select(value: string, force?: boolean) => Promise<void>`
+
+Select an option by value.
+
+#### Returns
+
+Type: `Promise<void>`
 
 
 

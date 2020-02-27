@@ -46,6 +46,11 @@ export namespace Components {
     */
     'countTextProvider': (count: number) => string;
     /**
+    * Deselect an option by value.
+    * @param value The value of the option to deselect.
+    */
+    'deselect': (value: string) => Promise<void>;
+    /**
     * If true, option icons will be displayed on the input bar as well.
     */
     'displayIconsOnInputBar': boolean;
@@ -107,6 +112,12 @@ export namespace Components {
     * This will appear in the search bar when there is no input.
     */
     'searchBarPlaceholder': string;
+    /**
+    * Select an option by value.
+    * @param value The value of the option to select.
+    * @param force If false, runs the command through internal selection logic which adheres to config. Otherwise, bypasses all the internal logic and forcefully appends the option to the selected options list.
+    */
+    'select': (value: string, force?: boolean) => Promise<void>;
     /**
     * If true, selected option bubbles will have close buttons.
     */
