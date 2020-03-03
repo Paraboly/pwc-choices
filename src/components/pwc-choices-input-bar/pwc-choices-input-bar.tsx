@@ -92,7 +92,7 @@ export class PwcChoicesInputBar {
           class="pwc-choices___placeholder-bubble"
           option={{
             value: "placeholder",
-            label: this.placeholder || "No options are selected."
+            label: this.placeholder
           }}
           showCloseButton={false}
           indexInSelectedList={-1}
@@ -165,11 +165,7 @@ export class PwcChoicesInputBar {
 
     return [
       <div class={"pwc-choices___input-bar-main" + flexAlignClass}>
-        <span>
-          {this.countTextProvider
-            ? this.countTextProvider(this.options.length)
-            : `Selected ${this.options.length} options.`}
-        </span>
+        <span>{this.countTextProvider(this.options.length)}</span>
       </div>,
       <div class="pwc-choices___input-bar-dropdown-icon">
         <svg width="28" height="28" viewBox="0 0 18 18">

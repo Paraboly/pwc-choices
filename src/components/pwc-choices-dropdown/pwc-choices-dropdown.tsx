@@ -70,7 +70,7 @@ export class PwcChoicesDropdown {
       <input
         type="text"
         class="pwc-choices___search"
-        placeholder={this.searchBarPlaceholder || "Search by typing..."}
+        placeholder={this.searchBarPlaceholder}
         ref={elm => (this.searchRef = elm)}
         onInput={this.onSearchInput.bind(this)}
       ></input>,

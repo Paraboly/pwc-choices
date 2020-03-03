@@ -33,79 +33,136 @@ export class PwcChoices {
 
   @Element() root: HTMLPwcChoicesElement;
 
+  private readonly defaultName = "PWC_CHOICES___UNASSIGNED_NAME";
   /**
    * HTML name attribute. This is implemented for compatibility with HTML forms, it has no internal usage.
    */
-  @Prop() name: string;
+  @Prop() name: string = this.defaultName;
+  @Watch("name")
+  nameWatchHandler(newValue) {
+    if (newValue === null || newValue === undefined) {
+      this.name = this.defaultName;
+    }
+  }
 
+  private readonly defaultType = "multi";
   /**
    * The selection behaviour.
    * "multi" allows selection of multiple options.
    * "single" allows selection of only a single option (just like the native HTML select element).
    */
-  @Prop() type: Type = "multi";
+  @Prop() type: Type = this.defaultType;
   @Watch("type")
   typeWatchHandler(newValue: Type) {
-    if (!AllTypeLiterals.includes(newValue)) {
-      throwTypeLiteralNotSupported("type", newValue, AllTypeLiterals);
+    if (newValue === null || newValue === undefined) {
+      this.type = this.defaultType;
+    } else {
+      if (!AllTypeLiterals.includes(newValue)) {
+        throwTypeLiteralNotSupported("type", newValue, AllTypeLiterals);
+      }
     }
   }
 
+  private readonly defaultOptions = [];
   /**
    * The options available to this component. An option must have a label and a value property.
    */
-  @Prop() options: IOption[] | string;
+  @Prop() options: IOption[] | string = this.defaultOptions;
   @Watch("options")
   optionsWatchHandler(newValue: IOption[] | string) {
-    const newOptions = distinctFilter(resolveJson(newValue), this.distinctMode);
-    const goneOptions = _.differenceBy(
-      this.resolvedOptions,
-      newOptions,
-      o => o.value
-    );
-
-    if (
-      this.selectedOptions &&
-      this.selectedOptions.length > 0 &&
-      this.selectedOptions.some(o =>
-        goneOptions.some(go => go.value === o.value)
-      )
-    ) {
-      _.remove(this.selectedOptions, o =>
-        goneOptions.some(go => go.value === o.value)
+    if (newValue === null || newValue === undefined) {
+      this.options = this.defaultOptions;
+    } else {
+      const newOptions = distinctFilter(
+        resolveJson(newValue),
+        this.distinctMode
       );
-      this.selectedOptions = [...this.selectedOptions];
-    }
+      const goneOptions = _.differenceBy(
+        this.resolvedOptions,
+        newOptions,
+        o => o.value
+      );
 
-    this.resolvedOptions = newOptions || [];
+      if (
+        this.selectedOptions &&
+        this.selectedOptions.length > 0 &&
+        this.selectedOptions.some(o =>
+          goneOptions.some(go => go.value === o.value)
+        )
+      ) {
+        _.remove(this.selectedOptions, o =>
+          goneOptions.some(go => go.value === o.value)
+        );
+        this.selectedOptions = [...this.selectedOptions];
+      }
+
+      this.resolvedOptions = newOptions || [];
+    }
   }
   private resolvedOptions: IOption[];
 
+  private readonly defaultSearchBarPlaceholder = "Search by typing...";
   /**
    * This will appear in the search bar when there is no input.
    */
-  @Prop() searchBarPlaceholder: string;
+  @Prop() searchBarPlaceholder: string = this.defaultSearchBarPlaceholder;
+  @Watch("searchBarPlaceholder")
+  searchBarPlaceholderWatchHandler(newValue) {
+    if (newValue === null || newValue === undefined) {
+      this.searchBarPlaceholder = this.defaultSearchBarPlaceholder;
+    }
+  }
 
+  private readonly defaultPlaceholder = "No options are selected.";
   /**
    * This will be displayed in the input bar after the selected options.
    */
-  @Prop() placeholder: string;
+  @Prop() placeholder: string = this.defaultPlaceholder;
+  @Watch("placeholder")
+  placeholderWatchHandler(newValue) {
+    if (newValue === null || newValue === undefined) {
+      this.placeholder = this.defaultPlaceholder;
+    }
+  }
 
+  private readonly defaultAutoHidePlaceholder = true;
   /**
    * If true, the placeholder will be hidden if there are selected options.
    */
-  @Prop() autoHidePlaceholder: boolean = true;
+  @Prop() autoHidePlaceholder: boolean = this.defaultAutoHidePlaceholder;
+  @Watch("autoHidePlaceholder")
+  autoHidePlaceholderWatchHandler(newValue) {
+    if (newValue === null || newValue === undefined) {
+      this.autoHidePlaceholder = this.defaultAutoHidePlaceholder;
+    }
+  }
 
+  private readonly defaultDropdownIsOpen = false;
   /**
    * This determines wheter the dropdown is open or not.
    */
-  @Prop({ mutable: true, reflect: true }) dropdownIsOpen: boolean = false;
+  @Prop({ mutable: true, reflect: true }) dropdownIsOpen: boolean = this
+    .defaultDropdownIsOpen;
+  @Watch("dropdownIsOpen")
+  dropdownIsOpenWatchHandler(newValue) {
+    if (newValue === null || newValue === undefined) {
+      this.dropdownIsOpen = this.defaultDropdownIsOpen;
+    }
+  }
 
+  private readonly defaultShowCloseButtons = true;
   /**
    * If true, selected option bubbles will have close buttons.
    */
-  @Prop() showCloseButtons: boolean = true;
+  @Prop() showCloseButtons: boolean = this.defaultShowCloseButtons;
+  @Watch("showCloseButtons")
+  showCloseButtonsWatchHandler(newValue) {
+    if (newValue === null || newValue === undefined) {
+      this.showCloseButtons = this.defaultShowCloseButtons;
+    }
+  }
 
+  private readonly defaultDropdownSelectionBehaviour = "remove";
   /**
    * This determines what happens to dropdown items after they are selected.
    *
@@ -115,35 +172,61 @@ export class PwcChoices {
    *
    * Both `remove` and `toggle` ensures the uniqueness of the selections, while `accumulate` allows for multiple selections of the same option.
    */
-  @Prop() dropdownSelectionBehaviour: "remove" | "toggle" | "accumulate" =
-    "remove";
+  @Prop() dropdownSelectionBehaviour: "remove" | "toggle" | "accumulate" = this
+    .defaultDropdownSelectionBehaviour;
+  @Watch("dropdownSelectionBehaviour")
+  dropdownSelectionBehaviourWatchHandler(newValue) {
+    if (newValue === null || newValue === undefined) {
+      this.dropdownSelectionBehaviour = this.defaultDropdownSelectionBehaviour;
+    }
+  }
 
+  private readonly defaultNoOptionsString = "No options to choose from.";
   /**
    * This will be displayed in the dropdown when there are no options left to choose.
    */
-  @Prop() noOptionsString: string = "No options to choose from.";
+  @Prop() noOptionsString: string = this.defaultNoOptionsString;
+  @Watch("noOptionsString")
+  noOptionsStringWatchHandler(newValue) {
+    if (newValue === null || newValue === undefined) {
+      this.noOptionsString = this.defaultNoOptionsString;
+    }
+  }
 
+  private readonly defaultDistinctMode = "none";
   /**
    * This is the mode of filtering we use to make given option objects distinct.
    * "none" disables the distinct filtering behaviour.
    */
-  @Prop() distinctMode: DistinctMode = "none";
+  @Prop() distinctMode: DistinctMode = this.defaultDistinctMode;
   @Watch("distinctMode")
   distinctModeWatchHandler(newValue: DistinctMode) {
-    if (!AllDistinctModeLiterals.includes(newValue)) {
-      throwTypeLiteralNotSupported(
-        "distinctMode",
-        newValue,
-        AllDistinctModeLiterals
-      );
+    if (newValue === null || newValue === undefined) {
+      this.distinctMode = this.defaultDistinctMode;
+    } else {
+      if (!AllDistinctModeLiterals.includes(newValue)) {
+        throwTypeLiteralNotSupported(
+          "distinctMode",
+          newValue,
+          AllDistinctModeLiterals
+        );
+      }
     }
   }
 
+  private readonly defaultDisplayIconsOnInputBar = false;
   /**
    * If true, option icons will be displayed on the input bar as well.
    */
-  @Prop() displayIconsOnInputBar: boolean;
+  @Prop() displayIconsOnInputBar: boolean = this.defaultDisplayIconsOnInputBar;
+  @Watch("displayIconsOnInputBar")
+  displayIconsOnInputBarWatchHandler(newValue) {
+    if (newValue === null || newValue === undefined) {
+      this.displayIconsOnInputBar = this.defaultDisplayIconsOnInputBar;
+    }
+  }
 
+  private readonly defaultInputBarDisplayMode = "bubblesOnly";
   /**
    * (multi select mode only) Maximum number of option bubbles to display in the input bar.
    *
@@ -151,25 +234,78 @@ export class PwcChoices {
    * * `dynamic`: display the option bubbles if they fit. when they overflow, switch to selected option count.
    * * `bubblesOnly`: display only the option bubbles.
    */
-  @Prop() inputBarDisplayMode:
-    | "countOnly"
-    | "dynamic"
-    | "bubblesOnly" = `bubblesOnly`;
+  @Prop() inputBarDisplayMode: "countOnly" | "dynamic" | "bubblesOnly" = this
+    .defaultInputBarDisplayMode;
+  @Watch("inputBarDisplayMode")
+  inputBarDisplayModeWatchHandler(newValue) {
+    if (newValue === null || newValue === undefined) {
+      this.inputBarDisplayMode = this.defaultInputBarDisplayMode;
+    }
+  }
 
+  private readonly defaultCountTextProvider = c => `Selected ${c} options.`;
   /**
    * Use this function to provide the text for the count display. It is invoked with the current selected option count.
    */
-  @Prop() countTextProvider: (count: number) => string;
+  @Prop() countTextProvider: (count: number) => string = this
+    .defaultCountTextProvider;
+  @Watch("countTextProvider")
+  countTextProviderWatchHandler(newValue) {
+    if (newValue === null || newValue === undefined) {
+      this.countTextProvider = this.defaultCountTextProvider;
+    }
+  }
 
+  private readonly defaultDropdownToggleText = "\u2713";
   /**
    * This is the text in the indicator of the options when they are in toggle mode.
    */
-  @Prop() dropdownToggleText: string = "\u2713";
+  @Prop() dropdownToggleText: string = this.defaultDropdownToggleText;
+  @Watch("dropdownToggleText")
+  dropdownToggleTextWatchHandler(newValue) {
+    if (newValue === null || newValue === undefined) {
+      this.dropdownToggleText = this.defaultDropdownToggleText;
+    }
+  }
 
+  private readonly defaultPopperjsOptionsForDropdown: Partial<Options> = {
+    placement: "bottom",
+    modifiers: [
+      {
+        name: "offset",
+        options: {
+          offset: [0, 6]
+        }
+      },
+      {
+        name: "preventOverflow",
+        options: {
+          mainAxis: true,
+          altAxis: false
+        }
+      },
+      {
+        name: "arrow"
+      },
+      {
+        name: "flip",
+        options: {
+          fallbackPlacements: ["top", "right", "left"]
+        }
+      }
+    ]
+  };
   /**
    * The options to pass to the prop.js constructor, which handles the dropdown placement.
    */
-  @Prop() popperjsOptionsForDropdown?: Partial<Options>;
+  @Prop() popperjsOptionsForDropdown?: Partial<Options> = this
+    .defaultPopperjsOptionsForDropdown;
+  @Watch("popperjsOptionsForDropdown")
+  popperjsOptionsForDropdownWatchHandler(newValue) {
+    if (newValue === undefined || newValue === null) {
+      this.popperjsOptionsForDropdown = this.defaultPopperjsOptionsForDropdown;
+    }
+  }
 
   /**
    * This is raised when the selected options change.
@@ -177,13 +313,19 @@ export class PwcChoices {
   @Event() selectedOptionsChanged: EventEmitter<IOption[]>;
 
   private doNotEmitChangeEvent: boolean = false;
-  @State() selectedOptions: IOption[] = [];
+
+  private readonly defaultSelectedOptions = [];
+  @State() selectedOptions: IOption[] = this.defaultSelectedOptions;
   @Watch("selectedOptions")
   selectedOptionsWatchHandler(newValue: IOption[]) {
-    if (!this.doNotEmitChangeEvent) {
-      this.selectedOptionsChanged.emit(newValue);
+    if (newValue === undefined || newValue === null) {
+      this.selectedOptions = this.defaultSelectedOptions;
+    } else {
+      if (!this.doNotEmitChangeEvent) {
+        this.selectedOptionsChanged.emit(newValue);
+      }
+      this.doNotEmitChangeEvent = false;
     }
-    this.doNotEmitChangeEvent = false;
   }
 
   /**
@@ -309,11 +451,32 @@ export class PwcChoices {
   }
 
   componentWillLoad() {
-    this.selectedOptions = this.selectedOptions || [];
-    this.optionsWatchHandler(this.options);
-    this.typeWatchHandler(this.type);
+    // prop validations
+    this.autoHidePlaceholderWatchHandler(this.autoHidePlaceholder);
+    this.countTextProviderWatchHandler(this.countTextProvider);
+    this.displayIconsOnInputBarWatchHandler(this.displayIconsOnInputBar);
     this.distinctModeWatchHandler(this.distinctMode);
+    this.dropdownIsOpenWatchHandler(this.dropdownIsOpen);
+    this.dropdownSelectionBehaviourWatchHandler(
+      this.dropdownSelectionBehaviour
+    );
+    this.dropdownToggleTextWatchHandler(this.dropdownToggleText);
+    this.inputBarDisplayModeWatchHandler(this.inputBarDisplayMode);
+    this.nameWatchHandler(this.name);
+    this.noOptionsStringWatchHandler(this.noOptionsString);
+    this.optionsWatchHandler(this.options);
+    this.placeholderWatchHandler(this.placeholder);
+    this.popperjsOptionsForDropdownWatchHandler(
+      this.popperjsOptionsForDropdown
+    );
+    this.searchBarPlaceholderWatchHandler(this.searchBarPlaceholder);
+    this.showCloseButtonsWatchHandler(this.showCloseButtons);
+    this.typeWatchHandler(this.type);
 
+    // state validations
+    this.selectedOptionsWatchHandler(this.selectedOptions);
+
+    // select initial options
     this.doNotEmitChangeEvent = true;
     this.selectInitialSelectedOptions();
   }
@@ -405,33 +568,7 @@ export class PwcChoices {
     const inputBar = this.root.querySelector("pwc-choices-input-bar");
 
     if (dropdown && inputBar) {
-      const opts = this.popperjsOptionsForDropdown || {
-        placement: "bottom",
-        modifiers: [
-          {
-            name: "offset",
-            options: {
-              offset: [0, 6]
-            }
-          },
-          {
-            name: "preventOverflow",
-            options: {
-              mainAxis: true,
-              altAxis: false
-            }
-          },
-          {
-            name: "arrow"
-          },
-          {
-            name: "flip",
-            options: {
-              fallbackPlacements: ["top", "right", "left"]
-            }
-          }
-        ]
-      };
+      const opts = this.popperjsOptionsForDropdown;
 
       this.popperInstance = createPopper(inputBar, dropdown, opts);
     }

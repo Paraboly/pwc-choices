@@ -85,9 +85,7 @@ export namespace Components {
     /**
     * (multi select mode only) Maximum number of option bubbles to display in the input bar.  * `countOnly`: display only the selected option count. * `dynamic`: display the option bubbles if they fit. when they overflow, switch to selected option count. * `bubblesOnly`: display only the option bubbles.
     */
-    'inputBarDisplayMode': | "countOnly"
-    | "dynamic"
-    | "bubblesOnly";
+    'inputBarDisplayMode': "countOnly" | "dynamic" | "bubblesOnly";
     /**
     * HTML name attribute. This is implemented for compatibility with HTML forms, it has no internal usage.
     */
@@ -235,9 +233,7 @@ declare namespace LocalJSX {
     /**
     * (multi select mode only) Maximum number of option bubbles to display in the input bar.  * `countOnly`: display only the selected option count. * `dynamic`: display the option bubbles if they fit. when they overflow, switch to selected option count. * `bubblesOnly`: display only the option bubbles.
     */
-    'inputBarDisplayMode'?: | "countOnly"
-    | "dynamic"
-    | "bubblesOnly";
+    'inputBarDisplayMode'?: "countOnly" | "dynamic" | "bubblesOnly";
     /**
     * HTML name attribute. This is implemented for compatibility with HTML forms, it has no internal usage.
     */
