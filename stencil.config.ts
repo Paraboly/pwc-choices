@@ -16,5 +16,8 @@ export const config: Config = {
       serviceWorker: null // disable service workers
     }
   ],
-  plugins: [sass()]
+  plugins: [sass()],
+
+  // ideally we want to use the cache, but when fscache gets corrupted stencil can't get anything done.
+  enableCache: false
 };
