@@ -366,7 +366,7 @@ export class PwcChoices {
    */
   @Method()
   async getSelectedOptionsAsValues(): Promise<string[]> {
-    return this.selectedOptions.map(o => o.value);
+    return this.selectedOptions ? this.selectedOptions.map(o => o.value) : [];
   }
 
   /**
@@ -374,7 +374,7 @@ export class PwcChoices {
    */
   @Method()
   async getSelectedOptionsAsLabels(): Promise<string[]> {
-    return this.selectedOptions.map(o => o.label);
+    return this.selectedOptions ? this.selectedOptions.map(o => o.label) : [];
   }
 
   /**
@@ -382,7 +382,7 @@ export class PwcChoices {
    */
   @Method()
   async getSelectedOptionsAsObjects(): Promise<IOption[]> {
-    return this.selectedOptions;
+    return this.selectedOptions || [];
   }
 
   @Listen("optionDiscarded")
